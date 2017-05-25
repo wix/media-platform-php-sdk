@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: leon
- * Date: 24/05/2017
- * Time: 16:55
+ * Date: 25/05/2017
+ * Time: 12:54
  */
 
 namespace Wix\Mediaplatform\Model\Job;
@@ -11,25 +11,29 @@ namespace Wix\Mediaplatform\Model\Job;
 
 use Wix\Mediaplatform\Model\Response\RestResponse;
 
-class FileImportJob extends Job
+/**
+ * Class TranscodeJob
+ * @package Wix\Mediaplatform\Model\Job
+ */
+class TranscodeJob extends Job
 {
     /**
      * @var string
      */
-    public static $job_type = "urn:job:import.file";
+    public static $job_type = "urn:job:av.transcode";
 
     /**
-     * @var ImportFileSpecification
+     * @var TranscodeSpecification
      */
     private $specification;
 
     /**
-     * @var RestResponse
+     * @var RestResponse<TranscodeJobResult>
      */
     private $result;
 
     /**
-     * @return ImportFileSpecification
+     * @return TranscodeSpecification
      */
     public function getSpecification() {
         return $this->specification;
