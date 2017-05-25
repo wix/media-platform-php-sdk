@@ -6,7 +6,7 @@
  * Time: 15:24
  */
 
-namespace Wix\Mediaplatform\Image\Saturation;
+namespace Wix\Mediaplatform\Image\Filter;
 
 use InvalidArgumentException;
 use Wix\Mediaplatform\Image\Option;

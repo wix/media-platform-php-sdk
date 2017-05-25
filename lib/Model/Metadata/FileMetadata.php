@@ -39,7 +39,7 @@ class FileMetadata
      * @param null $basic
      * @param null $features
      */
-    public function __construct($fileDescriptor = null, $basic = null, $features = null)
+    public function __construct(FileDescriptor $fileDescriptor = null, BasicMetadata $basic = null, Features $features = null)
     {
         $this->fileDescriptor = $fileDescriptor;
         $this->basic = $basic;

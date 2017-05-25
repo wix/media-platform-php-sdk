@@ -15,7 +15,7 @@ use Wix\Mediaplatform\Model\Request\Enum\OrderDirection;
  * Class ListFileRequest
  * @package Wix\Mediaplatform\Model\Request
  */
-class ListFileRequest
+class ListFilesRequest
 {
 
     /**
@@ -63,7 +63,7 @@ class ListFileRequest
 
     /**
      * @param string $nextPageToken
-     * @return ListFileRequest
+     * @return ListFilesRequest
      */
     public function setNextPageToken($nextPageToken)
     {
@@ -81,7 +81,7 @@ class ListFileRequest
 
     /**
      * @param int $pageSize
-     * @return ListFileRequest
+     * @return ListFilesRequest
      */
     public function setPageSize($pageSize)
     {
@@ -99,7 +99,7 @@ class ListFileRequest
 
     /**
      * @param OrderBy $orderBy
-     * @return ListFileRequest
+     * @return ListFilesRequest
      */
     public function setOrderBy($orderBy)
     {
@@ -117,7 +117,7 @@ class ListFileRequest
 
     /**
      * @param OrderDirection $orderDirection
-     * @return ListFileRequest
+     * @return ListFilesRequest
      */
     public function setOrderDirection($orderDirection)
     {
