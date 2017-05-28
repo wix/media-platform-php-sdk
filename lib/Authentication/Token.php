@@ -75,7 +75,7 @@ class Token
             $this->verbs = ($claims[Constants::AUDIENCE] == null) ? array() : explode(',', $claims[Constants::AUDIENCE]);
             $this->issuedAt = ($claims[Constants::ISSUED_AT] == null) ? null : $claims[Constants::ISSUED_AT];
             $this->expiration = ($claims[Constants::EXPIRATION] == null) ? null : $claims[Constants::EXPIRATION];
-            $this->identifier = ($claims[Constants::IDENTIFIER] == null) ? null : $claims[Constants::IDENTIFIER];
+            $this->tokenId = ($claims[Constants::IDENTIFIER] == null) ? null : $claims[Constants::IDENTIFIER];
         }
     }
 
@@ -245,7 +245,7 @@ class Token
         $claims[Constants::ISSUER] = $this->issuer;
         $claims[Constants::EXPIRATION] = $this->expiration;
         $claims[Constants::ISSUED_AT] = $this->issuedAt;
-        $claims[Constants::IDENTIFIER] = $this->identifier;
+        $claims[Constants::IDENTIFIER] = $this->tokenId;
         $claims[Constants::AUDIENCE] = $this->verbs;
         if (!empty($this->additionalClaims) && is_array($this->additionalClaims)) {
             $claims = array_merge($claims, $this->additionalClaims);

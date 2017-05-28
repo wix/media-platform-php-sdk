@@ -9,12 +9,13 @@
 namespace Wix\Mediaplatform\Model\Metadata;
 
 use \DateTime;
+use Wix\Mediaplatform\Model\Response\BaseResponse;
 
 /**
  * Class FileDescriptor
  * @package Wix\Mediaplatform\Model\Metadata
  */
-class FileDescriptor
+class FileDescriptor extends BaseResponse
 {
     /**
      * @var string

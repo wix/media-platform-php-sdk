@@ -13,17 +13,17 @@ namespace Wix\Mediaplatform\Model\Response;
  * Class ListFilesResponse
  * @package Wix\Mediaplatform\Model\Response
  */
-class ListFilesResponse
+class ListFilesResponse extends BaseResponse
 {
     /**
      * @var string
      */
-    private $nextPageToken;
+    protected $nextPageToken;
 
     /**
      * @var array[FileDescriptor]
      */
-    private $files;
+    protected $files;
 
     /**
      * ListFilesResponse constructor.

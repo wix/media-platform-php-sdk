@@ -7,6 +7,7 @@
  */
 
 namespace Wix\Mediaplatform\Model\Response;
+use GuzzleHttp\Psr7\Response;
 
 
 /**
@@ -30,6 +31,12 @@ class RestResponse
      */
     private $payload;
 
+    public function __construct(Array $response) {
+        $this->code = $response['code'];
+        $this->message = $response['message'];
+        $this->payload = $response['payload'];
+    }
+
     /**
      * @return int
      */
@@ -47,13 +54,12 @@ class RestResponse
     }
 
     /**
-     * @return \stdClass
+     * @return mixed
      */
     public function getPayload()
     {
         return $this->payload;
     }
-
 
     /**
      * @return string

@@ -8,37 +8,39 @@
 
 namespace Wix\Mediaplatform\Model\Job;
 
-abstract class Job
+use Wix\Mediaplatform\Model\Response\BaseResponse;
+
+abstract class Job extends BaseResponse
 {
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @var string
      */
-    private $issuer;
+    protected $issuer;
 
     /**
      * @var string
      */
-    private $status;
+    protected $status;
 
     /**
      * @var string
      */
-    private $groupId;
+    protected $groupId;
 
     /**
      * @var array[string]
      */
-    private $sources;
+    protected $sources;
 
     /**
      * @return string

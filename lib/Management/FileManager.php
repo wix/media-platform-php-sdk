@@ -10,11 +10,13 @@ namespace Wix\Mediaplatform\Management;
 
 
 use Wix\Mediaplatform\Configuration\Configuration;
+use Wix\Mediaplatform\Http\AuthenticatedHTTPClient;
 use Wix\Mediaplatform\Model\Metadata\FileDescriptor;
 use Wix\Mediaplatform\Model\Metadata\FileMetadata;
 use Wix\Mediaplatform\Model\Request\CreateFileRequest;
 use Wix\Mediaplatform\Model\Request\ImportFileRequest;
 use Wix\Mediaplatform\Model\Request\ListFilesRequest;
+use Wix\Mediaplatform\Model\Request\UploadUrlRequest;
 use Wix\Mediaplatform\Model\Response\ListFilesResponse;
 use Wix\Mediaplatform\Model\Response\RestResponse;
 use Wix\Mediaplatform\Model\Response\Types;
@@ -66,14 +68,14 @@ class FileManager
     }
 
     /**
-     * @param $path
-     * @param $mimeType
-     * @param $fileName
-     * @param $source
-     * @param $acl
-     * @return mixed
+     * @param string $path
+     * @param string $mimeType
+     * @param string $fileName
+     * @param string|resource $source
+     * @param string|null $acl
+     * @return array
      */
-    public function uploadFile($path, $mimeType, $fileName, $source, $acl)
+    public function uploadFile($path, $mimeType, $fileName, $source, $acl = null)
     {
         return $this->fileUploader->uploadFile($path, $mimeType, $fileName, $source, $acl);
     }

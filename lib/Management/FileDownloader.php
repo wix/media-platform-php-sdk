@@ -13,7 +13,7 @@ use Wix\Mediaplatform\Authentication\Authenticator;
 use Wix\Mediaplatform\Authentication\NS;
 use Wix\Mediaplatform\Authentication\Token;
 use Wix\Mediaplatform\Authentication\VERB;
-use Wix\Mediaplatform\Configuration;
+use Wix\Mediaplatform\Configuration\Configuration;
 use Wix\Mediaplatform\Model\Request\DownloadUrlRequest;
 
 class FileDownloader
@@ -38,6 +38,11 @@ class FileDownloader
         $this->configuration = $configuration;
     }
 
+    /**
+     * @param $path
+     * @param DownloadUrlRequest|null $downloadUrlRequest
+     * @return string
+     */
     public function getDownloadUrl($path, DownloadUrlRequest $downloadUrlRequest = null) {
         $payload = array();
         $payload["path"] = $path;

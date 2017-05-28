@@ -10,6 +10,7 @@ namespace Wix\Mediaplatform\Authentication;
 
 
 use Firebase\JWT\JWT;
+use InvalidArgumentException;
 use Wix\Mediaplatform\Configuration\Configuration;
 
 /**
@@ -65,7 +66,7 @@ class Authenticator
         try {
             return new Token(JWT::decode($token, $this->configuration->getSharedSecret()));
         } catch (InvalidArgumentException $e) {
-            throw new Exception("invalid token", $e);
+            throw new InvalidArgumentException("invalid token", $e);
         }
     }
 }

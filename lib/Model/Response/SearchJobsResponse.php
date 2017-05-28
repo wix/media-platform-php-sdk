@@ -13,25 +13,18 @@ namespace Wix\Mediaplatform\Model\Response;
  * Class SearchJobsResponse
  * @package Wix\Mediaplatform\Model\Response
  */
-class SearchJobsResponse
+class SearchJobsResponse extends BaseResponse
 {
 
     /**
      * @var string
      */
-    private $nextPageToken;
+    protected $nextPageToken;
 
     /**
      * @var array[Job]
      */
-    private $jobs;
-
-    /**
-     * SearchJobsResponse constructor.
-     */
-    public function __construct()
-    {
-    }
+    protected $jobs;
 
     /**
      * @return string

@@ -12,17 +12,17 @@ namespace Wix\Mediaplatform\Model\Response;
  * Class GetUploadUrlResponse
  * @package Wix\Mediaplatform\Model\Response
  */
-class GetUploadUrlResponse
+class GetUploadUrlResponse extends BaseResponse
 {
     /**
      * @var string
      */
-    private $uploadUrl;
+    protected $uploadUrl;
 
     /**
      * @var string
      */
-    private $uploadToken;
+    protected $uploadToken;
 
     /**
      * GetUploadUrlResponse constructor.
@@ -30,8 +30,13 @@ class GetUploadUrlResponse
      * @param null $uploadToken
      */
     public function __construct($uploadUrl = null, $uploadToken = null) {
-        $this->uploadUrl = $uploadUrl;
-        $this->uploadToken = $uploadToken;
+        // using payload to init the object
+        if(is_array($uploadUrl) && !empty($uploadUrl)) {
+            parent::__construct($uploadUrl);
+        } else {
+            $this->uploadUrl = $uploadUrl;
+            $this->uploadToken = $uploadToken;
+        }
     }
 
     /**
