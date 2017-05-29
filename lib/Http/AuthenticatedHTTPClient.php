@@ -63,6 +63,10 @@ class AuthenticatedHTTPClient
 
 
     public function post($url, $params = array(), $options = array()) {
+        if(is_object($params)) {
+            $params = $params->toArray();
+        }
+
         $params['Authorization'] = $this->authenticator->getHeader();
         $request = new Request("POST", $url, $params);
         return $this->send($request, $options);

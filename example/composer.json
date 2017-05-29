@@ -20,6 +20,9 @@
         "php": ">=5.4",
         "wix/media-platform-php-sdk": "*"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^6.1"
+    },
     "repositories": [
         {
             "type": "path",

@@ -91,7 +91,7 @@ class FileManager
 
     /**
      * @param CreateFileRequest $createFileRequest
-     * @return mixed
+     * @return FileDescriptor
      */
     public function createFile(CreateFileRequest $createFileRequest)
     {
@@ -100,11 +100,10 @@ class FileManager
          */
         $restResponse = $this->authenticatedHttpClient->post(
             $this->baseUrl . "/files",
-            $createFileRequest,
-            null,
-            Types::FILE_DESCRIPTOR_REST_RESPONSE);
+            $createFileRequest
+        );
 
-        return $restResponse->getPayload();
+        return new FileDescriptor($restResponse->getPayload());
     }
 
     /**

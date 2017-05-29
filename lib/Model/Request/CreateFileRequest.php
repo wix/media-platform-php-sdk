@@ -13,32 +13,32 @@ namespace Wix\Mediaplatform\Model\Request;
  * Class CreateFileRequest
  * @package Wix\Mediaplatform\Model\Request
  */
-class CreateFileRequest
+class CreateFileRequest extends BaseRequest
 {
     /**
      * @var string
      */
-    private $path;
+    protected $path;
 
     /**
      * @var string
      */
-    private $mimeType = "application/vnd.wix-media.dir";
+    protected $mimeType = "application/vnd.wix-media.dir";
 
     /**
      * @var string
      */
-    private $type = "d";
+    protected $type = "d";
 
     /**
      * @var int
      */
-    private $size;
+    protected $size;
 
     /**
      * @var string
      */
-    private $acl = "public";
+    protected $acl = "public";
 
     /**
      * CreateFileRequest constructor.

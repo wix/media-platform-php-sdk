@@ -64,7 +64,8 @@ class Authenticator
     public function decode($token)
     {
         try {
-            return new Token(JWT::decode($token, $this->configuration->getSharedSecret()));
+            $decoded = (array) JWT::decode($token, $this->configuration->getSharedSecret(), array("HS256"));
+            return new Token($decoded);
         } catch (InvalidArgumentException $e) {
             throw new InvalidArgumentException("invalid token", $e);
         }
