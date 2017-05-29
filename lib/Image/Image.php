@@ -9,7 +9,7 @@
 namespace Wix\Mediaplatform\Image;
 
 
-use Wix\Mediaplatform\Image\Encoder\Jpeg;
+use Wix\Mediaplatform\Image\Encoder\JPEG;
 use Wix\Mediaplatform\Image\Filter\Blur;
 use Wix\Mediaplatform\Image\Filter\Brightness;
 use Wix\Mediaplatform\Image\Filter\Contrast;
@@ -17,6 +17,7 @@ use Wix\Mediaplatform\Image\Filter\Hue;
 use Wix\Mediaplatform\Image\Filter\Saturation;
 use Wix\Mediaplatform\Image\Filter\UnsharpMask;
 use Wix\Mediaplatform\Image\Framing\Crop;
+use Wix\Mediaplatform\Image\Framing\Frame;
 use Wix\Mediaplatform\Image\Framing\SmartCrop;
 use Wix\Mediaplatform\Image\Parser\FileDescriptorParser;
 use Wix\Mediaplatform\Image\Parser\FileMetadataParser;
@@ -221,7 +222,7 @@ class Image
      */
     public function jpeg($quality)
     {
-        return $this->addOption(new Jpeg($quality));
+        return $this->addOption(new JPEG($quality));
     }
 
     /**

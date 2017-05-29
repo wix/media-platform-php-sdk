@@ -10,7 +10,7 @@ namespace Wix\Mediaplatform\Image\Parser;
 
 
 use InvalidArgumentException;
-use Wix\Mediaplatform\Image\Encoder\Jpeg;
+use Wix\Mediaplatform\Image\Encoder\JPEG;
 use Wix\Mediaplatform\Image\Filter\Brightness;
 use Wix\Mediaplatform\Image\Filter\Contrast;
 use Wix\Mediaplatform\Image\Filter\Hue;
@@ -33,7 +33,7 @@ class ImageUrlParser
         Blur::KEY => 'Wix\Mediaplatform\Image\Filter\Blur',
         Brightness::KEY => 'Wix\Mediaplatform\Image\Filter\Brightness',
         Contrast::KEY => 'Wix\Mediaplatform\Image\Filter\Contrast',
-        Jpeg::KEY => 'Wix\Mediaplatform\Image\Encoder\Jpeg',
+        JPEG::KEY => 'Wix\Mediaplatform\Image\Encoder\JPEG',
         Hue::KEY => 'Wix\Mediaplatform\Image\Filter\Hue',
         Saturation::KEY => 'Wix\Mediaplatform\Image\Filter\Saturation',
         UnsharpMask::KEY => 'Wix\Mediaplatform\Image\Filter\UnsharpMask',
