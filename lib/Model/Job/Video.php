@@ -8,12 +8,14 @@
 
 namespace Wix\Mediaplatform\Model\Job;
 
+use Wix\Mediaplatform\Model\BaseModel;
+
 
 /**
  * Class Video
  * @package Wix\Mediaplatform\Model\Job
  */
-class Video
+class Video extends BaseModel
 {
     /**
      * @var VideoSpecification
@@ -23,8 +25,9 @@ class Video
     /**
      * Video constructor.
      */
-    public function __construct()
-    {
+    public function __construct(Array $payload) {
+        parent::__construct();
+        $this->specification = new VideoSpecification($payload);
     }
 
     /**

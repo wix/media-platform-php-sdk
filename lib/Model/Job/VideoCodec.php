@@ -8,44 +8,38 @@
 
 namespace Wix\Mediaplatform\Model\Job;
 
+use Wix\Mediaplatform\Model\BaseModel;
 
 /**
  * Class VideoCodec
  * @package Wix\Mediaplatform\Model\Job
  */
-class VideoCodec
+class VideoCodec extends BaseModel
 {
     /**
      * @var string
      */
-    private $profile;
+    protected $profile;
 
     /**
      * @var float
      */
-    private $maxRate;
+    protected $maxRate;
 
     /**
      * @var float
      */
-    private $crf;
+    protected $crf;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
-    private $level;
-
-    /**
-     * VideoCodec constructor.
-     */
-    public function __construct()
-    {
-    }
+    protected $level;
 
     /**
      * @return string

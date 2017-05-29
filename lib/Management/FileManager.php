@@ -108,7 +108,7 @@ class FileManager
 
     /**
      * @param $path
-     * @return mixed
+     * @return FileDescriptor
      */
     public function getFile($path)
     {
@@ -120,9 +120,9 @@ class FileManager
          */
         $restResponse = $this->authenticatedHttpClient->get(
             $this->baseUrl . "/files",
-            $params,
-            Types::FILE_DESCRIPTOR_REST_RESPONSE);
-        return $restResponse->getPayload();
+            $params
+        );
+        return new FileDescriptor($restResponse->getPayload());
     }
 
     /**
@@ -135,11 +135,10 @@ class FileManager
          * @var RestResponse $restResponse
          */
         $restResponse = $this->authenticatedHttpClient->get(
-            $this->baseUrl . "/files/" . $fileId . "/metadata",
-            null,
-            Types::FILE_METADATA_REST_RESPONSE);
+            $this->baseUrl . "/files/" . $fileId . "/metadata"
+        );
 
-        return $restResponse->getPayload();
+        return new FileMetadata($restResponse->getPayload());
     }
 
     /**
@@ -160,10 +159,9 @@ class FileManager
          */
         $restResponse = $this->authenticatedHttpClient->get(
             $this->baseUrl . "/files/ls_dir",
-            $params,
-            Types::FILE_LIST_REST_RESPONSE
+            $params
         );
-        return $restResponse->getPayload();
+        return new ListFilesResponse($restResponse->getPayload());
     }
 
     /**
@@ -173,7 +171,7 @@ class FileManager
     {
         $params = array();
         $params["path"] = $path;
-        $this->authenticatedHttpClient->delete($this->baseUrl . "/files", $params, null);
+        $this->authenticatedHttpClient->delete($this->baseUrl . "/files", $params);
     }
 
     /**
@@ -181,6 +179,6 @@ class FileManager
      */
     public function deleteFileById($fileId)
     {
-        $this->authenticatedHttpClient->delete($this->baseUrl . "/files/" . $fileId, null, null);
+        $this->authenticatedHttpClient->delete($this->baseUrl . "/files/" . $fileId);
     }
 }

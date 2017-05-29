@@ -6,16 +6,16 @@
  * Time: 12:49
  */
 
-namespace Wix\Mediaplatform\Model\Response;
+namespace Wix\Mediaplatform\Model;
 
 /**
- *  * Class BaseResponse
- * @package Wix\Mediaplatform\Model\Response
+ *  * Class BaseModel
+ * @package Wix\Mediaplatform\Model
  */
-class BaseResponse
+class BaseModel
 {
     /**
-     * BaseResponse constructor.
+     * BaseModel constructor.
      * Get payload as array and put it into the existing class properties
      * @param array $payload
      */

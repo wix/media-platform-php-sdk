@@ -8,39 +8,33 @@
 
 namespace Wix\Mediaplatform\Geometry;
 
+use Wix\Mediaplatform\Model\BaseModel;
 
 /**
  * Class Rectangle
  * @package Wix\Mediaplatform\Geometry
  */
-class Rectangle
+class Rectangle extends BaseModel
 {
     /**
      * @var int
      */
-    private $x;
+    protected $x;
 
     /**
      * @var int
      */
-    private $y;
+    protected $y;
 
     /**
      * @var int
      */
-    private $width;
+    protected $width;
 
     /**
      * @var int
      */
-    private $height;
-
-    /**
-     * Rectangle constructor.
-     */
-    public function __construct()
-    {
-    }
+    protected $height;
 
     /**
      * @return int

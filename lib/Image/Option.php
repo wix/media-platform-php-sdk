@@ -40,7 +40,7 @@ abstract class Option
      * @return string
      */
     public function decimalString($value) {
-        return printf( "%.2f", $value);
+        return sprintf( "%.2f", $value);
     }
 
     /**

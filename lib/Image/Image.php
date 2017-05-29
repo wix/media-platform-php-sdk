@@ -9,6 +9,18 @@
 namespace Wix\Mediaplatform\Image;
 
 
+use Wix\Mediaplatform\Image\Encoder\Jpeg;
+use Wix\Mediaplatform\Image\Filter\Blur;
+use Wix\Mediaplatform\Image\Filter\Brightness;
+use Wix\Mediaplatform\Image\Filter\Contrast;
+use Wix\Mediaplatform\Image\Filter\Hue;
+use Wix\Mediaplatform\Image\Filter\Saturation;
+use Wix\Mediaplatform\Image\Filter\UnsharpMask;
+use Wix\Mediaplatform\Image\Framing\Crop;
+use Wix\Mediaplatform\Image\Framing\SmartCrop;
+use Wix\Mediaplatform\Image\Parser\FileDescriptorParser;
+use Wix\Mediaplatform\Image\Parser\FileMetadataParser;
+use Wix\Mediaplatform\Image\Parser\ImageUrlParser;
 use Wix\Mediaplatform\Model\Metadata\FileDescriptor;
 use Wix\Mediaplatform\Model\Metadata\FileMetadata;
 
@@ -64,7 +76,7 @@ class Image
         } else if (is_a($param, 'FileDescriptor')) {
             FileDescriptorParser::parse($this, $param);
         } else if (is_a($param, 'FileMetadata')) {
-            FileMetadataParser($this, $param);
+            FileMetadataParser::parse($this, $param);
         }
     }
 
@@ -140,6 +152,10 @@ class Image
      */
     public function addOption(Option $option)
     {
+        if(!empty($this->options[$option->getKey()])) {
+            unset($this->options[$option->getKey()]);
+        }
+
         $this->options[$option->getKey()] = $option;
         return $this;
     }
@@ -159,7 +175,7 @@ class Image
      */
     public function brightness($brightness)
     {
-        return $this->addOption(new Brightness(brightness));
+        return $this->addOption(new Brightness($brightness));
     }
 
     /**
@@ -168,7 +184,7 @@ class Image
      */
     public function contrast($contrast)
     {
-        return $this->addOption(new Contrast(contrast));
+        return $this->addOption(new Contrast($contrast));
     }
 
     /**
@@ -177,7 +193,7 @@ class Image
      */
     public function hue($hue)
     {
-        return $this->addOption(new Hue(hue));
+        return $this->addOption(new Hue($hue));
     }
 
     /**
@@ -205,7 +221,7 @@ class Image
      */
     public function jpeg($quality)
     {
-        return $this->addOption(new JPEG($quality));
+        return $this->addOption(new Jpeg($quality));
     }
 
     /**
@@ -214,7 +230,6 @@ class Image
     public function toUrl()
     {
         $url = "";
-
 
         if (!empty($this->host != null)) {
             if (substr($this->host, 0, strlen("http")) !== "http" &&
@@ -247,7 +262,7 @@ class Image
         $url .= StringToken::FORWARD_SLASH . $this->fileName;
 
         if ($this->metadata != null) {
-            $url .= $this->metadata->serialize();
+            $url .= StringToken::HASH . $this->metadata->serialize();
         }
 
         return $url;

@@ -15,7 +15,7 @@ use Wix\Mediaplatform\Http\AuthenticatedHTTPClient;
  * Date: 29/05/2017
  * Time: 10:28
  */
-class BaseTest extends TestCase
+abstract class BaseTest extends TestCase
 {
     /**
      * @var Configuration
@@ -47,9 +47,16 @@ class BaseTest extends TestCase
     }
 
     public static function setUpMockResponse($headers, $mockResponseFile) {
-        $mock = new MockHandler(array(
-            new Response(200, $headers, file_get_contents(self::MOCK_FILES_DIR . DIRECTORY_SEPARATOR . $mockResponseFile))
-        ));
+        if(is_string($mockResponseFile)) {
+            $mockResponseFile = array($mockResponseFile);
+        }
+
+        $responses = array();
+        foreach($mockResponseFile as $mockResponseItem) {
+            $responses[] = new Response(200, $headers, file_get_contents(self::MOCK_FILES_DIR . DIRECTORY_SEPARATOR . $mockResponseItem));
+        }
+
+        $mock = new MockHandler($responses);
 
         $handler = HandlerStack::create($mock);
         $client = new Client(array('handler' => $handler));

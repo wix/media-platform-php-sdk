@@ -8,32 +8,34 @@
 
 namespace Wix\Mediaplatform\Model\Job;
 
+use Wix\Mediaplatform\Model\BaseModel;
+
 
 /**
  * Class VideoSpecification
  * @package Wix\Mediaplatform\Model\Job
  */
-class VideoSpecification
+class VideoSpecification extends BaseModel
 {
     /**
      * @var string
      */
-    private $frameRate;
+    protected $frameRate;
 
     /**
      * @var VideoCodec
      */
-    private $codec;
+    protected $codec;
 
     /**
      * @var Resolution
      */
-    private $resolution;
+    protected $resolution;
 
     /**
      * @var float
      */
-    private $keyFrame;
+    protected $keyFrame;
 
     /**
      * @return string
@@ -67,6 +69,11 @@ class VideoSpecification
         return $this->keyFrame;
     }
 
+    public function __construct(Array $payload) {
+        parent::__construct($payload);
+        $this->codec = !empty($payload['codec']) ? new VideoCodec($payload['codec']) : null;
+        $this->resolution = !empty($payload['resolution']) ? new Resolution($payload['resolution']) : null;
+    }
 
 
     /**

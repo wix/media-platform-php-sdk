@@ -25,12 +25,18 @@ class TranscodeJob extends Job
     /**
      * @var TranscodeSpecification
      */
-    private $specification;
+    protected $specification;
 
     /**
      * @var RestResponse<TranscodeJobResult>
      */
-    private $result;
+    protected $result;
+
+    public function __construct(Array $payload) {
+        parent::__construct($payload);
+        $this->specification = new TranscodeSpecification($payload);
+    }
+
 
     /**
      * @return TranscodeSpecification

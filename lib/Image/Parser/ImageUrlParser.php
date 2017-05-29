@@ -10,7 +10,7 @@ namespace Wix\Mediaplatform\Image\Parser;
 
 
 use InvalidArgumentException;
-use Wix\Mediaplatform\Image\Encoder\JPEG;
+use Wix\Mediaplatform\Image\Encoder\Jpeg;
 use Wix\Mediaplatform\Image\Filter\Brightness;
 use Wix\Mediaplatform\Image\Filter\Contrast;
 use Wix\Mediaplatform\Image\Filter\Hue;
@@ -30,13 +30,13 @@ class ImageUrlParser
      * @var array
      */
     const OPTIONS = array(
-        Blur::KEY => "Blur",
-        Brightness::KEY => "Brightness",
-        Contrast::KEY => "Contrast",
-        JPEG::KEY => "JPEG",
-        Hue::KEY => "Hue",
-        Saturation::KEY => "Saturation",
-        UnsharpMask::KEY => "UnsharpMask",
+        Blur::KEY => 'Wix\Mediaplatform\Image\Filter\Blur',
+        Brightness::KEY => 'Wix\Mediaplatform\Image\Filter\Brightness',
+        Contrast::KEY => 'Wix\Mediaplatform\Image\Filter\Contrast',
+        Jpeg::KEY => 'Wix\Mediaplatform\Image\Encoder\Jpeg',
+        Hue::KEY => 'Wix\Mediaplatform\Image\Filter\Hue',
+        Saturation::KEY => 'Wix\Mediaplatform\Image\Filter\Saturation',
+        UnsharpMask::KEY => 'Wix\Mediaplatform\Image\Filter\UnsharpMask',
     );
 
     /**
@@ -52,7 +52,7 @@ class ImageUrlParser
         $image->setHost($explodedUrl->getHost());
         $image->setMetadata(self::parseFragment($explodedUrl->getFragment()));
 
-        self::applyOptions(image, explodedUrl . getGeometry(), explodedUrl . getOptions());
+        self::applyOptions($image, $explodedUrl->getGeometry(), $explodedUrl->getOptions());
     }
 
     /**
@@ -83,7 +83,7 @@ class ImageUrlParser
             return null;
         }
 
-        return new Metadata((int)$values[StringToken::KEY_WIDTH], (int)$values[StringToken::KEY_HEIGHT], $values[Metadata::KEY_MIME_TYPE]);
+        return new Metadata((int)$values[StringToken::KEY_WIDTH], (int)$values[StringToken::KEY_HEIGHT], urldecode($values[Metadata::KEY_MIME_TYPE]));
     }
 
     private static function applyOptions(Image $image, $geometry, $options)
@@ -93,7 +93,7 @@ class ImageUrlParser
 
         foreach ($parts as $part) {
             $paramArr = explode(StringToken::UNDERSCORE, $part);
-            $paramKey = array_pop($paramArr);
+            $paramKey = array_shift($paramArr);
             $params[$paramKey] = $paramArr;
         }
 
@@ -106,12 +106,11 @@ class ImageUrlParser
             switch ($method) {
                 case "crop":
                     $image->$method(
-                        $image,
-                        (int)$params[StringToken::KEY_WIDTH],
-                        (int)$params[StringToken::KEY_HEIGHT],
-                        (int)$params[Crop::KEY_X],
-                        (int)$params[Crop::KEY_Y],
-                        (int)$params[Crop::KEY_SCALE]
+                        (int)$params[StringToken::KEY_WIDTH][0],
+                        (int)$params[StringToken::KEY_HEIGHT][0],
+                        (int)$params[Crop::KEY_X][0],
+                        (int)$params[Crop::KEY_Y][0],
+                        (int)$params[Crop::KEY_SCALE][0]
                     );
 
                     unset($params[StringToken::KEY_WIDTH]);
@@ -122,9 +121,8 @@ class ImageUrlParser
                     break;
                 default:
                     $image->$method(
-                        $image,
-                        (int)$params[StringToken::KEY_WIDTH],
-                        (int)$params[StringToken::KEY_HEIGHT]
+                        (int)$params[StringToken::KEY_WIDTH][0],
+                        (int)$params[StringToken::KEY_HEIGHT][0]
                     );
                     unset($params[StringToken::KEY_WIDTH]);
                     unset($params[StringToken::KEY_HEIGHT]);

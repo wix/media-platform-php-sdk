@@ -9,24 +9,19 @@
 namespace Wix\Mediaplatform\Model\Job;
 
 
-class Source
+use Wix\Mediaplatform\Model\BaseModel;
+
+class Source extends BaseModel
 {
     /**
      * @var string
      */
-    private $fileId;
+    protected $fileId;
 
     /**
      * @var string
      */
-    private $path;
-
-    /**
-     * Source constructor.
-     */
-    public function __construct()
-    {
-    }
+    protected $path;
 
     /**
      * @param string $fileId

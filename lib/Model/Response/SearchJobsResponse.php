@@ -7,13 +7,15 @@
  */
 
 namespace Wix\Mediaplatform\Model\Response;
+use Wix\Mediaplatform\Management\JobManager;
+use Wix\Mediaplatform\Model\BaseModel;
 
 
 /**
  * Class SearchJobsResponse
  * @package Wix\Mediaplatform\Model\Response
  */
-class SearchJobsResponse extends BaseResponse
+class SearchJobsResponse extends BaseModel
 {
 
     /**
@@ -26,6 +28,16 @@ class SearchJobsResponse extends BaseResponse
      */
     protected $jobs;
 
+    public function __construct(Array $payload) {
+        parent::__construct($payload);
+        $this->jobs = array();
+        if(is_array($payload['jobs']) && !empty($payload['jobs'])) {
+            foreach($payload['jobs'] as $job) {
+                $this->jobs[] = JobManager::createJobObjectFromPayload($job);
+            }
+        }
+
+    }
     /**
      * @return string
      */

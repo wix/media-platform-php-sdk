@@ -9,22 +9,26 @@
 namespace Wix\Mediaplatform\Model\Job;
 
 
-class ImportFileSpecification implements Specification
+use Wix\Mediaplatform\Model\BaseModel;
+
+class ImportFileSpecification extends BaseModel implements Specification
 {
     /**
      * @var string
      */
-    private $sourceUrl;
+    protected $sourceUrl;
 
     /**
      * @var Destination
      */
-    private $destination;
+    protected $destination;
 
     /**
      * ImportFileSpecification constructor.
      */
-    public function __construct() {
+    public function __construct(Array $payload) {
+        parent::__construct($payload);
+        $this->destination = isset($payload['destination']) ? new Destination($payload['destination']) : null;
     }
 
     /**

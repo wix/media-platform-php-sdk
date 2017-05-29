@@ -82,7 +82,7 @@ class Metadata
             $this->width . "," .
             StringToken::KEY_HEIGHT . "_" .
             $this->height . "," .
-            StringToken::KEY_MIME_TYPE . "_" .
-            urlencode($this->mimeType);
+            Metadata::KEY_MIME_TYPE . "_" .
+            $this->mimeType;
     }
 }

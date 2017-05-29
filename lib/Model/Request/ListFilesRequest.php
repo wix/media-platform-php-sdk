@@ -43,9 +43,9 @@ class ListFilesRequest
      * @param string $nextPageToken
      * @param int $pageSize
      * @param OrderBy $orderBy
-     * @param OrderByDirection $orderDirection
+     * @param OrderDirection $orderDirection
      */
-    public function __construct($nextPageToken = null, $pageSize = null, $orderBy = null, $orderDirection = null)
+    public function __construct($nextPageToken = null, $pageSize = null, OrderBy $orderBy = null, OrderDirection $orderDirection = null)
     {
         $this->nextPageToken = $nextPageToken;
         $this->pageSize = $pageSize;

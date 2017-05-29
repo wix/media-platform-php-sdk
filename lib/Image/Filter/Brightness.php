@@ -57,7 +57,7 @@ class Brightness extends Option
      * @param $params
      * @return $this
      */
-    public function deserialize($params)
+    public function deserialize(array $params)
     {
         $this->brightness = (int)$params[0];
         return $this;

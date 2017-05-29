@@ -8,49 +8,45 @@
 
 namespace Wix\Mediaplatform\Model\Metadata\Basic;
 
+use Wix\Mediaplatform\Model\BaseModel;
+
 
 /**
  * Class AudioStream
  * @package Wix\Mediaplatform\Model\Metadata\Basic
  */
-class AudioStream
+class AudioStream extends BaseModel
 {
     /**
      * @var string
      */
-    private $codecLongName;
+    protected $codecLongName;
 
     /**
      * @var string
      */
-    private $codecTag;
+    protected $codecTag;
 
     /**
      * @var string
      */
-    private $codecName;
+    protected $codecName;
 
     /**
      * @var int
      */
-    private $duration;
+    protected $duration;
 
     /**
      * @var float
      */
-    private $bitrate;
+    protected $bitrate;
 
     /**
      * @var int
      */
-    private $index;
+    protected $index;
 
-    /**
-     * AudioStream constructor.
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * @return string

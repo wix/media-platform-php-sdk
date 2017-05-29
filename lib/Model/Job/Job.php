@@ -8,9 +8,10 @@
 
 namespace Wix\Mediaplatform\Model\Job;
 
-use Wix\Mediaplatform\Model\Response\BaseResponse;
+use Wix\Mediaplatform\Model\BaseModel;
+use Wix\Mediaplatform\Model\Response\RestResponse;
 
-abstract class Job extends BaseResponse
+abstract class Job extends BaseModel
 {
     /**
      * @var string
@@ -93,6 +94,16 @@ abstract class Job extends BaseResponse
      * @return RestResponse
      */
     public abstract function getResult();
+
+    public function __construct(Array $payload) {
+        parent::__construct($payload);
+        $this->sources = array();
+        if(!empty($payload['sources']) && is_array($payload['sources'])) {
+            foreach($payload['sources'] as $source) {
+                $this->sources[] = new Source($source);
+            }
+        }
+    }
 
     public function __tostring() {
         return "Job{" .

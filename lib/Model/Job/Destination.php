@@ -9,29 +9,25 @@
 namespace Wix\Mediaplatform\Model\Job;
 
 
-class Destination
+use Wix\Mediaplatform\Model\BaseModel;
+
+class Destination extends BaseModel
 {
     /**
      * @var string
      */
-    private $path;
+    protected $path;
 
     /**
      * @var string
      */
-    private $directory;
+    protected $directory;
 
     /**
      * @var string
      */
-    private $acl = "private";
-
-    /**
-     * Destination constructor.
-     */
-    public function __construct()
-    {
-    }
+    protected $acl = "protected";
+    
 
     /**
      * @param string $path

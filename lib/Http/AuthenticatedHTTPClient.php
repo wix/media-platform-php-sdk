@@ -54,7 +54,7 @@ class AuthenticatedHTTPClient
      * @param $params
      * @return RestResponse
      */
-    public function get($url, $params) {
+    public function get($url, $params = array()) {
         $params['Authorization'] = $this->authenticator->getHeader();
         $request = new Request("GET", $url, $params);
 
@@ -69,6 +69,16 @@ class AuthenticatedHTTPClient
 
         $params['Authorization'] = $this->authenticator->getHeader();
         $request = new Request("POST", $url, $params);
+        return $this->send($request, $options);
+    }
+
+    public function delete($url, $params = array(), $options = array()) {
+        if(is_object($params)) {
+            $params = $params->toArray();
+        }
+
+        $params['Authorization'] = $this->authenticator->getHeader();
+        $request = new Request("DELETE", $url, $params);
         return $this->send($request, $options);
     }
 }

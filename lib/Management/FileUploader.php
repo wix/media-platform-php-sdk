@@ -54,7 +54,7 @@ class FileUploader
      * @param UploadUrlRequest $uploadUrlRequest
      * @return GetUploadUrlResponse
      */
-    public function getUploadUrl(UploadUrlRequest $uploadUrlRequest) {
+    public function getUploadUrl(UploadUrlRequest $uploadUrlRequest = null) {
         $params = null;
         if ($uploadUrlRequest != null) {
             $params = $uploadUrlRequest->toParams();
@@ -110,6 +110,8 @@ class FileUploader
                 $response[] = new FileDescriptor($file);
             }
         }
+
+        return $response;
     }
 
     /**
@@ -119,8 +121,7 @@ class FileUploader
     public function importFile(ImportFileRequest $importFileRequest) {
         $restResponse = $this->authenticatedHTTPClient->post(
             $this->apiBaseUrl . "/import/file",
-            $importFileRequest,
-            null
+            $importFileRequest
         );
 
         return JobManager::createJobObjectFromPayload($restResponse->getPayload());

@@ -8,39 +8,37 @@
 
 namespace Wix\Mediaplatform\Model\Metadata\Basic;
 
+use Wix\Mediaplatform\Model\BaseModel;
+
 
 /**
  * Class ImageBasicMetadata
  * @package Wix\Mediaplatform\Model\Metadata\Basic
  */
-class ImageBasicMetadata implements BasicMetadata
+class ImageBasicMetadata extends BaseModel implements BasicMetadata
 {
-    /**
-     * @var int
-     */
-    private $height;
+    const MEDIA_TYPE = 'image';
 
     /**
      * @var int
      */
-    private $width;
+    protected $height;
+
+    /**
+     * @var int
+     */
+    protected $width;
 
     /**
      * @var string
      */
-    private $colorspace;
+    protected $colorspace;
 
     /**
      * @var string
      */
-    private $format;
+    protected $format;
 
-    /**
-     * ImageBasicMetadata constructor.
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * @return int

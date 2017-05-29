@@ -8,45 +8,41 @@
 
 namespace Wix\Mediaplatform\Model\Metadata\Features;
 
+use Wix\Mediaplatform\Model\BaseModel;
+
 
 /**
  * Class Color
  * @package Wix\Mediaplatform\Model\Metadata\Features
  */
-class Color
+class Color extends BaseModel
 {
 
     /**
      * @var int
      */
-    private $r;
+    protected $r;
 
     /**
      * @var int
      */
-    private $g;
+    protected $g;
 
     /**
      * @var int
      */
-    private $b;
+    protected $b;
 
     /**
      * @var float
      */
-    private $pixelFraction;
+    protected $pixelFraction;
 
     /**
      * @var float
      */
-    private $score;
+    protected $score;
 
-    /**
-     * Color constructor.
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * @return int

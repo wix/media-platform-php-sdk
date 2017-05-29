@@ -55,9 +55,9 @@ class ExplodedUrl
     public function __construct($url)
     {
         $urlComponents = parse_url($url);
-        $this->host = (!empty($urlComponents['scheme']) ? $urlComponents['scheme'] . "://" : "//") .
-        !empty($urlComponents['host']) ? $urlComponents['host'] : "" .
-            (!empty($urlComponents['port']) ? ':' . $urlComponents['port'] : '') . '/';
+        $this->host = !empty($urlComponents['scheme']) ? $urlComponents['scheme'] . "://" : "//";
+        $this->host .= !empty($urlComponents['host']) ? $urlComponents['host'] : "";
+        $this->host .= (!empty($urlComponents['port']) ? ':' . $urlComponents['port'] : '') . '/';
         $this->fragment = !empty($urlComponents['fragment']) ? $urlComponents['fragment'] : "";
 
         $parts = !empty($urlComponents['path']) ? explode(StringToken::FORWARD_SLASH, $urlComponents['path']) : array();

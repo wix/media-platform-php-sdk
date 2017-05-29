@@ -8,39 +8,34 @@
 
 namespace Wix\Mediaplatform\Model\Metadata\Basic;
 
+use Wix\Mediaplatform\Model\BaseModel;
+
 
 /**
  * Class VideoFormat
  * @package Wix\Mediaplatform\Model\Metadata\Basic
  */
-class VideoFormat
+class VideoFormat extends BaseModel
 {
     /**
      * @var string
      */
-    private $formatLongName;
+    protected $formatLongName;
 
     /**
      * @var int
      */
-    private $duration;
+    protected $duration;
 
     /**
      * @var float
      */
-    private $bitrate;
+    protected $bitrate;
 
     /**
      * @var int
      */
-    private $size;
-
-    /**
-     * VideoFormat constructor.
-     */
-    public function __construct()
-    {
-    }
+    protected $size;
 
     /**
      * @return string

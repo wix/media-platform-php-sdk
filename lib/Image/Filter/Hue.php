@@ -57,7 +57,7 @@ class Hue extends Option
      * @param $params
      * @return $this
      */
-    public function deserialize($params)
+    public function deserialize(array $params)
     {
         $this->hue = (int)$params[0];
         return $this;

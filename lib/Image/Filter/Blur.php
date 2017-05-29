@@ -57,7 +57,7 @@ class Blur extends Option
      * @param $params
      * @return $this
      */
-    public function deserialize($params)
+    public function deserialize(array $params)
     {
         $this->percentage = (int)$params[0];
         return $this;

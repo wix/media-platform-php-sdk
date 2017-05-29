@@ -57,7 +57,7 @@ class Saturation extends Option
      * @param $params
      * @return $this
      */
-    public function deserialize($params)
+    public function deserialize(array $params)
     {
         $this->saturation = (int)$params[0];
         return $this;

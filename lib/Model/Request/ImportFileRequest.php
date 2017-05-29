@@ -15,7 +15,7 @@ use Wix\Mediaplatform\Model\Job\Destination;
  * Class ImportFileRequest
  * @package Wix\Mediaplatform\Model\Request
  */
-class ImportFileRequest
+class ImportFileRequest extends BaseRequest
 {
     /**
      * @var string

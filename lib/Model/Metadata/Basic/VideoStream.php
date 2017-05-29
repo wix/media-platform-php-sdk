@@ -8,80 +8,75 @@
 
 namespace Wix\Mediaplatform\Model\Metadata\Basic;
 
+use Wix\Mediaplatform\Model\BaseModel;
+
 
 /**
  * Class VideoStream
  * @package Wix\Mediaplatform\Model\Metadata\Basic
  */
-class VideoStream
+class VideoStream extends BaseModel
 {
 
     /**
      * @var string
      */
-    private $codecLongName;
+    protected $codecLongName;
 
     /**
      * @var string
      */
-    private $codecTag;
+    protected $codecTag;
 
     /**
      * @var string
      */
-    private $codecName;
+    protected $codecName;
 
     /**
      * @var int
      */
-    private $height;
+    protected $height;
 
     /**
      * @var int
      */
-    private $width;
+    protected $width;
 
     /**
      * @var int
      */
-    private $duration;
+    protected $duration;
 
     /**
      * @var float
      */
-    private $bitrate;
+    protected $bitrate;
 
     /**
      * @var int
      */
-    private $index;
+    protected $index;
 
     /**
      * @var string
      */
-    private $rFrameRate;
+    protected $rFrameRate;
 
     /**
      * @var string
      */
-    private $avgFrameRate;
+    protected $avgFrameRate;
 
     /**
      * @var string
      */
-    private $sampleAspectRatio;
+    protected $sampleAspectRatio;
 
     /**
      * @var string
      */
-    private $displayAspectRatio;
-
-    /**
-     * VideoStream constructor.
-     */
-    public function __construct()
-    {
-    }
+    protected $displayAspectRatio;
 
     /**
      * @return string

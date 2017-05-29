@@ -8,39 +8,44 @@
 
 namespace Wix\Mediaplatform\Model\Job;
 
+use Wix\Mediaplatform\Model\BaseModel;
+
 
 /**
  * Class TranscodeSpecification
  * @package Wix\Mediaplatform\Model\Job
  */
-class TranscodeSpecification implements Specification
+class TranscodeSpecification extends BaseModel implements Specification
 {
 
     /**
      * @var Destination
      */
-    private $destination;
+    protected $destination;
 
     /**
      * @var string
      */
-    private $quality;
+    protected $quality;
 
     /**
      * @var Video
      */
-    private $video;
+    protected $video;
 
     /**
      * @var Audio
      */
-    private $audio;
+    protected $audio;
 
     /**
      * TranscodeSpecification constructor.
      */
-    public function __construct()
-    {
+    public function __construct(Array $payload) {
+        parent::__construct();
+
+        $this->video = !empty($payload['video']) ? new Video($payload['video']) : null;
+        $this->audio = !empty($payload['audio']) ? new Audio($payload['audio']) : null;
     }
 
     /**

@@ -8,29 +8,24 @@
 
 namespace Wix\Mediaplatform\Model\Metadata\Features;
 
+use Wix\Mediaplatform\Model\BaseModel;
+
 
 /**
  * Class Label
  * @package Wix\Mediaplatform\Model\Metadata\Features
  */
-class Label
+class Label extends BaseModel
 {
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var float
      */
-    private $score;
-
-    /**
-     * Label constructor.
-     */
-    public function __construct()
-    {
-    }
+    protected $score;
 
     /**
      * @return string

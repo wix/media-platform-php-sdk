@@ -9,65 +9,59 @@
 namespace Wix\Mediaplatform\Model\Metadata;
 
 use \DateTime;
-use Wix\Mediaplatform\Model\Response\BaseResponse;
+use Wix\Mediaplatform\Model\BaseModel;
 
 /**
  * Class FileDescriptor
  * @package Wix\Mediaplatform\Model\Metadata
  */
-class FileDescriptor extends BaseResponse
+class FileDescriptor extends BaseModel
 {
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $hash;
+    protected $hash;
 
     /**
      * @var string
      */
-    private $path;
+    protected $path;
 
     /**
      * @var string
      */
-    private $mimeType;
+    protected $mimeType;
 
     /**
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @var int
      */
-    private $size;
+    protected $size;
 
     /**
      * @var string
      */
-    private $acl;
+    protected $acl;
 
     /**
      * @var DateTime
      */
-    private $dateCreated;
+    protected $dateCreated;
 
     /**
      * @var DateTime
      */
-    private $dateUpdated;
+    protected $dateUpdated;
 
-    /**
-     * FileDescriptor constructor.
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * @return string

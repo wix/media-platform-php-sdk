@@ -21,12 +21,18 @@ class FileImportJob extends Job
     /**
      * @var ImportFileSpecification
      */
-    private $specification;
+    protected $specification;
 
     /**
      * @var RestResponse
      */
-    private $result;
+    protected $result;
+
+    public function __construct(Array $payload) {
+        parent::__construct($payload);
+        $this->result = $payload['result'] ? new RestResponse($payload['result']) : null;
+        $this->specification = isset($payload['specification']) ? new ImportFileSpecification($payload['specification']) : null;
+    }
 
     /**
      * @return ImportFileSpecification

@@ -7,12 +7,13 @@
  */
 
 namespace Wix\Mediaplatform\Model\Response;
+use Wix\Mediaplatform\Model\BaseModel;
 
 /**
  * Class GetUploadUrlResponse
  * @package Wix\Mediaplatform\Model\Response
  */
-class GetUploadUrlResponse extends BaseResponse
+class GetUploadUrlResponse extends BaseModel
 {
     /**
      * @var string

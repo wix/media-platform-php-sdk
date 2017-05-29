@@ -8,12 +8,14 @@
 
 namespace Wix\Mediaplatform\Model\Job;
 
+use Wix\Mediaplatform\Model\BaseModel;
+
 
 /**
  * Class Resolution
  * @package Wix\Mediaplatform\Model\Job
  */
-class Resolution
+class Resolution extends BaseModel
 {
     /**
      * @var int

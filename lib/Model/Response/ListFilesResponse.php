@@ -7,13 +7,15 @@
  */
 
 namespace Wix\Mediaplatform\Model\Response;
+use Wix\Mediaplatform\Model\BaseModel;
+use Wix\Mediaplatform\Model\Metadata\FileDescriptor;
 
 
 /**
  * Class ListFilesResponse
  * @package Wix\Mediaplatform\Model\Response
  */
-class ListFilesResponse extends BaseResponse
+class ListFilesResponse extends BaseModel
 {
     /**
      * @var string
@@ -28,8 +30,15 @@ class ListFilesResponse extends BaseResponse
     /**
      * ListFilesResponse constructor.
      */
-    public function __construct()
+    public function __construct(Array $payload)
     {
+        parent::__construct($payload);
+        $this->files = array();
+        if(is_array($payload['files']) && !empty($payload['files'])) {
+            foreach($payload['files'] as $file) {
+                $this->files[] = new FileDescriptor($file);
+            }
+        }
     }
 
     /**
