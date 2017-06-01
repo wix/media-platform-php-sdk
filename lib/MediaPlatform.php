@@ -90,6 +90,12 @@ class MediaPlatform
     public function jobManager() {
         return $this->jobManager;
     }
+    /**
+     * @return ArchiveManager
+     */
+    public function archiveManager() {
+        return $this->archiveManager;
+    }
 
     /**
      * @return Client

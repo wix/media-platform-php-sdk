@@ -1,24 +1,20 @@
 <?php
 
 require_once("vendor/autoload.php");
+require_once("WixDemo.php");
 
-$mediaPlatformClient = new Wix\Mediaplatform\MediaPlatform(
-    "wixmp-48ebb26d76afb87830f1fcb2.appspot.com",
-    "eb137171f9244fe5a1bbdbcc49183c16",
-    "5b08fc2715efc16da1719d2da5f4bffa"
+$mediaPlatform = new Wix\Mediaplatform\MediaPlatform(
+    "wixmp-410a67650b2f46baa5d003c6.appspot.com",
+    "48fa9aa3e9d342a3a33e66af08cd7fe3",
+    "fad475d88786ab720b04f059ac674b0e"
 );
 
-/*$uploadUrlRequest = new Wix\Mediaplatform\Model\Request\UploadUrlRequest();
-$uploadUrlRequest->setPath("/leon/test.mp4");
-$uploadUrlRequest->setMimeType("video/mp4");
+$demo = new WixDemo($mediaPlatform);
 
-$uploadUrlResponse = $mediaPlatformClient->fileManager()->getUploadUrl($uploadUrlRequest);*/
+$demo->importFile();
 
-$fileUploadResponse = $mediaPlatformClient->fileManager()->uploadFile(
-    "/leon/test1.mp4",
-        'video/mp4',
-    'test1.mp4',
-    fopen('/var/www/remoteclip_0_attxhexj_1409086235_2.mp4', 'r')
-    );
+$demo->uploadImage();
 
-var_dump($uploadUrlResponse);
+$demo->listJobs();
+
+$demo->extractArchive();

@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": ">=5.4",
-        "wix/media-platform-php-sdk": "*"
+        "wix/media-platform-php-sdk": "*@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.1"
@@ -26,7 +26,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/panda-os/media-platform-php-sdk"
+            "url": "git@github.com:panda-os/media-platform-php-sdk.git"
         }
     ]
 }
