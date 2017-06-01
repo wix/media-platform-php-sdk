@@ -27,7 +27,7 @@ class Saturation extends Option
     /**
      * @var int
      */
-    private $saturation;
+    protected $saturation;
 
     /**
      * Saturation constructor.

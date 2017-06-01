@@ -27,7 +27,7 @@ class Hue extends Option
     /**
      * @var int
      */
-    private $hue;
+    protected $hue;
 
     /**
      * Hue constructor.

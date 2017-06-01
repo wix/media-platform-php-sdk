@@ -27,7 +27,7 @@ class Blur extends Option
     /**
      * @var int
      */
-    private $percentage;
+    protected $percentage;
 
     /**
      * Blur constructor.

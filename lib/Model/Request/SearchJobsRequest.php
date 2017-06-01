@@ -16,57 +16,57 @@ use Wix\Mediaplatform\Model\Request\Enum\OrderDirection;
  * Class SearchJobsRequest
  * @package Wix\Mediaplatform\Model\Request
  */
-class SearchJobsRequest
+class SearchJobsRequest extends BaseRequest
 {
     /**
      * @var string
      */
-    private $nextPageToken;
+    protected $nextPageToken;
 
     /**
      * @var int
      */
-    private $pageSize;
+    protected $pageSize;
 
     /**
      * @var OrderBy
      */
-    private $orderBy;
+    protected $orderBy;
 
     /**
      * @var OrderDirection
      */
-    private $orderDirection;
+    protected $orderDirection;
 
     /**
      * @var string
      */
-    private $issuer;
+    protected $issuer;
 
     /**
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @var string
      */
-    private $status;
+    protected $status;
 
     /**
      * @var string
      */
-    private $groupId;
+    protected $groupId;
 
     /**
      * @var string
      */
-    private $fileId;
+    protected $fileId;
 
     /**
      * @var string
      */
-    private $path;
+    protected $path;
 
     /**
      * SearchJobsRequest constructor.

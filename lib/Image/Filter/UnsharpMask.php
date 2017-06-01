@@ -27,17 +27,17 @@ class UnsharpMask extends Option
     /**
      * @var float
      */
-    private $radius;
+    protected $radius;
 
     /**
      * @var float
      */
-    private $amount;
+    protected $amount;
 
     /**
      * @var float
      */
-    private $threshold;
+    protected $threshold;
 
     /**
      * UnsharpMask constructor.

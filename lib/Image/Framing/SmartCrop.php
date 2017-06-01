@@ -18,12 +18,12 @@ class SmartCrop implements Frame
     /**
      * @var int
      */
-    private $width;
+    protected $width;
 
     /**
      * @var int 
      */
-    private $height;
+    protected $height;
 
     /**
      * SmartCrop constructor.

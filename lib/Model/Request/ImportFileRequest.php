@@ -20,17 +20,17 @@ class ImportFileRequest extends BaseRequest
     /**
      * @var string
      */
-    private $sourceUrl;
+    protected $sourceUrl;
 
     /**
      * @var ExternalAuthorization
      */
-    private $externalAuthorization;
+    protected $externalAuthorization;
 
     /**
      * @var Destination
      */
-    private $destination;
+    protected $destination;
 
     /**
      * ImportFileRequest constructor.
