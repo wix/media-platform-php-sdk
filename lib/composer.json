@@ -1,0 +1,36 @@
+{
+    "name": "wix/media-platform-php-sdk",
+    "version": "0.0.1",
+    "description": "",
+    "keywords": [
+        "wix",
+        "php",
+        "sdk",
+        "api"
+    ],
+    "homepage": "http://gcp.wixmp.com",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Panda O.S.",
+            "homepage": "https://github.com/panda-os"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "guzzlehttp/guzzle": "~6.1",
+        "firebase/php-jwt": "^4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.1"
+    },
+    "autoload": {
+        "psr-4": { "Wix\\Mediaplatform\\" : "./" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Wix\\Mediaplatform\\" : "test/" }
+    }
+}
