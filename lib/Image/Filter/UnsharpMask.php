@@ -47,7 +47,7 @@ class UnsharpMask extends Option
     {
         parent::__construct(self::KEY);
 
-        if ($radius) {
+        if (!is_null($radius)) {
             if (!Validation::inRange($radius, 0.1, 500)) {
                 throw new InvalidArgumentException($radius . " is not in range [0.1,500]");
             }
@@ -55,7 +55,7 @@ class UnsharpMask extends Option
             $this->radius = $radius;
         }
 
-        if ($amount) {
+        if (!is_null($amount)) {
             if (!Validation::inRange($amount, 0, 10)) {
                 throw new InvalidArgumentException($amount . " is not in range [0,10]");
             }
@@ -63,7 +63,7 @@ class UnsharpMask extends Option
             $this->amount = $amount;
         }
 
-        if ($threshold) {
+        if (!is_null($threshold)) {
             if (!Validation::inRange($threshold, 0, 255)) {
                 throw new InvalidArgumentException($threshold . " is not in range [0,255]");
             }
