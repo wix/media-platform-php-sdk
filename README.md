@@ -6,26 +6,61 @@
 
 This artifact is a PHP library, compatible with PHP 5.4+ and PHP 7.
 
-## Installation
-
-```xml
-<dependency>
-    <groupId>com.wix</groupId>
-    <artifactId>media-platform-java-sdk</artifactId>
-    <version>[5.0,6.0)</version>
-</dependency>
-```
-
-## JavaScript SDK
+## Additional Platforms
 
 The respective JavaScript (for the Browser and Node.js) package can be found [here.][npm-url]
+
+The respective Java package can be found [here.][java-url]
+
+## Requirements
+
+PHP 5.4.0 and later.
+
+[Guzzle HTTP Client](http://docs.guzzlephp.org/en/latest/overview.html#installation)
+
+[PHP CURL Extension](http://php.net/manual/en/book.curl.php)
+
+[PHP JSON Extension](http://php.net/manual/en/book.json.php)
+
+[PHP MBString Extension](http://php.net/manual/en/book.mbstring.php)
+
+[Firebase PHP JWT (JSON Web Tokens)](https://github.com/firebase/php-jwt)
+
+## Installation
+### Composer
+
+To install the bindings via [Composer](http://getcomposer.org/), add the following to `composer.json`:
+
+```
+{
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/wix/media-platform-php-sdk.git"
+    }
+  ],
+  "require": {
+    "wix/media-platform-php-sdk": "*"
+  }
+}
+```
+
+Then run `composer install`
+
+### Manual Installation
+
+Download the files and include `autoload.php`:
+
+```php
+    require_once('/path/to/sdk/media-platform-php-sdk/autoload.php');
+```
 
 ## Instantiating the Media Platform
 
 First, if you haven't done so yet, register at [Wix Media Platform][wixmp-url], create your organization, project and application.
 
-```java
-MediaPlatform mediaPlatform = new MediaPlatform(
+```php
+    $mediaPlatform = new \Wix\Mediaplatform\MediaPlatform(
     "<project host as appears in the application page>",
     "<application id as appears in the application page>",
     "<shared secret as appears in the application page>"
@@ -34,17 +69,17 @@ MediaPlatform mediaPlatform = new MediaPlatform(
 
 ## File Upload
 
-```java
-File file = new File(...);
-FileDescriptor[] files = mediaPlatform.fileManager().uploadFile("/destination_path/file_name.ext", "mime_type", "file_name.ext", file, "private||public");
+```php
+$file = fopen("...path to file...", "r");
+$files = $mediaPlatform->fileManager()->uploadFile("/destination_path/file_name.ext", "mime_type", "file_name.ext", file, "private||public");
 ```
 
 ### Get Upload URL
 
 Generates a signed URL and token, required for uploading from the browser
 
-```java
-GetUploadUrlResponse getUploadUrlResponse = mediaPlatform.fileManager().getUploadUrl();
+```php
+$getUploadUrlResponse = $mediaPlatform->fileManager()->getUploadUrl();
 ```
 
 ## Jobs
@@ -61,39 +96,43 @@ A job is created by a service that performs a long running operation, such as vi
 
 ### Get Job
 
-```java
-job = mediaPlatform.jobManager().getJob("job id");
+```php
+$job = $mediaPlatform->jobManager()->getJob("job id");
 ```
 
 ## File Import
 
-```java
-ImportFileRequest importFileRequest = new ImportFileRequest()
-        .setSourceUrl("from URL")
-        .setDestination(new Destination()
-                .setPath("/to/file.ext")
-                .setAcl("private||public"));
-Job job = mediaPlatform.fileManager().importFile(importFileRequest);
+```php
+$importFileRequest = new \Wix\Mediaplatform\Model\Request\ImportFileRequest();
+
+$destination = new \Wix\Mediaplatform\Model\Job\Destination();
+$destination->setPath("/to/file.ext")
+              ->setAcl("private||public")
+              
+$importFileRequest->setSourceUrl("from URL")
+                    ->setDestination($destination);
+        
+$job = $mediaPlatform->fileManager()->importFile($importFileRequest);
 ```
 
 ## Secure File URL
 
 File access can be restricted by setting the acl to 'private', in order to access them a secure URL must be generated
 
-```java
-String signedUrl = mediaPlatform.fileDownloader().getDownloadUrl("path/to/file.ext");
+```php
+$signedUrl = $mediaPlatform->fileDownloader()->getDownloadUrl("path/to/file.ext");
 ```
 
 ## Image Consumption
 
 The SDK provides a programmatic facility to generate image URLs
 
-```java
-Image image = new Image(fileDescriptor).setHost("images service host");
+```php
+$image = new \Wix\Mediaplatform\Image\Image($fileDescriptor);
+$image->setHost("images service host");
+$image->crop($width, $height, $x, $y, $scale);
 
-image.crop(width, height, x, y, scale);
-
-String url = image.toUrl(); 
+$url = $image->toUrl(); 
 ```
 
 ## File Metadata & Management
@@ -102,20 +141,20 @@ Wix Media Platform exposes a comprehensive set of APIs tailored for the manageme
 
 ### List Files
 
-```java
-ListFilesResponse response = mediaPlatform.fileManager().listFiles("directory path");
+```php
+$response = $mediaPlatform->fileManager()->listFiles("directory path");
 ```
 
 ### Get File Metadata
 
-```java
-FileMetadata fileMetadata = mediaPlatform.fileManager().getFileMetadataById("file id");
+```php
+$fileMetadata = $mediaPlatform->fileManager()->getFileMetadataById("file id");
 ```
 
 ### Delete File
 
-```java
-mediaPlatform.fileManager().deleteFileById("file id");
+```php
+$mediaPlatform->fileManager()->deleteFileById("file id");
 ```
 
 ## Archive Extraction
@@ -123,16 +162,26 @@ mediaPlatform.fileManager().deleteFileById("file id");
 Instead of uploading numerous files one by one, it is possible to upload a single zip file
 and order the Media Platform to extract its content to a destination directory. 
 
-```java
-ExtractArchiveRequest extractArchiveRequest = new ExtractArchiveRequest()
-        .setSource(new Source().setFileId("file id"))
-        .setDestination(new Destination().setAcl("public").setDirectory("/demo/extracted"));
-Job job = mediaPlatform.archiveManager().extractArchive(extractArchiveRequest);
+```php
+$extractArchiveRequest = new \Wix\Mediaplatform\Model\Request\ExtractArchiveRequest();
+
+$source = new \Wix\Mediaplatform\Model\Job\Source();
+$source->setFileId("file id");
+
+$destination = new \Wix\Mediaplatform\Model\Job\Destination();
+$destination->setAcl("public")
+               ->setDirectory("/demo/extracted");
+
+$extractArchiveRequest
+        ->setSource($source)
+        ->setDestination($destination);
+        
+$job = $mediaPlatform->archiveManager()->extractArchive($extractArchiveRequest);
 ```
 
 ## Reporting Issues
 
-Please use [the issue tracker](https://github.com/wix/media-platform-java-sdk/issues) to report issues related to this library, or to the Wix Media Platform API in general.
+Please use [the issue tracker](https://github.com/wix/media-platform-php-sdk/issues) to report issues related to this library, or to the Wix Media Platform API in general.
 
 ## License
 
@@ -151,6 +200,5 @@ It offers computing, storage and application services for web, mobile and backen
 
 [wix-url]: https://www.wix.com/
 [wixmp-url]: https://gcp.wixmp.com/
-[mvn-image]: https://img.shields.io/maven-central/v/com.wix/media-platform-java-sdk.svg
-[mvn-url]: https://mvnrepository.com/artifact/com.wix/media-platform-java-sdk
+[java-url]: https://npmjs.org/package/media-platform-java-sdk
 [npm-url]: https://npmjs.org/package/media-platform-js-sdk
