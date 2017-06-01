@@ -28,7 +28,7 @@
         "phpunit/phpunit": "^6.1"
     },
     "autoload": {
-        "psr-4": { "Wix\\Mediaplatform\\" : "./" }
+        "psr-4": { "Wix\\Mediaplatform\\" : "lib/" }
     },
     "autoload-dev": {
         "psr-4": { "Wix\\Mediaplatform\\" : "test/" }

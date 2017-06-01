@@ -34,9 +34,11 @@ class ImportFileRequest extends BaseRequest
 
     /**
      * ImportFileRequest constructor.
+     * @return ImportFileRequest
      */
     public function __construct()
     {
+        return $this;
     }
 
     /**
