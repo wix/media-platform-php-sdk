@@ -74,9 +74,9 @@ class Image
     {
         if (is_string($param)) {
             ImageUrlParser::parse($this, $param);
-        } else if (is_a($param, 'FileDescriptor')) {
+        } else if (is_a($param, 'Wix\Mediaplatform\Model\Metadata\FileDescriptor')) {
             FileDescriptorParser::parse($this, $param);
-        } else if (is_a($param, 'FileMetadata')) {
+        } else if (is_a($param, 'Wix\Mediaplatform\Model\Metadata\FileMetadata')) {
             FileMetadataParser::parse($this, $param);
         }
     }
