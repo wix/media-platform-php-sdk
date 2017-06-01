@@ -8,11 +8,13 @@
 
 namespace Wix\Mediaplatform\Model;
 
+use Wix\Mediaplatform\Model\Request\BaseRequest;
+
 /**
  *  * Class BaseModel
  * @package Wix\Mediaplatform\Model
  */
-class BaseModel
+class BaseModel extends BaseRequest
 {
     /**
      * BaseModel constructor.

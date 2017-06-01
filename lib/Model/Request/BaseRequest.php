@@ -16,6 +16,13 @@ abstract class BaseRequest
      * @return array
      */
     public function toArray() {
-        return get_object_vars($this);
+        $vars = get_object_vars($this);
+        foreach($vars as $key => $value) {
+            if(is_object($value) && method_exists($value,"toArray")) {
+                $vars[$key] = $value->toArray();
+            }
+        }
+
+        return $vars;
     }
 }
