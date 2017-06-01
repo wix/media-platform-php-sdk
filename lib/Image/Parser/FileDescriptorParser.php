@@ -23,8 +23,8 @@ class FileDescriptorParser
      */
     public static function parse(Image $image, FileDescriptor $fileDescriptor)
     {
-        $type = strtolower(explode("/", $fileDescriptor->getMimeType()));
-        if ($type != "image") {
+        list($type, $format) = explode("/", $fileDescriptor->getMimeType());
+        if (strtolower($type) != "image") {
             throw new \InvalidArgumentException("not an image file descriptor");
         }
 
