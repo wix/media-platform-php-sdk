@@ -81,7 +81,7 @@ class WixDemo
         $searchJobsRequest->setType(FileImportJob::$job_type)->setPageSize(3);
         $response = $this->mediaPlatform->jobManager()->searchJobs($searchJobsRequest);
 
-        echo json_encode($response);
+        print_r($response);
     }
 
     function extractArchive() {
@@ -108,6 +108,6 @@ class WixDemo
 
         $job = $this->mediaPlatform->archiveManager()->extractArchive($extractArchiveRequest);
 
-        echo json_encode($job);
+        print_r($job);
     }
 }
