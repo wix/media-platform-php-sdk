@@ -1,5 +1,7 @@
 # Wix Media Platform
 
+[![Build Status](https://travis-ci.com/panda-os/media-platform-php-sdk.svg?token=BhxEHXNqvvH2jy6qiBFa&branch=master)](https://travis-ci.com/panda-os/media-platform-php-sdk)
+
 [Wix Media Platform][wixmp-url] is a collection of services for storing, serving, uploading, and managing media files and any files in general
 
 # PHP SDK
