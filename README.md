@@ -6,7 +6,7 @@
 
 # PHP SDK
 
-This artifact is a PHP library, compatible with PHP 5.4+ and PHP 7.
+This artifact is a PHP library, compatible with PHP 5.6+ and PHP 7.
 
 ## Additional Platforms
 
@@ -16,7 +16,7 @@ The respective Java package can be found [here.][java-url]
 
 ## Requirements
 
-PHP 5.4.0 and later.
+PHP 5.6 and later.
 
 [Guzzle HTTP Client](http://docs.guzzlephp.org/en/latest/overview.html#installation)
 
