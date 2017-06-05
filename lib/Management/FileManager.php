@@ -150,7 +150,7 @@ class FileManager
     {
         $params = array();
         if ($listFilesRequest != null) {
-            array_merge($params, $listFilesRequest->toParams());
+            $params = $listFilesRequest->toParams();
         }
         $params['path'] = $path;
 

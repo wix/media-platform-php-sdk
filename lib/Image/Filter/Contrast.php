@@ -27,7 +27,7 @@ class Contrast extends Option
     /**
      * @var int
      */
-    private $contrast;
+    protected $contrast;
 
     /**
      * Contrast constructor.

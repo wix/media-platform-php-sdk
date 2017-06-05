@@ -17,16 +17,16 @@
         }
     ],
     "require": {
-        "php": ">=5.4",
-        "wix/media-platform-php-sdk": "*"
+        "php": ">=5.6",
+        "wix/media-platform-php-sdk": "*@dev"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.1"
+        "phpunit/phpunit": "^5.0"
     },
     "repositories": [
         {
-            "type": "path",
-            "url": "../lib/"
+            "type": "vcs",
+            "url": "git@github.com:panda-os/media-platform-php-sdk.git"
         }
     ]
 }

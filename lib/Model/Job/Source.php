@@ -58,4 +58,15 @@ class Source extends BaseModel
     {
         return $this->path;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return "Source{" .
+            "fileId='" . $this->fileId . '\'' .
+            "path='" . $this->path . '\'' .
+            '}';
+    }
 }

@@ -27,7 +27,7 @@ class Brightness extends Option
     /**
      * @var int
      */
-    private $brightness;
+    protected $brightness;
 
     /**
      * Brightness constructor.

@@ -11,11 +11,20 @@ namespace Wix\Mediaplatform\Model\Request;
 
 abstract class BaseRequest
 {
-
     /**
      * @return array
      */
     public function toArray() {
-        return get_object_vars($this);
+        $vars = get_object_vars($this);
+        $ret = array();
+        foreach($vars as $key => $value) {
+            if(is_object($value) && method_exists($value,"toArray")) {
+                $ret[$key] = $value->toArray();
+            } else {
+                $ret[$key] = $value;
+            }
+        }
+
+        return $ret;
     }
 }

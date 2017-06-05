@@ -30,7 +30,7 @@ class FileImportJob extends Job
 
     public function __construct(Array $payload) {
         parent::__construct($payload);
-        $this->result = $payload['result'] ? new RestResponse($payload['result']) : null;
+        $this->result = $payload['result'] ? new RestResponse($payload['result'], 'Wix\Mediaplatform\Model\Metadata\FileDescriptor') : null;
         $this->specification = isset($payload['specification']) ? new ImportFileSpecification($payload['specification']) : null;
     }
 

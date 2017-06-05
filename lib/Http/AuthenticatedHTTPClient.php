@@ -55,20 +55,20 @@ class AuthenticatedHTTPClient
      * @return RestResponse
      */
     public function get($url, $params = array()) {
-        $params['Authorization'] = $this->authenticator->getHeader();
-        $request = new Request("GET", $url, $params);
+        $options = array('Authorization' => $this->authenticator->getHeader());
+        $request = new Request("GET", $url, $options);
 
-        return $this->send($request);
+        return $this->send($request, array('query' => $params));
     }
 
 
     public function post($url, $params = array(), $options = array()) {
-        if(is_object($params)) {
+        if(is_object($params) && method_exists($params, 'toArray')) {
             $params = $params->toArray();
         }
 
-        $params['Authorization'] = $this->authenticator->getHeader();
-        $request = new Request("POST", $url, $params);
+        $headers = array('Authorization' => $this->authenticator->getHeader());
+        $request = new Request("POST", $url, $headers, json_encode($params));
         return $this->send($request, $options);
     }
 

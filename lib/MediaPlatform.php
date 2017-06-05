@@ -13,6 +13,7 @@ use GuzzleHttp\Client;
 use Wix\Mediaplatform\Authentication\Authenticator;
 use Wix\Mediaplatform\Configuration\Configuration;
 use Wix\Mediaplatform\Http\AuthenticatedHTTPClient;
+use Wix\Mediaplatform\Management\ArchiveManager;
 use Wix\Mediaplatform\Management\FileDownloader;
 use Wix\Mediaplatform\Management\FileManager;
 use Wix\Mediaplatform\Management\FileUploader;
@@ -39,6 +40,11 @@ class MediaPlatform
      */
     private $jobManager;
 
+    /**
+     * @var ArchiveManager
+     */
+    private $archiveManager;
+
 
     /**
      * MediaPlatform constructor.
@@ -60,7 +66,8 @@ class MediaPlatform
         $this->fileDownloader = new FileDownloader($configuration, $authenticator);
         $this->fileManager = new FileManager($configuration, $authenticatedHTTPClient, $fileUploader);
         $this->jobManager = new JobManager($configuration, $authenticatedHTTPClient);
-}
+        $this->archiveManager = new ArchiveManager($configuration, $authenticatedHTTPClient);
+    }
 
 
     /**
@@ -82,6 +89,12 @@ class MediaPlatform
      */
     public function jobManager() {
         return $this->jobManager;
+    }
+    /**
+     * @return ArchiveManager
+     */
+    public function archiveManager() {
+        return $this->archiveManager;
     }
 
     /**

@@ -24,27 +24,27 @@ class Crop implements Frame
     /**
      * @var int
      */
-    private $x;
+    protected $x;
 
     /**
      * @var int
      */
-    private $y;
+    protected $y;
 
     /**
      * @var int
      */
-    private $width;
+    protected $width;
 
     /**
      * @var int 
      */
-    private $height;
+    protected $height;
 
     /**
      * @var float
      */
-    private $scale;
+    protected $scale;
 
     /**
      * Crop constructor.

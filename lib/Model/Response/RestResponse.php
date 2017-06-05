@@ -31,10 +31,14 @@ class RestResponse
      */
     private $payload;
 
-    public function __construct(Array $response) {
+    public function __construct(Array $response, $payloadType = null) {
         $this->code = $response['code'];
         $this->message = $response['message'];
-        $this->payload = $response['payload'];
+        if(!is_null($payloadType)) {
+            $this->payload = new $payloadType($response['payload']);
+        } else {
+            $this->payload = $response['payload'];
+        }
     }
 
     /**

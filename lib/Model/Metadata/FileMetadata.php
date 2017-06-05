@@ -49,10 +49,10 @@ class FileMetadata extends BaseModel
         $this->fileDescriptor = new FileDescriptor($payload['fileDescriptor']);
 
         if($payload['mediaType'] == VideoBasicMetadata::MEDIA_TYPE) {
-            $this->basic = new VideoBasicMetadata($payload['basic']);
+            $this->basic = !empty($payload['basic']) ? new VideoBasicMetadata($payload['basic']) : null;
         } elseif($payload['mediaType'] == ImageBasicMetadata::MEDIA_TYPE) {
-            $this->basic = new ImageBasicMetadata($payload['basic']);
-            $this->features = new ImageFeatures($payload['features']);
+            $this->basic = !empty($payload['basic']) ? new ImageBasicMetadata($payload['basic']) : null;
+            $this->features = !empty($payload['features']) ? new ImageFeatures($payload['features']) : null;
         }
 
     }

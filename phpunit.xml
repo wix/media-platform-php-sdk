@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnFailure="false">
+    <testsuites>
+        <testsuite>
+            <directory>./test/Authentication</directory>
+            <directory>./test/Image</directory>
+            <directory>./test/Management</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./lib/Authentication</directory>
+            <directory suffix=".php">./lib/Image</directory>
+            <directory suffix=".php">./lib/Management</directory>
+        </whitelist>
+    </filter>
+</phpunit>

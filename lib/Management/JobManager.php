@@ -90,9 +90,8 @@ class JobManager
          * @var RestResponse $restResponse
          */
         $restResponse = $this->authenticatedHTTPClient->get(
-            $this->apiBaseUrl . "/jobs/" . $jobId,
-            null,
-            Types::JOB_REST_RESPONSE);
+            $this->apiBaseUrl . "/jobs/" . $jobId
+        );
 
         return self::createJobObjectFromPayload($restResponse->getPayload());
     }

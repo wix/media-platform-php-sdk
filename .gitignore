@@ -2,3 +2,6 @@
 /.idea
 example/vendor/*
 example/composer.lock
+vendor
+vendor/*
+composer.lock
