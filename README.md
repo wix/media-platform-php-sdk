@@ -1,6 +1,6 @@
 # Wix Media Platform
 
-[![Build Status](https://travis-ci.com/panda-os/media-platform-php-sdk.svg?token=BhxEHXNqvvH2jy6qiBFa&branch=master)](https://travis-ci.com/panda-os/media-platform-php-sdk)
+[![Build Status][travis-image]][travis-url]
 
 [Wix Media Platform][wixmp-url] is a collection of services for storing, serving, uploading, and managing media files and any files in general
 
@@ -204,3 +204,5 @@ It offers computing, storage and application services for web, mobile and backen
 [wixmp-url]: https://gcp.wixmp.com/
 [java-url]: https://npmjs.org/package/media-platform-java-sdk
 [npm-url]: https://npmjs.org/package/media-platform-js-sdk
+[travis-image]: https://travis-ci.org/wix/media-platform-php-sdk.svg?branch=master
+[travis-url]: https://travis-ci.org/wix/media-platform-php-sdk
