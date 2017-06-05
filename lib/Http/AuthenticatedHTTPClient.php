@@ -55,10 +55,10 @@ class AuthenticatedHTTPClient
      * @return RestResponse
      */
     public function get($url, $params = array()) {
-        $params['Authorization'] = $this->authenticator->getHeader();
-        $request = new Request("GET", $url, $params);
+        $options = array('Authorization' => $this->authenticator->getHeader());
+        $request = new Request("GET", $url, $options);
 
-        return $this->send($request);
+        return $this->send($request, array('query' => $params));
     }
 
 

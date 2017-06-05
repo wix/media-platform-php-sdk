@@ -11,10 +11,25 @@ $mediaPlatform = new Wix\Mediaplatform\MediaPlatform(
 
 $demo = new WixDemo($mediaPlatform);
 
-$demo->importFile();
+$command = !empty($argv[1]) ? $argv[1] : null;
 
-$demo->uploadImage();
-
-$demo->listJobs();
-
-$demo->extractArchive();
+if($command && $command != "help" && ( method_exists($demo, $command) || $command == 'all')) {
+    if($command == 'all') {
+        foreach(get_class_methods(get_class($demo)) as $method) {
+            if($method != "__construct") {
+                $demo->$method();
+            }
+        }
+    } else {
+        $demo->$command();
+    }
+} else {
+    echo "Method not found. List of valid methods:" . PHP_EOL;
+    echo "all" . PHP_EOL;
+    echo "help" . PHP_EOL;
+    foreach(get_class_methods(get_class($demo)) as $method) {
+        if($method != "__construct") {
+            echo $method . PHP_EOL;
+        }
+    }
+}
