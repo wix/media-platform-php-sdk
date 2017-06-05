@@ -27,7 +27,7 @@ class ImageTest extends BaseTest
             ->unsharpMask(10, 10, 10)
             ->toUrl();
 
-        $this->assertEquals("//test.com/file.png/v1/crop/w_100,h_200,x_1,y_2,scl_3,br_10,q_10,con_10,sat_10,hue_10,blur_10,usm_10.00_10.00_10.00/file.png", $url);
+        $this->assertEquals("//test.com/file.png/v1/crop/w_100,h_200,x_1,y_2,scl_3,blur_10,br_10,con_10,hue_10,q_10,sat_10,usm_10.00_10.00_10.00/file.png", $url);
     }
 
 
@@ -44,7 +44,7 @@ class ImageTest extends BaseTest
             ->unsharpMask(10, 10, 10)
             ->toUrl();
 
-        $this->assertEquals("//test.com/images/file.png/v1/crop/w_100,h_200,x_1,y_2,scl_3,br_10,q_10,con_10,sat_10,hue_10,blur_10,usm_10.00_10.00_10.00/file.png#w_1000,h_2000,mt_image/png", $url);
+        $this->assertEquals("//test.com/images/file.png/v1/crop/w_100,h_200,x_1,y_2,scl_3,blur_10,br_10,con_10,hue_10,q_10,sat_10,usm_10.00_10.00_10.00/file.png#w_1000,h_2000,mt_image/png", $url);
     }
 
 

@@ -153,10 +153,6 @@ class Image
      */
     public function addOption(Option $option)
     {
-        if(!empty($this->options[$option->getKey()])) {
-            unset($this->options[$option->getKey()]);
-        }
-
         $this->options[$option->getKey()] = $option;
         return $this;
     }
@@ -241,6 +237,8 @@ class Image
 
             $url .= rtrim($this->host, StringToken::FORWARD_SLASH);
         }
+
+        ksort($this->options);
 
         $url .= $this->path .
             StringToken::FORWARD_SLASH .

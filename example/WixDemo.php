@@ -106,21 +106,24 @@ class WixDemo
             ->uploadFile("/demo/upload/" . $id . ".video.mp4","video/mp4", "video.mp4", $file, null);
 
         $fileId = $files[0]->getId();
-        $res = $this->mediaPlatform->fileManager()->getFileMetadataById($fileId);
-        print_r($res);
-    }
+        echo "Waiting for metadata (up to 60 seconds)...";
+        $ready = false;
+        $attempt = 0;
 
-    function getAudioMetadata() {
-        echo "uploading file..." . PHP_EOL;
-        $id = uniqid();
+        while (!$ready && $attempt < 60) {
+            $metadata = $this->mediaPlatform->fileManager()->getFileMetadataById($fileId);
+            $attempt++;
+            echo $attempt . " ";
 
-        $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/audio.mp3", "r");
-        $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".audio.mp3","audio/mp3", "audio.mp3", $file, null);
+            if (!is_null($metadata->getBasic())) {
+                $ready = true;
+                echo PHP_EOL;
+            }
 
-        $fileId = $files[0]->getId();
-        $res = $this->mediaPlatform->fileManager()->getFileMetadataById($fileId);
-        print_r($res);
+            sleep(1);
+        }
+
+        print_r($metadata);
     }
 
     function getDownloadUrl() {
@@ -132,8 +135,8 @@ class WixDemo
             ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, null);
 
         $path = $files[0]->getPath();
-        $res = $this->mediaPlatform->fileDownloader->getDownloadUrl($path);
-        print_r($res);
+        $res = $this->mediaPlatform->fileDownloader()->getDownloadUrl($path);
+        echo "Download Url: " . $res . PHP_EOL;
     }
 
     function listJobs() {
