@@ -1,7 +1,7 @@
 {
     "name": "wix/media-platform-php-sdk",
     "version": "1.0.0",
-    "description": "",
+    "description": "The official Wix Media Platform PHP SDK",
     "keywords": [
         "wix",
         "php",
