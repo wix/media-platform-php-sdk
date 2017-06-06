@@ -5,3 +5,6 @@ example/composer.lock
 vendor
 vendor/*
 composer.lock
+
+# OSX
+.DS_Store
