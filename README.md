@@ -31,16 +31,15 @@ PHP 5.6 and later.
 ## Installation
 ### Composer
 
-To install the bindings via [Composer](http://getcomposer.org/), add the following to `composer.json`:
+To install the bindings via [Composer](http://getcomposer.org/) run the following command
+```bash
+composer require wix/media-platform-php-sdk
+```
+
+Or add the following to `composer.json`:
 
 ```
 {
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/wix/media-platform-php-sdk.git"
-    }
-  ],
   "require": {
     "wix/media-platform-php-sdk": "*"
   }
