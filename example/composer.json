@@ -22,11 +22,5 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^5.0"
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:wix/media-platform-php-sdk.git"
-        }
-    ]
+    }
 }
