@@ -11,12 +11,14 @@ namespace Wix\Mediaplatform\Management;
 
 use Wix\Mediaplatform\Configuration\Configuration;
 use Wix\Mediaplatform\Http\AuthenticatedHTTPClient;
+use Wix\Mediaplatform\Model\Job\FileImportJob;
 use Wix\Mediaplatform\Model\Metadata\FileDescriptor;
 use Wix\Mediaplatform\Model\Metadata\FileMetadata;
 use Wix\Mediaplatform\Model\Request\CreateFileRequest;
 use Wix\Mediaplatform\Model\Request\ImportFileRequest;
 use Wix\Mediaplatform\Model\Request\ListFilesRequest;
 use Wix\Mediaplatform\Model\Request\UploadUrlRequest;
+use Wix\Mediaplatform\Model\Response\GetUploadUrlResponse;
 use Wix\Mediaplatform\Model\Response\ListFilesResponse;
 use Wix\Mediaplatform\Model\Response\RestResponse;
 use Wix\Mediaplatform\Model\Response\Types;
@@ -60,7 +62,7 @@ class FileManager
 
     /**
      * @param UploadUrlRequest|null $uploadUrlRequest
-     * @return mixed
+     * @return GetUploadUrlResponse
      */
     public function getUploadUrl(UploadUrlRequest $uploadUrlRequest = null)
     {
@@ -82,7 +84,7 @@ class FileManager
 
     /**
      * @param ImportFileRequest $importFileRequest
-     * @return mixed
+     * @return FileImportJob
      */
     public function importFile(ImportFileRequest $importFileRequest)
     {
@@ -127,7 +129,7 @@ class FileManager
 
     /**
      * @param $fileId
-     * @return mixed
+     * @return FileMetadata
      */
     public function getFileMetadataById($fileId)
     {
@@ -144,7 +146,7 @@ class FileManager
     /**
      * @param $path
      * @param ListFilesRequest|null $listFilesRequest
-     * @return mixed
+     * @return ListFilesResponse
      */
     public function listFiles($path, ListFilesRequest $listFilesRequest = null)
     {
