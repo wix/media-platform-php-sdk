@@ -37,6 +37,13 @@ class VideoSpecification extends BaseModel
      */
     protected $keyFrame;
 
+
+    public function __construct(Array $payload = null) {
+        parent::__construct($payload);
+        $this->codec = $payload && !empty($payload['codec']) ? new VideoCodec($payload['codec']) : null;
+        $this->resolution = $payload && !empty($payload['resolution']) ? new Resolution($payload['resolution']) : null;
+    }
+
     /**
      * @return string
      */
@@ -69,12 +76,45 @@ class VideoSpecification extends BaseModel
         return $this->keyFrame;
     }
 
-    public function __construct(Array $payload) {
-        parent::__construct($payload);
-        $this->codec = !empty($payload['codec']) ? new VideoCodec($payload['codec']) : null;
-        $this->resolution = !empty($payload['resolution']) ? new Resolution($payload['resolution']) : null;
+    /**
+     * @param string $frameRate
+     * @return VideoSpecification
+     */
+    public function setFrameRate($frameRate)
+    {
+        $this->frameRate = $frameRate;
+        return $this;
     }
 
+    /**
+     * @param VideoCodec $codec
+     * @return VideoSpecification
+     */
+    public function setCodec(VideoCodec $codec)
+    {
+        $this->codec = $codec;
+        return $this;
+    }
+
+    /**
+     * @param Resolution $resolution
+     * @return VideoSpecification
+     */
+    public function setResolution(Resolution $resolution)
+    {
+        $this->resolution = $resolution;
+        return $this;
+    }
+
+    /**
+     * @param float $keyFrame
+     * @return VideoSpecification
+     */
+    public function setKeyFrame( $keyFrame)
+    {
+        $this->keyFrame = $keyFrame;
+        return $this;
+    }
 
     /**
      * @return string

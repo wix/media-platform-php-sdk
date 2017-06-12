@@ -18,6 +18,7 @@ use Wix\Mediaplatform\Management\FileDownloader;
 use Wix\Mediaplatform\Management\FileManager;
 use Wix\Mediaplatform\Management\FileUploader;
 use Wix\Mediaplatform\Management\JobManager;
+use Wix\Mediaplatform\Management\TranscodeManager;
 
 /**
  * Class MediaPlatform
@@ -45,6 +46,11 @@ class MediaPlatform
      */
     private $archiveManager;
 
+    /**
+     * @var TranscodeManager
+     */
+    private $transcodeManager;
+
 
     /**
      * MediaPlatform constructor.
@@ -67,6 +73,7 @@ class MediaPlatform
         $this->fileManager = new FileManager($configuration, $authenticatedHTTPClient, $fileUploader);
         $this->jobManager = new JobManager($configuration, $authenticatedHTTPClient);
         $this->archiveManager = new ArchiveManager($configuration, $authenticatedHTTPClient);
+        $this->transcodeManager = new TranscodeManager($configuration, $authenticatedHTTPClient);
     }
 
 
@@ -90,11 +97,19 @@ class MediaPlatform
     public function jobManager() {
         return $this->jobManager;
     }
+
     /**
      * @return ArchiveManager
      */
     public function archiveManager() {
         return $this->archiveManager;
+    }
+
+    /**
+     * @return TranscodeManager
+     */
+    public function transcodeManager() {
+        return $this->transcodeManager;
     }
 
     /**

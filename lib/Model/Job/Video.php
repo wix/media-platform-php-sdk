@@ -25,7 +25,7 @@ class Video extends BaseModel
     /**
      * Video constructor.
      */
-    public function __construct(Array $payload) {
+    public function __construct(Array $payload = null) {
         parent::__construct();
         $this->specification = new VideoSpecification($payload);
     }
@@ -37,6 +37,17 @@ class Video extends BaseModel
     {
         return $this->specification;
     }
+
+    /**
+     * @param VideoSpecification $specification
+     * @return Video
+     */
+    public function setSpecification(VideoSpecification $specification)
+    {
+        $this->specification = $specification;
+        return $this;
+    }
+
 
     /**
      * @return string

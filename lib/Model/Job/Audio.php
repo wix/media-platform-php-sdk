@@ -35,6 +35,17 @@ class Audio
         return $this->specification;
     }
 
+    /**
+     * @param AudioSpecification $specification
+     * @return Audio
+     */
+    public function setSpecification(AudioSpecification $specification)
+    {
+        $this->specification = $specification;
+        return $this;
+    }
+
+
 
     /**
      * @return string

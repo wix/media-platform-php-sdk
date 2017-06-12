@@ -1,13 +1,22 @@
 <?php
 use Wix\Mediaplatform\Image\Image;
 use Wix\Mediaplatform\MediaPlatform;
+use Wix\Mediaplatform\Model\Job\Audio;
+use Wix\Mediaplatform\Model\Job\AudioCodec;
+use Wix\Mediaplatform\Model\Job\AudioSpecification;
 use Wix\Mediaplatform\Model\Job\Destination;
 use Wix\Mediaplatform\Model\Job\FileImportJob;
+use Wix\Mediaplatform\Model\Job\Resolution;
 use Wix\Mediaplatform\Model\Job\Source;
+use Wix\Mediaplatform\Model\Job\TranscodeSpecification;
+use Wix\Mediaplatform\Model\Job\Video;
+use Wix\Mediaplatform\Model\Job\VideoCodec;
+use Wix\Mediaplatform\Model\Job\VideoSpecification;
 use Wix\Mediaplatform\Model\Request\ExtractArchiveRequest;
 use Wix\Mediaplatform\Model\Request\ImportFileRequest;
 use Wix\Mediaplatform\Model\Request\ListFilesRequest;
 use Wix\Mediaplatform\Model\Request\SearchJobsRequest;
+use Wix\Mediaplatform\Model\Request\TranscodeRequest;
 
 /**
  * Created by PhpStorm.
@@ -172,5 +181,84 @@ class WixDemo
         $job = $this->mediaPlatform->archiveManager()->extractArchive($extractArchiveRequest);
 
         print_r($job);
+    }
+
+
+    function transcodeVideo() {
+        echo "uploading file..." . PHP_EOL;
+        $id = uniqid();
+
+        $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/video.mp4", "r");
+        $files = $this->mediaPlatform->fileManager()
+            ->uploadFile("/demo/upload/" . $id . ".video.mp4","video/mp4", "video.mp4", $file, null);
+
+        $fileId = $files[0]->getId();
+        echo "Waiting for transcode (up to 10 minutes)...";
+        $ready = false;
+        $attempt = 0;
+
+        // transcode job
+        $transcodeJobRequest = new TranscodeRequest();
+        $source = new Source();
+        $source->setFileId($fileId);
+
+        $videoSpecification = new VideoSpecification();
+        $videoSpecification->setFrameRate(30);
+
+        $resolution = new Resolution();
+        $resolution->setHeight(480);
+
+        $videoSpecification->setResolution($resolution);
+
+        $videoCodec = new VideoCodec();
+        $videoCodec->setProfile("high");
+        $videoCodec->setName("h.264");
+        $videoCodec->setLevel("2.2");
+        $videoCodec->setMaxRate(3000);
+        $videoCodec->setCrf(26);
+
+        $videoSpecification->setCodec($videoCodec);
+
+        $audioSpecification = new AudioSpecification();
+        $audioCodec = new AudioCodec();
+        $audioCodec->setName("aac");
+        $audioCodec->setCbr(192);
+
+        $audioSpecification->setCodec($audioCodec);
+        $audioSpecification->setChannels("stereo");
+
+        $specification = new TranscodeSpecification();
+
+        $destination = new Destination();
+        $destination->setDirectory("/test/encodes");
+        $destination->setAcl("public");
+        $specification->setDestination($destination);
+        $audioSpecification->setSpecification($audioSpecification);
+        $video = new Video();
+        $video->setSpecification($videoSpecification);
+        $audio = new Audio();
+        $audio->setSpecification($audioSpecification);
+        $specification->setVideo($video);
+        $specification->setAudio($audio);
+
+        $transcodeJobRequest->addSource($source);
+        $transcodeJobRequest->addSpecification($specification);
+
+        $job = $this->mediaPlatform->transcodeManager()->transcodeVideo($transcodeJobRequest);
+
+
+        while (!$ready && $attempt < 600) {
+            $attempt++;
+            echo $attempt . " ";
+/*
+            if (!is_null($metadata->getBasic())) {
+                $ready = true;
+                echo PHP_EOL;
+
+            }*/
+
+            sleep(1);
+        }
+
     }
 }

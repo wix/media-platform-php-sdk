@@ -41,11 +41,51 @@ class TranscodeSpecification extends BaseModel implements Specification
     /**
      * TranscodeSpecification constructor.
      */
-    public function __construct(Array $payload) {
+    public function __construct(Array $payload = null) {
         parent::__construct();
 
-        $this->video = !empty($payload['video']) ? new Video($payload['video']) : null;
-        $this->audio = !empty($payload['audio']) ? new Audio($payload['audio']) : null;
+        $this->video = $payload && !empty($payload['video']) ? new Video($payload['video']) : null;
+        $this->audio = $payload && !empty($payload['audio']) ? new Audio($payload['audio']) : null;
+    }
+
+    /**
+     * @param Destination $destination
+     * @return TranscodeSpecification
+     */
+    public function setDestination(Destination $destination)
+    {
+        $this->destination = $destination;
+        return $this;
+    }
+
+    /**
+     * @param string $quality
+     * @return TranscodeSpecification
+     */
+    public function setQuality($quality)
+    {
+        $this->quality = $quality;
+        return $this;
+    }
+
+    /**
+     * @param Video $video
+     * @return TranscodeSpecification
+     */
+    public function setVideo(Video $video)
+    {
+        $this->video = $video;
+        return $this;
+    }
+
+    /**
+     * @param Audio $audio
+     * @return TranscodeSpecification
+     */
+    public function setAudio(Audio $audio)
+    {
+        $this->audio = $audio;
+        return $this;
     }
 
     /**

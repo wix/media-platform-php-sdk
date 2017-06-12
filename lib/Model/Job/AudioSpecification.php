@@ -7,13 +7,14 @@
  */
 
 namespace Wix\Mediaplatform\Model\Job;
+use Wix\Mediaplatform\Model\BaseModel;
 
 
 /**
  * Class AudioSpecification
  * @package Wix\Mediaplatform\Model\Job
  */
-class AudioSpecification
+class AudioSpecification extends BaseModel
 {
     /**
      * @var string
@@ -28,8 +29,10 @@ class AudioSpecification
     /**
      * AudioSpecification constructor.
      */
-    public function __construct()
+    public function __construct(Array $payload = null)
     {
+        parent::__construct($payload);
+        $this->codec = $payload && !empty($payload['codec']) ? new AudioCodec($payload['codec']) : null;
     }
 
     /**
@@ -47,6 +50,27 @@ class AudioSpecification
     {
         return $this->codec;
     }
+
+    /**
+     * @param string $channels
+     * @return AudioSpecification
+     */
+    public function setChannels($channels)
+    {
+        $this->channels = $channels;
+        return $this;
+    }
+
+    /**
+     * @param AudioCodec $codec
+     * @return AudioSpecification
+     */
+    public function setCodec(AudioCodec $codec)
+    {
+        $this->codec = $codec;
+        return $this;
+    }
+
 
 
     /**

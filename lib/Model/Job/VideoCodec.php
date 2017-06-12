@@ -81,6 +81,57 @@ class VideoCodec extends BaseModel
         return $this->level;
     }
 
+    /**
+     * @param string $profile
+     * @return VideoCodec
+     */
+    public function setProfile($profile)
+    {
+        $this->profile = $profile;
+        return $this;
+    }
+
+    /**
+     * @param float $maxRate
+     * @return VideoCodec
+     */
+    public function setMaxRate($maxRate)
+    {
+        $this->maxRate = $maxRate;
+        return $this;
+    }
+
+    /**
+     * @param float $crf
+     * @return VideoCodec
+     */
+    public function setCrf($crf)
+    {
+        $this->crf = $crf;
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @return VideoCodec
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @param string $level
+     * @return VideoCodec
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+        return $this;
+    }
+
+
 
     /**
      * @return string

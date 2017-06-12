@@ -42,6 +42,28 @@ class AudioCodec
     }
 
     /**
+     * @param float $cbr
+     * @return AudioCodec
+     */
+    public function setCbr($cbr)
+    {
+        $this->cbr = $cbr;
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @return AudioCodec
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+
+
+    /**
      * @return string
      */
     public function __toString()
