@@ -29,7 +29,7 @@ class TranscodeSpecification extends BaseModel implements Specification
     protected $quality;
 
     /**
-     * @var string
+     * @var QualityRange
      */
     protected $qualityRange;
 
