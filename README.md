@@ -158,6 +158,36 @@ $fileMetadata = $mediaPlatform->fileManager()->getFileMetadataById("file id");
 $mediaPlatform->fileManager()->deleteFileById("file id");
 ```
 
+## Transcoding
+
+[Transcode API Documentation](https://support.wixmp.com/en/article/video-transcoding-5054232)
+
+To initiate a transcode request
+
+```php
+$transcodeRequest = new TranscodeRequest();
+
+$specifications = array(
+    TranscodeSpecification::factory()
+        ->setDestination(
+            Destination::factory()
+                ->setDirectory("/test/output1.mp4")
+                ->setAcl("public")
+        )->setQualityRange(
+            QualityRange::factory()
+                ->setMinimum("240p")
+                ->setMaximum("1440p")
+        )
+);
+
+$source = Source::factory()->setPath("/test/file.mp4");
+
+$transcodeRequest->addSource($source)
+    ->setSpecifications($specifications);
+
+$transcodeResponse = $mediaPlatform->transcodeManager()->transcodeVideo($transcodeRequest);
+```
+
 ## Archive Extraction
 
 Instead of uploading numerous files one by one, it is possible to upload a single zip file
