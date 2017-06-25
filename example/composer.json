@@ -22,9 +22,5 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^5.0"
-    },
-    "repositories": [{
-        "type": "vcs",
-        "url": "/var/www/wix-sdk/media-platform-php-sdk"
-    }]
+    }
 }
