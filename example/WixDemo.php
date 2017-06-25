@@ -275,17 +275,4 @@ class WixDemo
 
     }
 
-    function leonTest() {
-
-        $jobs = $this->mediaPlatform->jobManager()->searchJobs(
-            SearchJobsRequest::factory()
-                ->setType(TranscodeJob::$job_type)
-            ->setPath()
-        );
-
-
-        $grp = $this->mediaPlatform->jobManager()->getJobGroup("9249dd9e68b94d989aea2436049ec790");
-        var_dump($grp);
-//        $job = $this->mediaPlatform->jobManager()->getJob($grp[0]->getId());
-    }
 }
