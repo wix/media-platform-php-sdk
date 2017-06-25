@@ -8,73 +8,75 @@
 
 namespace Wix\Mediaplatform\Model\Job;
 
+use Wix\Mediaplatform\Model\BaseModel;
+
 
 /**
  * Class VideoInfo
  * @package Wix\Mediaplatform\Model\Job
  */
-class VideoInfo
+class VideoInfo extends BaseModel
 {
     /**
      * @var string
      */
-    private $format;
+    protected $format;
 
     /**
      * @var float
      */
-    private $videoBitrate;
+    protected $videoBitrate;
 
     /**
      * @var float
      */
-    private $audioBitrate;
+    protected $audioBitrate;
 
     /**
      * @var string
      */
-    private $quality;
+    protected $quality;
 
     /**
      * @var int
      */
-    private $width;
+    protected $width;
 
     /**
      * @var int
      */
-    private $height;
+    protected $height;
 
     /**
      * @var string
      */
-    private $tag;
+    protected $tag;
 
     /**
      * @var string
      */
-    private $fps;
+    protected $fps;
 
     /**
      * @var float
      */
-    private $duration;
+    protected $duration;
 
     /**
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @var string
      */
-    private $displayAspectRatio;
+    protected $displayAspectRatio;
 
     /**
      * VideoInfo constructor.
      */
-    public function __construct()
-    {
+    public function __construct(Array $payload = null) {
+        parent::__construct($payload);
     }
 
     /**

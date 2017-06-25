@@ -1,10 +1,10 @@
 <?php
 namespace Wix\Mediaplatform\Http;
 
-use GuzzleHttp\Exception\GuzzleException;
-use Wix\Mediaplatform\Authentication\Authenticator;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
+use Wix\Mediaplatform\Authentication\Authenticator;
 use Wix\Mediaplatform\Model\Response\RestResponse;
 
 /**
@@ -42,10 +42,14 @@ class AuthenticatedHTTPClient
     }
 
     public function send(Request $request, Array $options = array()) {
-        $response = $this->httpClient->send($request, $options);
-        if($response->getStatusCode() == 200) {
-            $jsonArray = \GuzzleHttp\json_decode($response->getBody(), true);
-            return new RestResponse($jsonArray);
+        try {
+            $response = $this->httpClient->send($request, $options);
+            if ($response->getStatusCode() == 200) {
+                $jsonArray = \GuzzleHttp\json_decode($response->getBody(), true);
+                return new RestResponse($jsonArray);
+            }
+        } catch (GuzzleException $e) {
+            throw $e;
         }
     }
 

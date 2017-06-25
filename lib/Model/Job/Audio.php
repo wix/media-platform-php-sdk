@@ -7,26 +7,29 @@
  */
 
 namespace Wix\Mediaplatform\Model\Job;
+use Wix\Mediaplatform\Model\BaseModel;
 
 
 /**
  * Class Audio
  * @package Wix\Mediaplatform\Model\Job
  */
-class Audio
+class Audio extends BaseModel
 {
     /**
      * @var AudioSpecification
      */
-    private $specification;
+    protected $specification;
 
     /**
      * Audio constructor.
      */
-    public function __construct()
-    {
+    public function __construct(Array $payload = null) {
+        parent::__construct($payload);
+        if($payload && !empty($payload['specification'])) {
+            $this->specification = new AudioSpecification($payload['specification']);
+        }
     }
-
     /**
      * @return AudioSpecification
      */

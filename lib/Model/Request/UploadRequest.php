@@ -13,17 +13,17 @@ namespace Wix\Mediaplatform\Model\Request;
  * Class UploadRequest
  * @package Wix\Mediaplatform\Model\Request
  */
-class UploadRequest
+class UploadRequest extends BaseRequest
 {
     /**
      * @var string
      */
-    private $mimeType = "application/octet-stream";
+    protected $mimeType = "application/octet-stream";
 
     /**
      * @var string
      */
-    private $acl = "public";
+    protected $acl = "public";
 
     /**
      * UploadRequest constructor.

@@ -20,14 +20,16 @@ class Video extends BaseModel
     /**
      * @var VideoSpecification
      */
-    private $specification;
+    protected $specification;
 
     /**
      * Video constructor.
      */
     public function __construct(Array $payload = null) {
-        parent::__construct();
-        $this->specification = new VideoSpecification($payload);
+        parent::__construct($payload);
+        if($payload && !empty($payload['specification'])) {
+            $this->specification = new VideoSpecification($payload['specification']);
+        }
     }
 
     /**

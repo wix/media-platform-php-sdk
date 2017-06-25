@@ -26,7 +26,7 @@ class Destination extends BaseModel
     /**
      * @var string
      */
-    protected $acl = "protected";
+    protected $acl = "private";
     
 
     /**

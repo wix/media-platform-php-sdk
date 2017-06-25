@@ -19,12 +19,12 @@ class AudioSpecification extends BaseModel
     /**
      * @var string
      */
-    private $channels;
+    protected $channels;
 
     /**
      * @var AudioCodec
      */
-    private $codec;
+    protected $codec;
 
     /**
      * AudioSpecification constructor.

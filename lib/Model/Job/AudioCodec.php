@@ -7,23 +7,24 @@
  */
 
 namespace Wix\Mediaplatform\Model\Job;
+use Wix\Mediaplatform\Model\BaseModel;
 
 
 /**
  * Class AudioCodec
  * @package Wix\Mediaplatform\Model\Job
  */
-class AudioCodec
+class AudioCodec extends BaseModel
 {
     /**
      * @var float
      */
-    private $cbr;
+    protected $cbr;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @return float

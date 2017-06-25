@@ -7,7 +7,6 @@
  */
 
 namespace Wix\Mediaplatform\Model\Response;
-use GuzzleHttp\Psr7\Response;
 
 
 /**

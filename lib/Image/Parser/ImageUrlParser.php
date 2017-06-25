@@ -11,6 +11,7 @@ namespace Wix\Mediaplatform\Image\Parser;
 
 use InvalidArgumentException;
 use Wix\Mediaplatform\Image\Encoder\JPEG;
+use Wix\Mediaplatform\Image\Filter\Blur;
 use Wix\Mediaplatform\Image\Filter\Brightness;
 use Wix\Mediaplatform\Image\Filter\Contrast;
 use Wix\Mediaplatform\Image\Filter\Hue;
@@ -21,7 +22,6 @@ use Wix\Mediaplatform\Image\Image;
 use Wix\Mediaplatform\Image\Metadata;
 use Wix\Mediaplatform\Image\Option;
 use Wix\Mediaplatform\Image\StringToken;
-use Wix\Mediaplatform\Image\Filter\Blur;
 
 class ImageUrlParser
 {

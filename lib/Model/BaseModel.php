@@ -16,11 +16,8 @@ use Wix\Mediaplatform\Model\Request\BaseRequest;
  */
 class BaseModel extends BaseRequest
 {
-    /**
-     * @param array $payload
-     */
-    public static function factory(Array $payload = array()) {
-            return new ${static::class}($payload);
+    public static function factory(Array $payload = null) {
+        return new static($payload);
     }
 
     /**
@@ -28,10 +25,12 @@ class BaseModel extends BaseRequest
      * Get payload as array and put it into the existing class properties
      * @param array $payload
      */
-    public function __construct(Array $payload = array()) {
-        foreach($payload as $key => $value) {
-            if(property_exists(static::class, $key)) {
-                $this->$key = $value;
+    public function __construct(Array $payload = null) {
+        if(!is_null($payload) && is_array($payload)) {
+            foreach($payload as $key => $value) {
+                if(property_exists(static::class, $key)) {
+                    $this->$key = $value;
+                }
             }
         }
     }

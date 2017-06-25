@@ -10,8 +10,8 @@ namespace Wix\Mediaplatform\Image\Parser;
 
 use Wix\Mediaplatform\Image\Image;
 use Wix\Mediaplatform\Image\Metadata;
-use Wix\Mediaplatform\Model\Metadata\FileMetadata;
 use Wix\Mediaplatform\Model\Metadata\Basic\ImageBasicMetadata;
+use Wix\Mediaplatform\Model\Metadata\FileMetadata;
 
 /**
  * Class FileMetadataParser

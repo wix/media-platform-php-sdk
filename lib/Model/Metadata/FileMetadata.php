@@ -8,12 +8,12 @@
 
 namespace Wix\Mediaplatform\Model\Metadata;
 
+use Wix\Mediaplatform\Model\BaseModel;
 use Wix\Mediaplatform\Model\Metadata\Basic\BasicMetadata;
 use Wix\Mediaplatform\Model\Metadata\Basic\ImageBasicMetadata;
 use Wix\Mediaplatform\Model\Metadata\Basic\VideoBasicMetadata;
 use Wix\Mediaplatform\Model\Metadata\Features\Features;
 use Wix\Mediaplatform\Model\Metadata\Features\ImageFeatures;
-use Wix\Mediaplatform\Model\BaseModel;
 
 /**
  * Class FileMetadata

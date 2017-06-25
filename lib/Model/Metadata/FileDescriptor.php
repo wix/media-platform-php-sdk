@@ -8,7 +8,7 @@
 
 namespace Wix\Mediaplatform\Model\Metadata;
 
-use \DateTime;
+use DateTime;
 use Wix\Mediaplatform\Model\BaseModel;
 
 /**

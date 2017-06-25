@@ -1,15 +1,13 @@
 <?php
 use Wix\Mediaplatform\Image\Image;
 use Wix\Mediaplatform\MediaPlatform;
-use Wix\Mediaplatform\Model\Job\Audio;
-use Wix\Mediaplatform\Model\Job\AudioCodec;
-use Wix\Mediaplatform\Model\Job\AudioSpecification;
 use Wix\Mediaplatform\Model\Job\Destination;
 use Wix\Mediaplatform\Model\Job\FileImportJob;
+use Wix\Mediaplatform\Model\Job\QualityRange;
 use Wix\Mediaplatform\Model\Job\Resolution;
 use Wix\Mediaplatform\Model\Job\Source;
+use Wix\Mediaplatform\Model\Job\TranscodeJob;
 use Wix\Mediaplatform\Model\Job\TranscodeSpecification;
-use Wix\Mediaplatform\Model\Job\Video;
 use Wix\Mediaplatform\Model\Job\VideoCodec;
 use Wix\Mediaplatform\Model\Job\VideoSpecification;
 use Wix\Mediaplatform\Model\Request\ExtractArchiveRequest;
@@ -198,67 +196,96 @@ class WixDemo
         $attempt = 0;
 
         // transcode job
-        $transcodeJobRequest = new TranscodeRequest();
-        $source = new Source();
-        $source->setFileId($fileId);
+        $transcodeJobRequest = TranscodeRequest::factory();
+        $source = Source::factory()->setPath($files[0]->getPath());
 
-        $videoSpecification = new VideoSpecification();
-        $videoSpecification->setFrameRate(30);
+        $videoSpecification1 = VideoSpecification::factory()
+            ->setFrameRate(30)
+            ->setResolution(
+                Resolution::factory()->setHeight(480)
+            )->setCodec(
+                VideoCodec::factory()
+                    ->setProfile("high")
+                    ->setName("h.264")
+                    ->setLevel("2.2")
+                    ->setMaxRate(3000)
+                    ->setCrf(26)
+            );
 
-        $resolution = new Resolution();
-        $resolution->setHeight(480);
-
-        $videoSpecification->setResolution($resolution);
-
-        $videoCodec = new VideoCodec();
-        $videoCodec->setProfile("high");
-        $videoCodec->setName("h.264");
-        $videoCodec->setLevel("2.2");
-        $videoCodec->setMaxRate(3000);
-        $videoCodec->setCrf(26);
-
-        $videoSpecification->setCodec($videoCodec);
-
-        $audioSpecification = new AudioSpecification();
-        $audioCodec = new AudioCodec();
-        $audioCodec->setName("aac");
-        $audioCodec->setCbr(192);
-
-        $audioSpecification->setCodec($audioCodec);
-        $audioSpecification->setChannels("stereo");
-
-        $specification = new TranscodeSpecification();
-
-        $destination = new Destination();
-        $destination->setDirectory("/test/encodes");
-        $destination->setAcl("public");
-        $specification->setDestination($destination);
-        $audioSpecification->setSpecification($audioSpecification);
-        $video = new Video();
-        $video->setSpecification($videoSpecification);
-        $audio = new Audio();
-        $audio->setSpecification($audioSpecification);
-        $specification->setVideo($video);
-        $specification->setAudio($audio);
-
-        $transcodeJobRequest->addSource($source);
-        $transcodeJobRequest->addSpecification($specification);
-
-        $job = $this->mediaPlatform->transcodeManager()->transcodeVideo($transcodeJobRequest);
+        $videoSpecification2 = VideoSpecification::factory()
+            ->setFrameRate(30)
+            ->setResolution(
+                Resolution::factory()->setHeight(240)
+            )->setCodec(
+                VideoCodec::factory()
+                    ->setProfile("baseline")
+                    ->setName("h.264")
+                    ->setLevel("2.2")
+                    ->setMaxRate(3000)
+                    ->setCrf(26)
+            );
 
 
-        while (!$ready && $attempt < 600) {
+        $specifications = array(
+            TranscodeSpecification::factory()
+                ->setDestination(
+                    Destination::factory()
+                        ->setDirectory("/demo/encodes/$id/")
+                        ->setAcl("public")
+                )->setQualityRange(
+                    QualityRange::factory()
+                    ->setMinimum("240p")
+                    ->setMaximum("1440p")
+                )
+            );
+
+        $transcodeJobRequest->addSource($source)
+            ->setSpecifications($specifications);
+
+        $transcodeResult = $this->mediaPlatform->transcodeManager()->transcodeVideo($transcodeJobRequest);
+
+        echo PHP_EOL . "Checking job group " . $transcodeResult->getGroupId() . PHP_EOL;
+        while (!$ready && $attempt < 300) {
             $attempt++;
-            echo $attempt . " ";
-/*
-            if (!is_null($metadata->getBasic())) {
+            echo $attempt . ". " . PHP_EOL;
+
+            $jobGroup = $this->mediaPlatform->jobManager()->getJobGroup($transcodeResult->getGroupId());
+
+            $success = false;
+            /**
+             * @var $job TranscodeJob
+             */
+            foreach($jobGroup as $job) {
+                echo $job->getId() . ": " . $job->getStatus() . PHP_EOL;
+                if($job->getStatus() == "success") {
+                    $success = true;
+                } else {
+                    $success = false;
+                    break;
+                }
+            }
+
+            if ($success) {
                 $ready = true;
                 echo PHP_EOL;
+            }
 
-            }*/
-
-            sleep(1);
+            sleep(2);
         }
 
+    }
+
+    function leonTest() {
+
+        $jobs = $this->mediaPlatform->jobManager()->searchJobs(
+            SearchJobsRequest::factory()
+                ->setType(TranscodeJob::$job_type)
+            ->setPath()
+        );
+
+
+        $grp = $this->mediaPlatform->jobManager()->getJobGroup("9249dd9e68b94d989aea2436049ec790");
+        var_dump($grp);
+//        $job = $this->mediaPlatform->jobManager()->getJob($grp[0]->getId());
     }
 }

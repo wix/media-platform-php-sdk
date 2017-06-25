@@ -13,22 +13,22 @@ namespace Wix\Mediaplatform\Model\Request;
  * Class DownloadUrlRequest
  * @package Wix\Mediaplatform\Model\Request
  */
-class DownloadUrlRequest
+class DownloadUrlRequest extends BaseRequest
 {
     /**
      * @var int
      */
-    private $ttl;
+    protected $ttl;
 
     /**
      * @var Attachment
      */
-    private $attachment;
+    protected $attachment;
 
     /**
      * @var string
      */
-    private $onExpireRedirectTo;
+    protected $onExpireRedirectTo;
 
     /**
      * DownloadUrlRequest constructor.

@@ -9,56 +9,64 @@
 namespace Wix\Mediaplatform\Model\Job;
 
 
+use Wix\Mediaplatform\Model\BaseModel;
 use Wix\Mediaplatform\Model\Metadata\FileDescriptor;
 
 /**
  * Class TranscodeJobResult
  * @package Wix\Mediaplatform\Model\Job
  */
-class TranscodeJobResult
+class TranscodeJobResult extends BaseModel
 {
     /**
-     * @var VideoInfo
+     * @var array
      */
-    private $info;
+    protected $jobs;
 
     /**
-     * @var FileDescriptor
+     * @var string
      */
-    private $file;
+    protected $groupId;
 
     /**
      * TranscodeJobResult constructor.
+     * @param array $payload
      */
-    public function __construct()
-    {
+    public function __construct(Array $payload) {
+        parent::__construct($payload);
+        if($payload && !empty($payload['jobs'])) {
+            $this->jobs = array();
+            foreach($payload['jobs'] as $job) {
+                $this->jobs[] = new TranscodeJob($job);
+            }
+        }
     }
 
     /**
-     * @return VideoInfo
+     * @return array
      */
-    public function getInfo()
+    public function getJobs()
     {
-        return $this->info;
+        return $this->jobs;
     }
 
     /**
-     * @return FileDescriptor
+     * @return string
      */
-    public function getFile()
+    public function getGroupId()
     {
-        return $this->file;
+        return $this->groupId;
     }
 
 
-    /**
+     /**
      * @return string
      */
     public function __toString()
     {
         return "TranscodeJobResult{" .
-            "info=" . $this->info .
-            ", file=" . $this->file .
+            "jobs=" . $this->jobs .
+            ", groupId=" . $this->groupId .
             '}';
     }
 }

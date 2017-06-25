@@ -28,7 +28,7 @@ class JPEG extends Option
     /**
      * @var int
      */
-    private $quality;
+    protected $quality;
 
     /**
      * JPEG constructor.

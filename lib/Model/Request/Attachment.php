@@ -13,12 +13,12 @@ namespace Wix\Mediaplatform\Model\Request;
  * Class Attachment
  * @package Wix\Mediaplatform\Model\Request
  */
-class Attachment
+class Attachment extends BaseRequest
 {
     /**
      * @var string
      */
-    private $filename;
+    protected $filename;
 
     /**
      * Attachment constructor.

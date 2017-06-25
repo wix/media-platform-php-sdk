@@ -20,12 +20,12 @@ class Resolution extends BaseModel
     /**
      * @var int
      */
-    private $width;
+    protected $width;
 
     /**
      * @var int
      */
-    private $height;
+    protected $height;
 
     /**
      * @return int

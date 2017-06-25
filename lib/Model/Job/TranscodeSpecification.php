@@ -29,6 +29,11 @@ class TranscodeSpecification extends BaseModel implements Specification
     protected $quality;
 
     /**
+     * @var string
+     */
+    protected $qualityRange;
+
+    /**
      * @var Video
      */
     protected $video;
@@ -42,8 +47,10 @@ class TranscodeSpecification extends BaseModel implements Specification
      * TranscodeSpecification constructor.
      */
     public function __construct(Array $payload = null) {
-        parent::__construct();
+        parent::__construct($payload);
 
+        $this->destination = $payload && !empty($payload['destination']) ? new Destination($payload['destination']) : null;
+        $this->qualityRange = $payload && !empty($payload['qualityRange']) ? new QualityRange($payload['qualityRange']) : null;
         $this->video = $payload && !empty($payload['video']) ? new Video($payload['video']) : null;
         $this->audio = $payload && !empty($payload['audio']) ? new Audio($payload['audio']) : null;
     }
@@ -75,6 +82,24 @@ class TranscodeSpecification extends BaseModel implements Specification
     public function setVideo(Video $video)
     {
         $this->video = $video;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getQualityRange()
+    {
+        return $this->qualityRange;
+    }
+
+    /**
+     * @param string $qualityRange
+     * @return TranscodeSpecification
+     */
+    public function setQualityRange($qualityRange)
+    {
+        $this->qualityRange = $qualityRange;
         return $this;
     }
 

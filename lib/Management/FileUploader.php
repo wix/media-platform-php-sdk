@@ -16,9 +16,6 @@ use Wix\Mediaplatform\Model\Metadata\FileDescriptor;
 use Wix\Mediaplatform\Model\Request\ImportFileRequest;
 use Wix\Mediaplatform\Model\Request\UploadUrlRequest;
 use Wix\Mediaplatform\Model\Response\GetUploadUrlResponse;
-use Wix\Mediaplatform\Model\Response\ListFilesResponse;
-use Wix\Mediaplatform\Model\Response\RestResponse;
-use Wix\Mediaplatform\Model\Response\Types;
 
 class FileUploader
 {

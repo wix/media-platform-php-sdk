@@ -12,18 +12,15 @@ namespace Wix\Mediaplatform\Management;
 use Wix\Mediaplatform\Configuration\Configuration;
 use Wix\Mediaplatform\Http\AuthenticatedHTTPClient;
 use Wix\Mediaplatform\Model\Job\FileImportJob;
-use Wix\Mediaplatform\Model\Job\TranscodeJobResult;
 use Wix\Mediaplatform\Model\Metadata\FileDescriptor;
 use Wix\Mediaplatform\Model\Metadata\FileMetadata;
 use Wix\Mediaplatform\Model\Request\CreateFileRequest;
 use Wix\Mediaplatform\Model\Request\ImportFileRequest;
 use Wix\Mediaplatform\Model\Request\ListFilesRequest;
-use Wix\Mediaplatform\Model\Request\TranscodeRequest;
 use Wix\Mediaplatform\Model\Request\UploadUrlRequest;
 use Wix\Mediaplatform\Model\Response\GetUploadUrlResponse;
 use Wix\Mediaplatform\Model\Response\ListFilesResponse;
 use Wix\Mediaplatform\Model\Response\RestResponse;
-use Wix\Mediaplatform\Model\Response\Types;
 
 /**
  * Class FileManager

@@ -9,17 +9,17 @@
 namespace Wix\Mediaplatform\Model\Request;
 
 
-class UploadUrlRequest
+class UploadUrlRequest extends BaseRequest
 {
     /**
      * @var string
      */
-    private $mimeType;
+    protected $mimeType;
 
     /**
      * @var string
      */
-    private $path;
+    protected $path;
 
     /**
      * UploadUrlRequest constructor.

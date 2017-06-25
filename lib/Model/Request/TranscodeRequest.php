@@ -9,9 +9,7 @@
 namespace Wix\Mediaplatform\Model\Request;
 
 
-use Wix\Mediaplatform\Model\Job\Destination;
 use Wix\Mediaplatform\Model\Job\Source;
-use Wix\Mediaplatform\Model\Job\TranscodeJobResult;
 use Wix\Mediaplatform\Model\Job\TranscodeSpecification;
 
 /**
@@ -35,6 +33,26 @@ class TranscodeRequest extends BaseRequest
      */
     public function __construct()
     {
+    }
+
+    public function toArray() {
+        $vars = parent::toArray();
+
+        /**
+         * @var $source Source
+         */
+        foreach($vars['sources'] as $key => $source) {
+            $vars['sources'][$key] = $source->toArray();
+        }
+
+        /**
+         * @var $specification Specification
+         */
+        foreach($vars['specifications'] as $key => $specification) {
+            $vars['specifications'][$key] = $specification->toArray();
+        }
+
+        return $vars;
     }
 
     /**

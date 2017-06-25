@@ -15,37 +15,37 @@ use Wix\Mediaplatform\Model\Request\Enum\OrderDirection;
  * Class ListFileRequest
  * @package Wix\Mediaplatform\Model\Request
  */
-class ListFilesRequest
+class ListFilesRequest extends BaseRequest
 {
 
     /**
      * @var string
      */
-    private $nextPageToken;
+    protected $nextPageToken;
 
     /**
      * @var int
      */
-    private $pageSize;
+    protected $pageSize;
 
     /**
      * @var OrderBy
      */
-    private $orderBy;
+    protected $orderBy;
 
     /**
      * @var OrderDirection
      */
-    private $orderDirection;
+    protected $orderDirection;
 
     /**
      * ListFileRequest constructor.
      * @param string $nextPageToken
      * @param int $pageSize
-     * @param OrderBy $orderBy
-     * @param OrderDirection $orderDirection
+     * @param string $orderBy
+     * @param string $orderDirection
      */
-    public function __construct($nextPageToken = null, $pageSize = null, OrderBy $orderBy = null, OrderDirection $orderDirection = null)
+    public function __construct($nextPageToken = null, $pageSize = null, $orderBy = null, $orderDirection = null)
     {
         $this->nextPageToken = $nextPageToken;
         $this->pageSize = $pageSize;
