@@ -34,7 +34,11 @@ class TranscodeJob extends Job
 
     public function __construct(Array $payload = null) {
         parent::__construct($payload);
-        $this->result = $payload && !empty($payload['result']) ? new RestResponse($payload['result'], 'Wix\Mediaplatform\Model\Metadata\FileDescriptor') : null;
+        $payloadType = array(
+            'info' => 'Wix\Mediaplatform\Model\Job\VideoInfo',
+            'file' => 'Wix\Mediaplatform\Model\Metadata\FileDescriptor'
+        );
+        $this->result = $payload && !empty($payload['result']) ? new RestResponse($payload['result'], $payloadType) : null;
         $this->specification = $payload && !empty($payload['specification']) ? new TranscodeSpecification($payload['specification']) : null;
     }
 

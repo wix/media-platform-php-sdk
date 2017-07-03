@@ -81,8 +81,9 @@ class AuthenticatedHTTPClient
             $params = $params->toArray();
         }
 
-        $params['Authorization'] = $this->authenticator->getHeader();
-        $request = new Request("DELETE", $url, $params);
+        $headers = array('Authorization' => $this->authenticator->getHeader());
+        $options['query'] = $params;
+        $request = new Request("DELETE", $url, $headers);
         return $this->send($request, $options);
     }
 }

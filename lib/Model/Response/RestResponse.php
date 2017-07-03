@@ -34,7 +34,16 @@ class RestResponse
         $this->code = $response['code'];
         $this->message = $response['message'];
         if(!is_null($payloadType)) {
-            $this->payload = new $payloadType($response['payload']);
+            if(is_array($payloadType)) {
+                $this->payload = new \stdClass();
+                foreach($payloadType as $key => $subType) {
+                    if(isset($response['payload'][$key])) {
+                        $this->payload->$key = new $subType($response['payload'][$key]);
+                    }
+                }
+            } else {
+                $this->payload = new $payloadType($response['payload']);
+            }
         } else {
             $this->payload = $response['payload'];
         }
