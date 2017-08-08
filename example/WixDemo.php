@@ -163,7 +163,7 @@ class WixDemo
         $fileDescriptor = $this->mediaPlatform->fileManager()
             ->uploadFile("/demo/upload/" . $id . ".document.xlsx",
             "application/vnd.ms-excel",
-            "document.xlsx.zip",
+            "document.xlsx",
             $file, "private")[0];
 
         $createArchiveRequest = new CreateArchiveRequest();
