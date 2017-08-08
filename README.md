@@ -188,7 +188,32 @@ $transcodeRequest->addSource($source)
 $transcodeResponse = $mediaPlatform->transcodeManager()->transcodeVideo($transcodeRequest);
 ```
 
-## Archive Extraction
+## Archive Functions
+[Archive API Documentation](https://support.wixmp.com/en/article/archive-service)
+
+### Archive Creation
+
+It is possible to create an archive from several files
+
+```php
+$createArchiveRequest = new \Wix\Mediaplatform\Model\Request\CreateArchiveRequest();
+
+$source = new \Wix\Mediaplatform\Model\Job\Source();
+$source->setFileId("file id");
+
+$destination = new \Wix\Mediaplatform\Model\Job\Destination();
+$destination->setAcl("public")
+            ->setPath("/demo/file.zip");
+
+$createArchiveRequest
+        ->addSource($source)
+        ->setDestination($destination)
+        ->setArchiveType('zip');
+        
+$job = $mediaPlatform->archiveManager()->createArchive($createArchiveRequest);
+```
+
+### Archive Extraction
 
 Instead of uploading numerous files one by one, it is possible to upload a single zip file
 and order the Media Platform to extract its content to a destination directory. 

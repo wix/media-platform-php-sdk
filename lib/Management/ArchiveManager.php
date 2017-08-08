@@ -11,7 +11,9 @@ namespace Wix\Mediaplatform\Management;
 
 use Wix\Mediaplatform\Configuration\Configuration;
 use Wix\Mediaplatform\Http\AuthenticatedHTTPClient;
+use Wix\Mediaplatform\Model\Job\CreateArchiveJob;
 use Wix\Mediaplatform\Model\Job\ExtractArchiveJob;
+use Wix\Mediaplatform\Model\Request\CreateArchiveRequest;
 use Wix\Mediaplatform\Model\Request\ExtractArchiveRequest;
 
 class ArchiveManager
@@ -39,6 +41,19 @@ class ArchiveManager
         $this->baseUrl = "https://" . $this->configuration->getDomain() . "/_api";
     }
 
+
+    /**
+     * @param CreateArchiveRequest
+     * @return CreateArchiveJob
+     */
+    public function createArchive(CreateArchiveRequest $createArchiveRequest) {
+        $restResponse = $this->authenticatedHTTPClient->post(
+            $this->baseUrl . "/archive/create",
+            $createArchiveRequest
+        );
+
+        return new CreateArchiveJob($restResponse->getPayload());
+    }
 
     /**
      * @param ExtractArchiveRequest

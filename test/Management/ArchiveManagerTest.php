@@ -36,6 +36,29 @@ class ArchiveManagerTest extends BaseTest
         self::$archiveManager = new ArchiveManager(BaseTest::$configuration, BaseTest::$authenticatedHttpClient);
     }
 
+    public function testCreateArchive()
+    {
+        self::setUpMockResponse(array("Content-Type" => "application/json"), "create-archive-pending-response.json");
+
+        $createArchiveRequest = new \Wix\Mediaplatform\Model\Request\CreateArchiveRequest();
+
+        $source = new \Wix\Mediaplatform\Model\Job\Source();
+        $source->setFileId("file id");
+
+        $destination = new \Wix\Mediaplatform\Model\Job\Destination();
+        $destination->setAcl("public")
+            ->setPath("/demo/file.zip");
+
+        $createArchiveRequest
+            ->addSource($source)
+            ->setDestination($destination)
+            ->setArchiveType('zip');
+
+        $job = self::$archiveManager->createArchive($createArchiveRequest);
+
+        $this->assertEquals("6b4da966844d4ae09417300f3811849b_dd0ecc5cbaba4f1b9aba08cc6fa7348b", $job->getId());
+    }
+
     public function testExtractArchive()
     {
         self::setUpMockResponse(array("Content-Type" => "application/json"), "extract-archive-pending-response.json");
