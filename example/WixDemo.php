@@ -10,6 +10,7 @@ use Wix\Mediaplatform\Model\Job\TranscodeJob;
 use Wix\Mediaplatform\Model\Job\TranscodeSpecification;
 use Wix\Mediaplatform\Model\Job\VideoCodec;
 use Wix\Mediaplatform\Model\Job\VideoSpecification;
+use Wix\Mediaplatform\Model\Request\CreateArchiveRequest;
 use Wix\Mediaplatform\Model\Request\ExtractArchiveRequest;
 use Wix\Mediaplatform\Model\Request\ImportFileRequest;
 use Wix\Mediaplatform\Model\Request\ListFilesRequest;
@@ -152,6 +153,34 @@ class WixDemo
         $response = $this->mediaPlatform->jobManager()->searchJobs($searchJobsRequest);
 
         print_r($response);
+    }
+
+    function createArchive() {
+
+        $id = uniqid();
+
+        $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/document.xlsx", "r");
+        $fileDescriptor = $this->mediaPlatform->fileManager()
+            ->uploadFile("/demo/upload/" . $id . ".document.xlsx",
+            "application/vnd.ms-excel",
+            "document.xlsx",
+            $file, "private")[0];
+
+        $createArchiveRequest = new CreateArchiveRequest();
+
+        $source = new Source();
+        $source->setFileId($fileDescriptor->getId());
+
+        $destination = new Destination();
+        $destination->setAcl("public")->setPath("/demo/archived/document.xlsx.zip");
+
+        $createArchiveRequest->setSource($source)
+            ->setDestination($destination)
+            ->setArchiveType('zip');
+
+        $job = $this->mediaPlatform->archiveManager()->createArchive($createArchiveRequest);
+
+        print_r($job);
     }
 
     function extractArchive() {

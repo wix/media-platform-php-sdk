@@ -46,7 +46,7 @@ class TranscodeRequest extends BaseRequest
         }
 
         /**
-         * @var $specification Specification
+         * @var $specification TranscodeSpecification
          */
         foreach($vars['specifications'] as $key => $specification) {
             $vars['specifications'][$key] = $specification->toArray();
