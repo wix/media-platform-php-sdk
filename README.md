@@ -2,7 +2,8 @@
 
 [![Build Status][travis-image]][travis-url]
 
-[Wix Media Platform][wixmp-url] is a collection of services for storing, serving, uploading, and managing media files and any files in general
+[Wix Media Platform][wixmp-url] is an end-to-end solution for all modern web media management, handling images, video and audio in the most efficient way on the market. From upload, storage, metadata management and all the way to delivery, Wix Media Platform takes care of all possible media workflows.
+
 
 # PHP SDK
 
@@ -58,7 +59,7 @@ Download the files and include `autoload.php`:
 
 ## Instantiating the Media Platform
 
-First, if you haven't done so yet, register at [Wix Media Platform][wixmp-url], create your organization, project and application.
+First, if you haven't done so yet, register at [Wix Media Platform][wixmp-url], create your [organization, project][org-and-project-start] and [application][application-start].
 
 ```php
     $mediaPlatform = new \Wix\Mediaplatform\MediaPlatform(
@@ -69,6 +70,7 @@ First, if you haven't done so yet, register at [Wix Media Platform][wixmp-url], 
 ```
 
 ## File Upload
+[File Upload API Documentation](https://support.wixmp.com/en/article/file-management#upload-file)
 
 ```php
 $file = fopen("...path to file...", "r");
@@ -83,25 +85,8 @@ Generates a signed URL and token, required for uploading from the browser
 $getUploadUrlResponse = $mediaPlatform->fileManager()->getUploadUrl();
 ```
 
-## Jobs
-
-The Jobs API forms the basis for all long running asynchronous operations in the platform.
-
-### Job Lifecycle
-
-A job is created by a service that performs a long running operation, such as video transcode or file import.
-
-1. On job creation it is queued for execution and assumes the 'pending' status.
-2. When the job execution commences, the job status changes to 'working'
-3. On job completion the job assumes one of the following statuses: 'success' or 'error' and the 'result' property is populated
-
-### Get Job
-
-```php
-$job = $mediaPlatform->jobManager()->getJob("job id");
-```
-
 ## File Import
+[File Import API documentation](https://support.wixmp.com/en/article/file-import)
 
 ```php
 $importFileRequest = new \Wix\Mediaplatform\Model\Request\ImportFileRequest();
@@ -116,12 +101,31 @@ $importFileRequest->setSourceUrl("from URL")
 $job = $mediaPlatform->fileManager()->importFile($importFileRequest);
 ```
 
-## Secure File URL
+## Download a Secure File
+[File Download API documentation](https://support.wixmp.com/en/article/file-download)
 
-File access can be restricted by setting the acl to 'private', in order to access them a secure URL must be generated
+File access can be restricted by setting the acl to 'private'. In order to access these files, a secure URL must be generated:
 
 ```php
 $signedUrl = $mediaPlatform->fileDownloader()->getDownloadUrl("path/to/file.ext");
+```
+
+## Jobs
+
+The [Jobs API][jobs-api] forms the basis for all long running asynchronous operations in the platform.
+
+### Job Lifecycle
+
+A job is created by a service that performs a long running operation, such as video transcode or file import.
+
+1. When a job is created, it is queued for execution, and its status is initially set to 'pending'.
+2. Once the job execution commences, the job status is updated to 'working'.
+3. On job completion, the job status is updated to either 'success' or 'error', and the 'result' property is populated (prior to the job's completion, the 'result' field is null).
+
+### Get Job
+
+```php
+$job = $mediaPlatform->jobManager()->getJob("job id");
 ```
 
 ## Image Consumption
@@ -137,10 +141,13 @@ $url = $image->toUrl();
 ```
 
 ## File Metadata & Management
+[File Management API Documentation](https://support.wixmp.com/en/article/file-management)
 
-Wix Media Platform exposes a comprehensive set of APIs tailored for the management of files.
+[File Metadata API Documentation](https://support.wixmp.com/en/article/file-metadata)
 
-### List Files
+Wix Media Platform provides a comprehensive set of APIs tailored for management of previously uploaded files.
+
+### List Files in a Directory
 
 ```php
 $response = $mediaPlatform->fileManager()->listFiles("directory path");
@@ -158,11 +165,58 @@ $fileMetadata = $mediaPlatform->fileManager()->getFileMetadataById("file id");
 $mediaPlatform->fileManager()->deleteFileById("file id");
 ```
 
+
+## Archive Functions
+[Archive API Documentation](https://support.wixmp.com/en/article/archive-service)
+
+### Archive Creation
+
+Create an archive from several files:
+
+```php
+$createArchiveRequest = new \Wix\Mediaplatform\Model\Request\CreateArchiveRequest();
+
+$source = new \Wix\Mediaplatform\Model\Job\Source();
+$source->setFileId("file id");
+
+$destination = new \Wix\Mediaplatform\Model\Job\Destination();
+$destination->setAcl("public")
+            ->setPath("/demo/file.zip");
+
+$createArchiveRequest
+        ->addSource($source)
+        ->setDestination($destination)
+        ->setArchiveType('zip');
+        
+$job = $mediaPlatform->archiveManager()->createArchive($createArchiveRequest);
+```
+
+### Archive Extraction
+
+Instead of uploading numerous files one by one, you can upload a single zip file
+and instruct the Media Platform to extract its content to a destination directory. 
+
+```php
+$extractArchiveRequest = new \Wix\Mediaplatform\Model\Request\ExtractArchiveRequest();
+
+$source = new \Wix\Mediaplatform\Model\Job\Source();
+$source->setFileId("file id");
+
+$destination = new \Wix\Mediaplatform\Model\Job\Destination();
+$destination->setAcl("public")
+               ->setDirectory("/demo/extracted");
+
+$extractArchiveRequest
+        ->setSource($source)
+        ->setDestination($destination);
+        
+$job = $mediaPlatform->archiveManager()->extractArchive($extractArchiveRequest);
+```
 ## Transcoding
 
 [Transcode API Documentation](https://support.wixmp.com/en/article/video-transcoding-5054232)
 
-To initiate a transcode request
+To initiate a transcode request:
 
 ```php
 $transcodeRequest = new TranscodeRequest();
@@ -186,53 +240,6 @@ $transcodeRequest->addSource($source)
     ->setSpecifications($specifications);
 
 $transcodeResponse = $mediaPlatform->transcodeManager()->transcodeVideo($transcodeRequest);
-```
-
-## Archive Functions
-[Archive API Documentation](https://support.wixmp.com/en/article/archive-service)
-
-### Archive Creation
-
-It is possible to create an archive from several files
-
-```php
-$createArchiveRequest = new \Wix\Mediaplatform\Model\Request\CreateArchiveRequest();
-
-$source = new \Wix\Mediaplatform\Model\Job\Source();
-$source->setFileId("file id");
-
-$destination = new \Wix\Mediaplatform\Model\Job\Destination();
-$destination->setAcl("public")
-            ->setPath("/demo/file.zip");
-
-$createArchiveRequest
-        ->addSource($source)
-        ->setDestination($destination)
-        ->setArchiveType('zip');
-        
-$job = $mediaPlatform->archiveManager()->createArchive($createArchiveRequest);
-```
-
-### Archive Extraction
-
-Instead of uploading numerous files one by one, it is possible to upload a single zip file
-and order the Media Platform to extract its content to a destination directory. 
-
-```php
-$extractArchiveRequest = new \Wix\Mediaplatform\Model\Request\ExtractArchiveRequest();
-
-$source = new \Wix\Mediaplatform\Model\Job\Source();
-$source->setFileId("file id");
-
-$destination = new \Wix\Mediaplatform\Model\Job\Destination();
-$destination->setAcl("public")
-               ->setDirectory("/demo/extracted");
-
-$extractArchiveRequest
-        ->setSource($source)
-        ->setDestination($destination);
-        
-$job = $mediaPlatform->archiveManager()->extractArchive($extractArchiveRequest);
 ```
 
 ## Reporting Issues
@@ -260,3 +267,6 @@ It offers computing, storage and application services for web, mobile and backen
 [npm-url]: https://npmjs.org/package/media-platform-js-sdk
 [travis-image]: https://travis-ci.org/wix/media-platform-php-sdk.svg?branch=master
 [travis-url]: https://travis-ci.org/wix/media-platform-php-sdk
+[org-and-project-start]: https://support.wixmp.com/en/article/creating-your-organization-and-project
+[application-start]: https://support.wixmp.com/en/article/creating-your-first-application
+[jobs-api]: https://support.wixmp.com/en/article/jobs
