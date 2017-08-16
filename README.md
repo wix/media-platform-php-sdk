@@ -128,6 +128,12 @@ A job is created by a service that performs a long running operation, such as vi
 $job = $mediaPlatform->jobManager()->getJob("job id");
 ```
 
+### Get Job Group
+
+```php
+$jobGroup = $mediaPlatform->jobManager()->getJobGroup("job group id");
+```
+
 ## Image Consumption
 
 The SDK provides a programmatic facility to generate image URLs
