@@ -17,6 +17,8 @@ use Wix\Mediaplatform\Image\Filter\Hue;
 use Wix\Mediaplatform\Image\Filter\Saturation;
 use Wix\Mediaplatform\Image\Filter\UnsharpMask;
 use Wix\Mediaplatform\Image\Framing\Crop;
+use Wix\Mediaplatform\Image\Framing\Fill;
+use Wix\Mediaplatform\Image\Framing\Fit;
 use Wix\Mediaplatform\Image\Framing\Frame;
 use Wix\Mediaplatform\Image\Framing\SmartCrop;
 use Wix\Mediaplatform\Image\Parser\FileDescriptorParser;
@@ -121,6 +123,28 @@ class Image
         return $this;
     }
 
+
+    /**
+     * @param int $width
+     * @param int $height
+     * @return $this
+     */
+    public function fill($width, $height)
+    {
+        $this->frame = new Fill($width, $height);
+        return $this;
+    }
+
+    /**
+     * @param int $width
+     * @param int $height
+     * @return $this
+     */
+    public function fit($width, $height)
+    {
+        $this->frame = new Fit($width, $height);
+        return $this;
+    }
 
     /**
      * @param int $width
