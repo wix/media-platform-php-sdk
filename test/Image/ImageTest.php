@@ -14,6 +14,26 @@ use Wix\Mediaplatform\Model\Request\CreateFileRequest;
 class ImageTest extends BaseTest
 {
 
+    public function testFit()
+    {
+        $image = new Image("//test.com/file.png/v1/fit/w_709,h_400/file.png");
+        $url = $image->fit(100, 200)
+            ->toUrl();
+
+        $this->assertEquals("//test.com/file.png/v1/fit/w_100,h_200/file.png", $url);
+    }
+
+
+    public function testFill()
+    {
+        $image = new Image("//test.com/file.png/v1/fill/w_709,h_400/file.png");
+        $url = $image->fill(100, 200)
+            ->toUrl();
+
+        $this->assertEquals("//test.com/file.png/v1/fill/w_100,h_200/file.png", $url);
+    }
+
+
     public function testCrop()
     {
         $image = new Image("//test.com/file.png/v1/crop/w_709,h_400,x_1,y_2,scl_1,q_75,usm_0.5_0.2_0.0/file.png");
