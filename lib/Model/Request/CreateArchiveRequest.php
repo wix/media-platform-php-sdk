@@ -41,12 +41,12 @@ class CreateArchiveRequest extends BaseRequest
     }
 
     /**
-     * @param Source $source
+     * @param array
      * @return CreateArchiveRequest
      */
-    public function setSource(Source $source)
+    public function setSources(array $sources)
     {
-        $this->source = $source;
+        $this->sources = $sources;
         return $this;
     }
 
