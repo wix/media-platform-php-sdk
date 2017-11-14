@@ -148,14 +148,14 @@ $url = $image->toUrl();
 
 ## Image Features
 
-The SDK provides a way to extract image features via the ImageManager
+The SDK enables extracting an image's features, which includes face detection, labeling, explicit content detection and color-hinting:
 
-### Extract Image Features from a Path or FileID
 ```php
-        $extractFeaturesRequest = new Wix\Mediaplatform\Model\Request\ExtractImageFeaturesRequest();
-        $extractFeaturesRequest->setPath('/test.jpg');
+$extractFeaturesRequest = new Wix\Mediaplatform\Model\Request\ExtractImageFeaturesRequest();
+                            ->setPath('/test.jpg')
+                            ->setFeatures({FACIAL_DETECTION, LABEL_DETECTION, COLOR_DETECTION, EXPLICIT_CONTENT_DETECTION});
 
-        $imageFeatures = $mediaPlatform->imageManager()->extractFeatures($extractFeaturesRequest);
+$imageFeatures = $mediaPlatform->imageManager()->extractFeatures($extractFeaturesRequest);
 ```
 
 
