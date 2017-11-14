@@ -31,7 +31,7 @@ class ImageFeatures extends BaseModel implements Features
     /**
      * @var array[ExplicitContent]
      */
-    protected $explicitContents;
+    protected $explicitContent;
 
     /**
      * ImageFeatures constructor.
@@ -61,10 +61,10 @@ class ImageFeatures extends BaseModel implements Features
             }
         }
 
-        $this->explicitContents = array();
-        if(!empty($payload['explicitContents']) && is_array($payload['explicitContents'])) {
-            foreach($payload['explicitContents'] as $explicitContent) {
-                $this->explicitContents[] = new ExplicitContent($explicitContent);
+        $this->explicitContent = array();
+        if(!empty($payload['explicitContent']) && is_array($payload['explicitContent'])) {
+            foreach($payload['explicitContent'] as $explicitContent) {
+                $this->explicitContent[] = new ExplicitContent($explicitContent);
             }
         }
     }
@@ -96,9 +96,9 @@ class ImageFeatures extends BaseModel implements Features
     /**
      * @return array
      */
-    public function getExplicitContents()
+    public function getExplicitContent()
     {
-        return $this->explicitContents;
+        return $this->explicitContent;
     }
 
 
@@ -108,7 +108,7 @@ class ImageFeatures extends BaseModel implements Features
             "labels=" . join(',', $this->labels) .
             ", faces=" . join(',', $this->faces) .
             ", colors=" . join(',', $this->colors) .
-            ", explicitContents=" . join(',', $this->explicitContents) .
+            ", explicitContent=" . join(',', $this->explicitContent) .
             '}';
     }
 }

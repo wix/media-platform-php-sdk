@@ -13,7 +13,7 @@
     "colors": [
       {"r": 138, "g": 218, "b": 244, "pixelFraction": 0.38548386, "score": 0.688166}
     ],
-    "explicitContents": [
+    "explicitContent": [
       {
         "name": "violence",
         "likelihood": "VERY_UNLIKELY"

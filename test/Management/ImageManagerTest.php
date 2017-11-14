@@ -40,7 +40,7 @@ class ImageManagerText extends BaseTest
         $extractFeaturesRequest->setPath('/test.jpg');
 
         $imageFeatures = self::$imageManager->extractFeatures($extractFeaturesRequest);
-        $this->assertEquals("violence", $imageFeatures->getExplicitContents()[0]->getName());
+        $this->assertEquals("violence", $imageFeatures->getExplicitContent()[0]->getName());
     }
 
 }
