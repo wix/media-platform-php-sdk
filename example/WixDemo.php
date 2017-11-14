@@ -198,7 +198,7 @@ class WixDemo
         $destination = new Destination();
         $destination->setAcl("public")->setPath("/demo/archived/document.xlsx.zip");
 
-        $createArchiveRequest->setSource($source)
+        $createArchiveRequest->addSource($source)
             ->setDestination($destination)
             ->setArchiveType('zip');
 
