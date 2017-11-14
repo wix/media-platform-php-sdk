@@ -105,6 +105,30 @@ class WixDemo
         print_r($res);
     }
 
+
+    function getImageFeatures() {
+        echo "uploading file..." . PHP_EOL;
+        $id = uniqid();
+
+        $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
+        $files = $this->mediaPlatform->fileManager()
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, null);
+
+        $fileId = $files[0]->getId();
+        $imageFeaturesRequest = new \Wix\Mediaplatform\Model\Request\ExtractImageFeaturesRequest();
+        $imageFeaturesRequest->setFileId($fileId);
+        $imageFeaturesRequest->setFeatures(array(
+            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExractors::COLOR_DETECTION,
+            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExractors::EXPLICIT_CONTENT_DETECTION,
+            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExractors::FACIAL_DETECTION,
+            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExractors::LABEL_DETECTION,
+        ));
+
+        $res = $this->mediaPlatform->imageManager()->extractFeatures($imageFeaturesRequest);
+        print_r($res);
+    }
+
+
     function getVideoMetadata() {
         echo "uploading file..." . PHP_EOL;
         $id = uniqid();
@@ -174,7 +198,7 @@ class WixDemo
         $destination = new Destination();
         $destination->setAcl("public")->setPath("/demo/archived/document.xlsx.zip");
 
-        $createArchiveRequest->setSource($source)
+        $createArchiveRequest->addSource($source)
             ->setDestination($destination)
             ->setArchiveType('zip');
 
@@ -209,7 +233,6 @@ class WixDemo
 
         print_r($job);
     }
-
 
     function transcodeVideo() {
         echo "uploading file..." . PHP_EOL;

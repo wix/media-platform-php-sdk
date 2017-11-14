@@ -42,7 +42,7 @@ Or add the following to `composer.json`:
 ```
 {
   "require": {
-    "wix/media-platform-php-sdk": "*"
+    "wix/media-platform-php-sdk": "*@dev"
   }
 }
 ```
@@ -145,6 +145,19 @@ $image->crop($width, $height, $x, $y, $scale);
 
 $url = $image->toUrl(); 
 ```
+
+## Image Features
+
+The SDK provides a way to extract image features via the ImageManager
+
+### Extract Image Features from a Path or FileID
+```php
+        $extractFeaturesRequest = new Wix\Mediaplatform\Model\Request\ExtractImageFeaturesRequest();
+        $extractFeaturesRequest->setPath('/test.jpg');
+
+        $imageFeatures = $mediaPlatform->imageManager()->extractFeatures($extractFeaturesRequest);
+```
+
 
 ## File Metadata & Management
 [File Management API Documentation](https://support.wixmp.com/en/article/file-management)

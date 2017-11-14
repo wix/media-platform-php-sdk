@@ -29,6 +29,11 @@ class ImageFeatures extends BaseModel implements Features
     protected $colors;
 
     /**
+     * @var array[ExplicitContent]
+     */
+    protected $explicitContent;
+
+    /**
      * ImageFeatures constructor.
      * @param array $payload
      */
@@ -55,7 +60,47 @@ class ImageFeatures extends BaseModel implements Features
                 $this->colors[] = new Color($color);
             }
         }
+
+        $this->explicitContent = array();
+        if(!empty($payload['explicitContent']) && is_array($payload['explicitContent'])) {
+            foreach($payload['explicitContent'] as $explicitContent) {
+                $this->explicitContent[] = new ExplicitContent($explicitContent);
+            }
+        }
     }
+
+    /**
+     * @return array
+     */
+    public function getLabels()
+    {
+        return $this->labels;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFaces()
+    {
+        return $this->faces;
+    }
+
+    /**
+     * @return array
+     */
+    public function getColors()
+    {
+        return $this->colors;
+    }
+
+    /**
+     * @return array
+     */
+    public function getExplicitContent()
+    {
+        return $this->explicitContent;
+    }
+
 
     public function __toString()
     {
@@ -63,6 +108,7 @@ class ImageFeatures extends BaseModel implements Features
             "labels=" . join(',', $this->labels) .
             ", faces=" . join(',', $this->faces) .
             ", colors=" . join(',', $this->colors) .
+            ", explicitContent=" . join(',', $this->explicitContent) .
             '}';
     }
 }
