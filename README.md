@@ -158,6 +158,36 @@ The SDK provides a way to extract image features via the ImageManager
         $imageFeatures = $mediaPlatform->imageManager()->extractFeatures($extractFeaturesRequest);
 ```
 
+### Execute an image operation and save it to a remote destination
+```php
+        // define the source
+        $source = new Source();
+        $source->setPath("/test.jpg");
+
+        // define the destination
+        $destination = new Destination();
+        $destination->setPath('/image/file/outputs/first.jpg');
+        $destination->setAcl('public');
+
+        // create an empty image object
+        $image = new Image();
+
+        // perform an image operation
+        $image->fit(100, 100);
+        
+        // create specification object
+        $specification = new ImageOperationSpecification();
+        $specification->setCommand($image);
+        $specification->setDestination($destination);
+
+        // prepare the image operation request
+        $imageOperationRequest = new ImageOperationRequest();
+        $imageOperationRequest->setSource($source);
+        $imageOperationRequest->setSpecification($specification);
+
+        // execute the request and fetch the file descriptor
+        $fileDescriptor = self::$imageManager->imageOperation($imageOperationRequest);
+```
 
 ## File Metadata & Management
 [File Management API Documentation](https://support.wixmp.com/en/article/file-management)

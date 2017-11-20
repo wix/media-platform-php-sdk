@@ -72,7 +72,7 @@ class Image
      * Image constructor.
      * @param $param string|FileDescriptor|FileMetadata
      */
-    public function __construct($param)
+    public function __construct($param = null)
     {
         if (is_string($param)) {
             ImageUrlParser::parse($this, $param);

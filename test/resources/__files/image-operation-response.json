@@ -1,0 +1,15 @@
+{
+  "message": "OK",
+  "code": 0,
+  "payload": {
+    "mimeType": "image/jpg",
+    "hash": "9535134b0284a042357a87f27cf2d2f3",
+    "urn": "urn:file:0f5781ad96c8413880c7b867bcccbba6",
+    "acl": "public",
+    "path": "/image/file/outputs/first.jpg",
+    "dateUpdated": "2017-11-15T17:53:40Z",
+    "type": "-",
+    "id": "0f5781ad96c8413880c7b867bcccbba6",
+    "size": 695507
+  }
+}
