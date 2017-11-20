@@ -11,17 +11,10 @@ namespace Wix\Mediaplatform\Management;
 
 use Wix\Mediaplatform\Configuration\Configuration;
 use Wix\Mediaplatform\Http\AuthenticatedHTTPClient;
-use Wix\Mediaplatform\Model\Job\FileImportJob;
 use Wix\Mediaplatform\Model\Metadata\Features\ImageFeatures;
 use Wix\Mediaplatform\Model\Metadata\FileDescriptor;
-use Wix\Mediaplatform\Model\Metadata\FileMetadata;
-use Wix\Mediaplatform\Model\Request\CreateFileRequest;
 use Wix\Mediaplatform\Model\Request\ExtractImageFeaturesRequest;
-use Wix\Mediaplatform\Model\Request\ImportFileRequest;
-use Wix\Mediaplatform\Model\Request\ListFilesRequest;
-use Wix\Mediaplatform\Model\Request\UploadUrlRequest;
-use Wix\Mediaplatform\Model\Response\GetUploadUrlResponse;
-use Wix\Mediaplatform\Model\Response\ListFilesResponse;
+use Wix\Mediaplatform\Model\Request\ImageOperationRequest;
 use Wix\Mediaplatform\Model\Response\RestResponse;
 
 /**
@@ -60,7 +53,8 @@ class ImageManager
      * @param ExtractImageFeaturesRequest $extractImageFeaturesRequest
      * @return ImageFeatures
      */
-    public function extractFeatures(ExtractImageFeaturesRequest $extractImageFeaturesRequest) {
+    public function extractFeatures(ExtractImageFeaturesRequest $extractImageFeaturesRequest)
+    {
         /**
          * @var RestResponse $restResponse
          */
@@ -73,4 +67,16 @@ class ImageManager
     }
 
 
+    public function imageOperation(ImageOperationRequest $imageOperationRequest)
+    {
+        /**
+         * @var RestResponse $restResponse
+         */
+        $restResponse = $this->authenticatedHttpClient->post(
+            $this->baseUrl . "/images/operations",
+            $imageOperationRequest->toParams()
+        );
+
+        return new FileDescriptor($restResponse->getPayload());
+    }
 }

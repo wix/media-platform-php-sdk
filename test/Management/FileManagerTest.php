@@ -83,10 +83,9 @@ class FileManagerTest extends BaseTest
         $this->addToAssertionCount(1);
     }
 
-    public function testDeleteFileByPath() {
-        self::setUpMockResponse(array("Content-Type" => "application/json"), "null-payload-response.json");
-        self::$fileManager->deleteFileByPath("/file.txt");
-        $this->addToAssertionCount(1);
-
+    public function testUpdateFileAcl() {
+        self::setUpMockResponse(array("Content-Type" => "application/json"), "update-file-acl-response.json");
+        $fileDescriptor = self::$fileManager->updateFileAcl("/file.txt", null, "public");
+        $this->assertEquals("public", $fileDescriptor->getAcl());
     }
 }

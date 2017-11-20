@@ -3,6 +3,7 @@ use Wix\Mediaplatform\Image\Image;
 use Wix\Mediaplatform\MediaPlatform;
 use Wix\Mediaplatform\Model\Job\Destination;
 use Wix\Mediaplatform\Model\Job\FileImportJob;
+use Wix\Mediaplatform\Model\Job\ImageOperationSpecification;
 use Wix\Mediaplatform\Model\Job\QualityRange;
 use Wix\Mediaplatform\Model\Job\Resolution;
 use Wix\Mediaplatform\Model\Job\Source;
@@ -12,6 +13,7 @@ use Wix\Mediaplatform\Model\Job\VideoCodec;
 use Wix\Mediaplatform\Model\Job\VideoSpecification;
 use Wix\Mediaplatform\Model\Request\CreateArchiveRequest;
 use Wix\Mediaplatform\Model\Request\ExtractArchiveRequest;
+use Wix\Mediaplatform\Model\Request\ImageOperationRequest;
 use Wix\Mediaplatform\Model\Request\ImportFileRequest;
 use Wix\Mediaplatform\Model\Request\ListFilesRequest;
 use Wix\Mediaplatform\Model\Request\SearchJobsRequest;
@@ -105,6 +107,19 @@ class WixDemo
         print_r($res);
     }
 
+    function updateFileAcl() {
+        echo "uploading file..." . PHP_EOL;
+        $id = uniqid();
+
+        $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
+        $files = $this->mediaPlatform->fileManager()
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, 'private');
+
+        $fileId = $files[0]->getId();
+        $res = $this->mediaPlatform->fileManager()->updateFileAcl(null, $fileId, 'public');
+        print_r($res);
+    }
+
 
     function getImageFeatures() {
         echo "uploading file..." . PHP_EOL;
@@ -128,6 +143,38 @@ class WixDemo
         print_r($res);
     }
 
+    function executeImageOperation() {
+        echo "uploading file..." . PHP_EOL;
+        $id = uniqid();
+
+        $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
+        $files = $this->mediaPlatform->fileManager()
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, null);
+
+        $fileId = $files[0]->getId();
+
+        $source = new Source();
+        $source->setFileId($fileId);
+
+        $destination = new Destination();
+        $destination->setPath('/demo/fit-image-100-100.jpg');
+        $destination->setAcl('public');
+
+        $image = new Image();
+
+        $image->fit(100, 100);
+        $specification = new ImageOperationSpecification();
+        $specification->setCommand($image);
+        $specification->setDestination($destination);
+
+        $imageOperationRequest = new ImageOperationRequest();
+        $imageOperationRequest->setSource($source);
+        $imageOperationRequest->setSpecification($specification);
+
+        $fileDescriptor = $this->mediaPlatform->imageManager()->imageOperation($imageOperationRequest);
+
+        print_r($fileDescriptor);
+    }
 
     function getVideoMetadata() {
         echo "uploading file..." . PHP_EOL;

@@ -158,6 +158,36 @@ $extractFeaturesRequest = new Wix\Mediaplatform\Model\Request\ExtractImageFeatur
 $imageFeatures = $mediaPlatform->imageManager()->extractFeatures($extractFeaturesRequest);
 ```
 
+### Execute an image operation and save it to a remote destination
+```php
+        // define the source
+        $source = new Source();
+        $source->setPath("/test.jpg");
+
+        // define the destination
+        $destination = new Destination();
+        $destination->setPath('/image/file/outputs/first.jpg');
+        $destination->setAcl('public');
+
+        // create an empty image object
+        $image = new Image();
+
+        // perform an image operation
+        $image->fit(100, 100);
+        
+        // create specification object
+        $specification = new ImageOperationSpecification();
+        $specification->setCommand($image);
+        $specification->setDestination($destination);
+
+        // prepare the image operation request
+        $imageOperationRequest = new ImageOperationRequest();
+        $imageOperationRequest->setSource($source);
+        $imageOperationRequest->setSpecification($specification);
+
+        // execute the request and fetch the file descriptor
+        $fileDescriptor = self::$imageManager->imageOperation($imageOperationRequest);
+```
 
 ## File Metadata & Management
 [File Management API Documentation](https://support.wixmp.com/en/article/file-management)
@@ -184,6 +214,13 @@ $fileMetadata = $mediaPlatform->fileManager()->getFileMetadataById("file id");
 $mediaPlatform->fileManager()->deleteFileById("file id");
 ```
 
+### Update File ACL
+
+```php
+// mandatory: one of $path or $file
+// mandatory: $acl ('private' or 'public'
+$fileDescriptor = $mediaPlatform->fileManager()->updateFileAcl($path, $fileId, $acl);
+```
 
 ## Archive Functions
 [Archive API Documentation](https://support.wixmp.com/en/article/archive-service)
