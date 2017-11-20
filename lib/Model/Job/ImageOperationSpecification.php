@@ -69,7 +69,7 @@ class ImageOperationSpecification extends BaseModel implements Specification
         $clonedImage->setFileName("");
         $clonedImage->setPath("");
 
-        $this->command = $clonedImage->toUrl();
+        $this->command = rtrim($clonedImage->toUrl(), '/');
         return $this;
     }
 
