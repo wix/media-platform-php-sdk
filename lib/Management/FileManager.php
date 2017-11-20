@@ -9,6 +9,7 @@
 namespace Wix\Mediaplatform\Management;
 
 
+use SebastianBergmann\CodeCoverage\Node\File;
 use Wix\Mediaplatform\Configuration\Configuration;
 use Wix\Mediaplatform\Http\AuthenticatedHTTPClient;
 use Wix\Mediaplatform\Model\Job\FileImportJob;
@@ -181,6 +182,20 @@ class FileManager
     public function deleteFileById($fileId)
     {
         $this->authenticatedHttpClient->delete($this->baseUrl . "/files/" . $fileId);
+    }
+
+
+    public function updateFileAcl($path = null, $id = null, $acl = null) {
+        $restResponse = $this->authenticatedHttpClient->put(
+            $this->baseUrl . "/files",
+            array(
+                "path" => $path,
+                "id" => $id,
+                "acl" => $acl
+            )
+        );
+        return new FileDescriptor($restResponse->getPayload());
+
     }
 
 }

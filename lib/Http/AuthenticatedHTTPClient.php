@@ -76,6 +76,16 @@ class AuthenticatedHTTPClient
         return $this->send($request, $options);
     }
 
+    public function put($url, $params = array(), $options = array()) {
+        if(is_object($params) && method_exists($params, 'toArray')) {
+            $params = $params->toArray();
+        }
+
+        $headers = array('Authorization' => $this->authenticator->getHeader());
+        $request = new Request("PUT", $url, $headers, json_encode($params));
+        return $this->send($request, $options);
+    }
+
     public function delete($url, $params = array(), $options = array()) {
         if(is_object($params)) {
             $params = $params->toArray();

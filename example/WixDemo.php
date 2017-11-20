@@ -107,6 +107,19 @@ class WixDemo
         print_r($res);
     }
 
+    function updateFileAcl() {
+        echo "uploading file..." . PHP_EOL;
+        $id = uniqid();
+
+        $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
+        $files = $this->mediaPlatform->fileManager()
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, 'private');
+
+        $fileId = $files[0]->getId();
+        $res = $this->mediaPlatform->fileManager()->updateFileAcl(null, $fileId, 'public');
+        print_r($res);
+    }
+
 
     function getImageFeatures() {
         echo "uploading file..." . PHP_EOL;
