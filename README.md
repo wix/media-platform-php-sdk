@@ -214,6 +214,13 @@ $fileMetadata = $mediaPlatform->fileManager()->getFileMetadataById("file id");
 $mediaPlatform->fileManager()->deleteFileById("file id");
 ```
 
+### Update File ACL
+
+```php
+// mandatory: one of $path or $file
+// mandatory: $acl ('private' or 'public'
+$fileDescriptor = $mediaPlatform->fileManager()->updateFileAcl($path, $fileId, $acl);
+```
 
 ## Archive Functions
 [Archive API Documentation](https://support.wixmp.com/en/article/archive-service)
