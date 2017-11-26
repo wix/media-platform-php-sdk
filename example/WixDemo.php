@@ -133,10 +133,10 @@ class WixDemo
         $imageFeaturesRequest = new \Wix\Mediaplatform\Model\Request\ExtractImageFeaturesRequest();
         $imageFeaturesRequest->setFileId($fileId);
         $imageFeaturesRequest->setFeatures(array(
-            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExractors::COLOR_DETECTION,
-            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExractors::EXPLICIT_CONTENT_DETECTION,
-            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExractors::FACIAL_DETECTION,
-            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExractors::LABEL_DETECTION,
+            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExtractors::COLOR_DETECTION,
+            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExtractors::EXPLICIT_CONTENT_DETECTION,
+            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExtractors::FACIAL_DETECTION,
+            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExtractors::LABEL_DETECTION,
         ));
 
         $res = $this->mediaPlatform->imageManager()->extractFeatures($imageFeaturesRequest);

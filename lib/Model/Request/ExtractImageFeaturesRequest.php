@@ -26,7 +26,7 @@ class ExtractImageFeaturesRequest extends BaseRequest
 
     /**
      * @var array[string]
-     * @enum Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExractors
+     * @enum Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExtractors
      */
     private $features;
 
