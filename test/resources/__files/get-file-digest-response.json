@@ -1,0 +1,22 @@
+{
+  "code": 0,
+  "message": "OK",
+  "payload": {
+    "mediaType": "image",
+    "fileDescriptor": {
+      "mimeType": "image/jpg",
+      "hash": null,
+      "acl": "private",
+      "path": "/images/animals/cat.jpg",
+      "type": "-",
+      "id": "2145ae56cd5c47c79c05d4cfef5f1078",
+      "size": 15431
+    },
+    "basic": {
+      "height": 600,
+      "width": 500,
+      "colorspace": null,
+      "format": "jpeg"
+    }
+  }
+}

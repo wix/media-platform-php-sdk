@@ -46,7 +46,9 @@ class FileMetadata extends BaseModel
     public function __construct(Array $payload)
     {
         parent::__construct($payload);
-        $this->fileDescriptor = new FileDescriptor($payload['fileDescriptor']);
+        if(!empty($payload['fileDescriptor'])) {
+            $this->fileDescriptor = new FileDescriptor($payload['fileDescriptor']);
+        }
 
         if($payload['mediaType'] == VideoBasicMetadata::MEDIA_TYPE) {
             $this->basic = !empty($payload['basic']) ? new VideoBasicMetadata($payload['basic']) : null;

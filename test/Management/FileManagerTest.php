@@ -87,5 +87,18 @@ class FileManagerTest extends BaseTest
         self::setUpMockResponse(array("Content-Type" => "application/json"), "update-file-acl-response.json");
         $fileDescriptor = self::$fileManager->updateFileAcl("/file.txt", null, "public");
         $this->assertEquals("public", $fileDescriptor->getAcl());
+
+        self::setUpMockResponse(array("Content-Type" => "application/json"), "update-file-acl-response.json");
+        $fileDescriptor = self::$fileManager->updateFileAcl(null, "2145ae56cd5c47c79c05d4cfef5f1078", "public");
+        $this->assertEquals("public", $fileDescriptor->getAcl());
+
+        $fileDescriptor = self::$fileManager->updateFileAcl(null, null, null);
+        $this->assertEmpty($fileDescriptor);
+    }
+
+    public function testGetFileDigest() {
+        self::setUpMockResponse(array("Content-Type" => "application/json"), "get-file-digest-response.json");
+        $fileDescriptor = self::$fileManager->getFileDigest("/file.txt");
+        $this->assertEquals("2145ae56cd5c47c79c05d4cfef5f1078", $fileDescriptor->getFileDescriptor()->getId());
     }
 }

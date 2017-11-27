@@ -222,6 +222,14 @@ $mediaPlatform->fileManager()->deleteFileById("file id");
 $fileDescriptor = $mediaPlatform->fileManager()->updateFileAcl($path, $fileId, $acl);
 ```
 
+### Get File Digest (Basic Metadata)
+In order to get the basic uploaded file metadata synchronously, it's possible to call the digest API
+
+```php
+        $filePath = "/path/to/some/file.jpg";
+        $fileMetadataResponse = $mediaPlatform->fileManager()->getFileDigest($filePath);
+```
+
 ## Archive Functions
 [Archive API Documentation](https://support.wixmp.com/en/article/archive-service)
 

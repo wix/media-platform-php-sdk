@@ -185,17 +185,41 @@ class FileManager
     }
 
 
+    /**
+     * @param null $path
+     * @param null $id
+     * @param null $acl
+     * @return FileDescriptor
+     */
     public function updateFileAcl($path = null, $id = null, $acl = null) {
-        $restResponse = $this->authenticatedHttpClient->put(
-            $this->baseUrl . "/files",
+        if((!is_null($path) || !is_null($id)) && !is_null($acl) ) {
+            $restResponse = $this->authenticatedHttpClient->put(
+                $this->baseUrl . "/files",
+                array(
+                    "path" => $path,
+                    "id" => $id,
+                    "acl" => $acl
+                )
+            );
+            return new FileDescriptor($restResponse->getPayload());
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * @param $path
+     * @return FileMetadata
+     */
+    public function getFileDigest($path) {
+        $restResponse = $this->authenticatedHttpClient->get(
+            $this->baseUrl . "/digest",
             array(
                 "path" => $path,
-                "id" => $id,
-                "acl" => $acl
             )
         );
-        return new FileDescriptor($restResponse->getPayload());
 
+        return new FileMetadata($restResponse->getPayload());
     }
 
 }
