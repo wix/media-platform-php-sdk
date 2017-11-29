@@ -188,6 +188,39 @@ class WixDemo
         print_r($fileDescriptor);
     }
 
+    function executeImageOperationOnPrivateFile() {
+        echo "uploading file..." . PHP_EOL;
+        $id = uniqid();
+
+        $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
+        $files = $this->mediaPlatform->fileManager()
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, "private");
+
+        $fileId = $files[0]->getId();
+
+        $source = new Source();
+        $source->setFileId($fileId);
+
+        $destination = new Destination();
+        $destination->setPath('/demo/fit-image-100-100.jpg');
+        $destination->setAcl('public');
+
+        $image = new Image();
+
+        $image->fit(100, 100);
+        $specification = new ImageOperationSpecification();
+        $specification->setCommand($image);
+        $specification->setDestination($destination);
+
+        $imageOperationRequest = new ImageOperationRequest();
+        $imageOperationRequest->setSource($source);
+        $imageOperationRequest->setSpecification($specification);
+
+        $fileDescriptor = $this->mediaPlatform->imageManager()->imageOperation($imageOperationRequest);
+
+        print_r($fileDescriptor);
+    }
+
     function getVideoMetadata() {
         echo "uploading file..." . PHP_EOL;
         $id = uniqid();
