@@ -169,7 +169,7 @@ class WixDemo
         $source->setFileId($fileId);
 
         $destination = new Destination();
-        $destination->setPath('/demo/fit-image-100-100.jpg');
+        $destination->setPath('/demo/fit-image-100-100.' . $id . '.jpg');
         $destination->setAcl('public');
 
         $image = new Image();
@@ -202,7 +202,7 @@ class WixDemo
         $source->setFileId($fileId);
 
         $destination = new Destination();
-        $destination->setPath('/demo/fit-image-100-100.jpg');
+        $destination->setPath('/demo/fit-image-100-100.' . $id . '.jpg');
         $destination->setAcl('public');
 
         $image = new Image();
