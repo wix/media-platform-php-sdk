@@ -146,12 +146,51 @@ $image->crop($width, $height, $x, $y, $scale);
 $url = $image->toUrl(); 
 ```
 
+## Image Watermark Manifest Creation
+
+It's possible to create a watermark manifest, and later apply it in any image manipulation url.
+Adding a watermark manifest to secured (private) files will make these files available publicly via the image API, only after the watermark manifest is created for the specific image, and only if the wm_{manifestId} parameter is present.
+
+```php
+        // define the source image
+        $source = new Source();
+        $source->setPath("/image/path/file.jpg");
+
+        // define the source for the watermark image
+        $watermarkSource = new Source();
+        $watermarkSource->setPath("/image/watermark/file.png");
+
+        // define the watermark specification options
+        $specification = new ImageWatermarkSpecification();
+        $specification->setWatermark($watermarkSource);
+        $specification->setPosition(7);
+        $specification->setOpacity(90);
+        $specification->setScale(0);
+
+        // issue the request
+        $watermarkRequest = new ImageWatermarkRequest();
+        $watermarkRequest->setSource($source);
+        $watermarkRequest->setSpecification($specification);
+
+        $watermarkManifest =  self::$imageManager->createWatermarkManifest($watermarkRequest);
+        
+        // example: get a watermarked image url using the watermark manifest
+        $image = new Image();
+        $imageUrl = $image->setPath('/image/path/file.jpg')
+            ->setFilename('watermarked.jpg')
+            ->fill(100, 100)
+            ->watermark( $watermarkManifest->getId() )
+            ->toUrl();
+        // $imageUrl will be: '/image/path/file.jpg/v1/fill/w_100,h_100,wm_abcdefghijklmnop/watermarked.jpg'
+
+```
+
 ## Image Features
 
 The SDK enables extracting an image's features, which includes face detection, labeling, explicit content detection and color-hinting:
 
 ```php
-$extractFeaturesRequest = new Wix\Mediaplatform\Model\Request\ExtractImageFeaturesRequest();
+$extractFeaturesRequest = new Wix\Mediaplatform\Model\Request\ExtractImageFeaturesRequest()
                             ->setPath('/test.jpg')
                             ->setFeatures({FACIAL_DETECTION, LABEL_DETECTION, COLOR_DETECTION, EXPLICIT_CONTENT_DETECTION});
 

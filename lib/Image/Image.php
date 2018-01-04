@@ -16,6 +16,7 @@ use Wix\Mediaplatform\Image\Filter\Contrast;
 use Wix\Mediaplatform\Image\Filter\Hue;
 use Wix\Mediaplatform\Image\Filter\Saturation;
 use Wix\Mediaplatform\Image\Filter\UnsharpMask;
+use Wix\Mediaplatform\Image\Filter\Watermark;
 use Wix\Mediaplatform\Image\Framing\Crop;
 use Wix\Mediaplatform\Image\Framing\Fill;
 use Wix\Mediaplatform\Image\Framing\Fit;
@@ -243,6 +244,14 @@ class Image
     public function jpeg($quality)
     {
         return $this->addOption(new JPEG($quality));
+    }
+
+    /**
+     * @param $manifestId
+     * @return Image
+     */
+    public function watermark($manifestId) {
+        return $this->addOption(new Watermark($manifestId));
     }
 
     /**

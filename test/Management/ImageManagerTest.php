@@ -12,11 +12,13 @@ use Wix\Mediaplatform\BaseTest;
 use Wix\Mediaplatform\Image\Image;
 use Wix\Mediaplatform\Model\Job\Destination;
 use Wix\Mediaplatform\Model\Job\ImageOperationSpecification;
+use Wix\Mediaplatform\Model\Job\ImageWatermarkSpecification;
 use Wix\Mediaplatform\Model\Job\Source;
 use Wix\Mediaplatform\Model\Request\ExtractImageFeaturesRequest;
 use Wix\Mediaplatform\Model\Request\ImageOperationRequest;
+use Wix\Mediaplatform\Model\Request\ImageWatermarkRequest;
 
-class ImageManagerText extends BaseTest
+class ImageManagerTest extends BaseTest
 {
     /**
      * @var ImageManager
@@ -73,6 +75,30 @@ class ImageManagerText extends BaseTest
 
 
         $this->assertEquals("/image/file/outputs/first.jpg", $fileDescriptor->getPath());
+    }
+
+    public function testImageWatermark() {
+        self::setUpMockResponse(array("Content-Type" => "application/json"), "image-watermark-response.json");
+        // 0f5781ad96c8413880c7b867bcccbba6
+
+        $source = new Source();
+        $source->setPath("/image/path/file.jpg");
+
+        $watermarkSource = new Source();
+        $watermarkSource->setPath("/image/watermark/file.png");
+
+        $specification = new ImageWatermarkSpecification();
+        $specification->setWatermark($watermarkSource);
+        $specification->setPosition(7);
+        $specification->setOpacity(90);
+        $specification->setScale(0);
+
+        $watermarkRequest = new ImageWatermarkRequest();
+        $watermarkRequest->setSource($source);
+        $watermarkRequest->setSpecification($specification);
+
+        $watermarkManifest =  self::$imageManager->createWatermarkManifest($watermarkRequest);
+        $this->assertEquals("0f5781ad96c8413880c7b867bcccbba6", $watermarkManifest->getId());
     }
 
 }

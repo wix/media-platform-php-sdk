@@ -13,8 +13,10 @@ use Wix\Mediaplatform\Configuration\Configuration;
 use Wix\Mediaplatform\Http\AuthenticatedHTTPClient;
 use Wix\Mediaplatform\Model\Metadata\Features\ImageFeatures;
 use Wix\Mediaplatform\Model\Metadata\FileDescriptor;
+use Wix\Mediaplatform\Model\Metadata\WatermarkManifest;
 use Wix\Mediaplatform\Model\Request\ExtractImageFeaturesRequest;
 use Wix\Mediaplatform\Model\Request\ImageOperationRequest;
+use Wix\Mediaplatform\Model\Request\ImageWatermarkRequest;
 use Wix\Mediaplatform\Model\Response\RestResponse;
 
 /**
@@ -66,7 +68,26 @@ class ImageManager
         return new ImageFeatures($restResponse->getPayload());
     }
 
+    /**
+     * @param ImageWatermarkRequest $imageWatermarkRequest
+     * @return WatermarkManifest
+     */
+    public function createWatermarkManifest(ImageWatermarkRequest $imageWatermarkRequest) {
+        /**
+         * @var RestResponse $restResponse
+         */
+        $restResponse = $this->authenticatedHttpClient->post(
+            $this->baseUrl . "/images/watermark",
+            $imageWatermarkRequest->toParams()
+        );
 
+        return new WatermarkManifest($restResponse->getPayload());
+    }
+
+    /**
+     * @param ImageOperationRequest $imageOperationRequest
+     * @return FileDescriptor
+     */
     public function imageOperation(ImageOperationRequest $imageOperationRequest)
     {
         /**

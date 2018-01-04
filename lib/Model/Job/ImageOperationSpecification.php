@@ -98,7 +98,7 @@ class ImageOperationSpecification extends BaseModel implements Specification
      * @return string
      */
     public function __toString() {
-        return "ImportFileSpecification{" .
+        return "ImageOperationSpecification{" .
             "command='" . $this->command . '\'' .
             ", destination=" . $this->destination .
             '}';

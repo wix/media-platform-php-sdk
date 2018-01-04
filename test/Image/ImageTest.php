@@ -112,4 +112,13 @@ class ImageTest extends BaseTest
 
         $this->assertEquals("//images-wixmp-8cbe8e680e95a22c77c8d3d0.wixmp.com/media_manager_demo/common/SanFranHouse.jpg/v1/crop/w_475,h_267,x_1,y_2,scl_1/SanFranHouse.jpg", $url);
     }
+
+    public function testWatermark()
+    {
+        $image = new Image("//test.com/images/file.png/v1/scrop/w_100,h_200,q_75,usm_0.50_0.20_0.00/file.png");
+        $url = $image->watermark("abcdefghijklmnopqrstuvwxyz1234567890")->toUrl();
+
+        $this->assertEquals("//test.com/images/file.png/v1/scrop/w_100,h_200,q_75,usm_0.50_0.20_0.00,wm_abcdefghijklmnopqrstuvwxyz1234567890/file.png", $url);
+
+    }
 }

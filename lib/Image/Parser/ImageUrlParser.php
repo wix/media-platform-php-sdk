@@ -17,6 +17,7 @@ use Wix\Mediaplatform\Image\Filter\Contrast;
 use Wix\Mediaplatform\Image\Filter\Hue;
 use Wix\Mediaplatform\Image\Filter\Saturation;
 use Wix\Mediaplatform\Image\Filter\UnsharpMask;
+use Wix\Mediaplatform\Image\Filter\Watermark;
 use Wix\Mediaplatform\Image\Framing\Crop;
 use Wix\Mediaplatform\Image\Image;
 use Wix\Mediaplatform\Image\Metadata;
@@ -37,6 +38,7 @@ class ImageUrlParser
         Hue::KEY => 'Wix\Mediaplatform\Image\Filter\Hue',
         Saturation::KEY => 'Wix\Mediaplatform\Image\Filter\Saturation',
         UnsharpMask::KEY => 'Wix\Mediaplatform\Image\Filter\UnsharpMask',
+        Watermark::KEY => 'Wix\Mediaplatform\Image\Filter\Watermark',
     );
 
     /**
