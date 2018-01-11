@@ -374,7 +374,7 @@ class WixDemo
             TranscodeSpecification::factory()
                 ->setDestination(
                     Destination::factory()
-                        ->setDirectory("/demo/encodes/$id/")
+                        ->setDirectory("/demo/encodes/$id")
                         ->setAcl("public")
                 )->setQualityRange(
                     QualityRange::factory()
