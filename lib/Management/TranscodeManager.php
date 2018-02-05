@@ -11,7 +11,9 @@ namespace Wix\Mediaplatform\Management;
 
 use Wix\Mediaplatform\Configuration\Configuration;
 use Wix\Mediaplatform\Http\AuthenticatedHTTPClient;
+use Wix\Mediaplatform\Model\Job\ExtractPostersJobResult;
 use Wix\Mediaplatform\Model\Job\TranscodeJobResult;
+use Wix\Mediaplatform\Model\Request\ExtractPostersRequest;
 use Wix\Mediaplatform\Model\Request\TranscodeRequest;
 
 /**
@@ -52,5 +54,10 @@ class TranscodeManager
     public function transcodeVideo(TranscodeRequest $transcodeRequest) {
         $restResponse = $this->authenticatedHttpClient->post($this->baseUrl . "/av/transcode", $transcodeRequest);
         return new TranscodeJobResult($restResponse->getPayload());
+    }
+
+    public function extractPosters(ExtractPostersRequest $extractPostersRequest) {
+	    $restResponse = $this->authenticatedHttpClient->post($this->baseUrl . "/av/posters", $extractPostersRequest);
+	    return new ExtractPostersJobResult($restResponse->getPayload());
     }
 }
