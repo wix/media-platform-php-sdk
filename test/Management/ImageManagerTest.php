@@ -14,6 +14,7 @@ use Wix\Mediaplatform\Model\Job\Destination;
 use Wix\Mediaplatform\Model\Job\ImageOperationSpecification;
 use Wix\Mediaplatform\Model\Job\ImageWatermarkSpecification;
 use Wix\Mediaplatform\Model\Job\Source;
+use Wix\Mediaplatform\Model\Request\Enum\ImageWatermarkPosition;
 use Wix\Mediaplatform\Model\Request\ExtractImageFeaturesRequest;
 use Wix\Mediaplatform\Model\Request\ImageOperationRequest;
 use Wix\Mediaplatform\Model\Request\ImageWatermarkRequest;
@@ -89,7 +90,7 @@ class ImageManagerTest extends BaseTest
 
         $specification = new ImageWatermarkSpecification();
         $specification->setWatermark($watermarkSource);
-        $specification->setPosition(7);
+        $specification->setPosition(ImageWatermarkPosition::SOUTHWEST);
         $specification->setOpacity(90);
         $specification->setScale(0);
 

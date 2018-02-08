@@ -163,7 +163,7 @@ Adding a watermark manifest to secured (private) files will make these files ava
         // define the watermark specification options
         $specification = new ImageWatermarkSpecification();
         $specification->setWatermark($watermarkSource);
-        $specification->setPosition(7);
+        $specification->setPosition(ImageWatermarkPosition::CENTER);
         $specification->setOpacity(90);
         $specification->setScale(0);
 

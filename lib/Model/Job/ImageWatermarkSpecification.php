@@ -29,6 +29,7 @@ class ImageWatermarkSpecification extends BaseModel implements Specification
     protected $opacity;
 
     /**
+     * @enum ImageWatermarkPosition
      * @var integer
      */
     protected $scale;
