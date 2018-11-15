@@ -15,6 +15,7 @@ use Wix\Mediaplatform\Http\AuthenticatedHTTPClient;
 use Wix\Mediaplatform\Model\Job\FileImportJob;
 use Wix\Mediaplatform\Model\Metadata\FileDescriptor;
 use Wix\Mediaplatform\Model\Metadata\FileMetadata;
+use Wix\Mediaplatform\Model\Request\CopyFileRequest;
 use Wix\Mediaplatform\Model\Request\CreateFileRequest;
 use Wix\Mediaplatform\Model\Request\ImportFileRequest;
 use Wix\Mediaplatform\Model\Request\ListFilesRequest;
@@ -90,6 +91,17 @@ class FileManager
     {
         return $this->fileUploader->importFile($importFileRequest);
     }
+
+
+	/**
+	 * @param CopyFileRequest $copyFileRequest
+	 * @return FileDescriptor
+	 */
+    public function copyFile(CopyFileRequest $copyFileRequest)
+    {
+    	return $this->fileUploader->copyFile($copyFileRequest);
+    }
+
 
     /**
      * @param CreateFileRequest $createFileRequest

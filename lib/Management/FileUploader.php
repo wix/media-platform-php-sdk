@@ -13,6 +13,7 @@ use Wix\Mediaplatform\Configuration\Configuration;
 use Wix\Mediaplatform\Http\AuthenticatedHTTPClient;
 use Wix\Mediaplatform\Model\Job\FileImportJob;
 use Wix\Mediaplatform\Model\Metadata\FileDescriptor;
+use Wix\Mediaplatform\Model\Request\CopyFileRequest;
 use Wix\Mediaplatform\Model\Request\ImportFileRequest;
 use Wix\Mediaplatform\Model\Request\UploadUrlRequest;
 use Wix\Mediaplatform\Model\Response\GetUploadUrlResponse;
@@ -122,6 +123,19 @@ class FileUploader
         );
 
         return JobManager::createJobObjectFromPayload($restResponse->getPayload());
+    }
+
+    /**
+     * @param CopyFileRequest $copyFileRequest
+     * @return FileDescriptor
+     */
+    public function copyFile(CopyFileRequest $copyFileRequest) {
+	    $restResponse = $this->authenticatedHTTPClient->post(
+		    $this->apiBaseUrl . "/copy/file",
+		    $copyFileRequest
+	    );
+
+	    return new FileDescriptor($restResponse->getPayload());
     }
 
     /**

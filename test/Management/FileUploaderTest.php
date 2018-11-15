@@ -10,6 +10,8 @@ namespace Wix\Mediaplatform\Management;
 
 use Wix\Mediaplatform\BaseTest;
 use Wix\Mediaplatform\Model\Job\Destination;
+use Wix\Mediaplatform\Model\Job\Source;
+use Wix\Mediaplatform\Model\Request\CopyFileRequest;
 use Wix\Mediaplatform\Model\Request\CreateFileRequest;
 use Wix\Mediaplatform\Model\Request\ImportFileRequest;
 
@@ -56,8 +58,29 @@ class FileUploaderTest extends BaseTest
         $this->assertEquals("c4516b12744b4ef08625f016a80aed3a", $files[0]->getId());
     }
 
+	public function testCopyFile() {
+		self::setUpMockResponse(array("Content-Type" => "application/json"),
+			"copy-file-response.json");
 
-    public function testImportFilePending() {
+		$destination = new Destination();
+		$destination->setAcl("public")
+		            ->setDirectory("/foo");
+
+		$source = new Source();
+		$source->setPath('/bar/file.jpg');
+
+		$copyFileRequest = new CopyFileRequest();
+		$copyFileRequest->setSource($source)
+			->setDestination($destination);
+
+		$fileDescriptor = self::$fileUploader->copyFile($copyFileRequest);
+
+		$this->assertEquals("/foo/file.jpg", $fileDescriptor->getPath());
+
+	}
+
+
+	public function testImportFilePending() {
         self::setUpMockResponse(array("Content-Type" => "application/json"), "import-file-pending-response.json");
         $destination = new Destination();
         $destination->setAcl("public")
@@ -71,7 +94,6 @@ class FileUploaderTest extends BaseTest
         $this->assertEquals("71f0d3fde7f348ea89aa1173299146f8_19e137e8221b4a709220280b432f947f", $job->getId());
     }
 
-    
     public function testImportFileSuccess(){
         self::setUpMockResponse(array("Content-Type" => "application/json"), "import-file-success-response.json");
 

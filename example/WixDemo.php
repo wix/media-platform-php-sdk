@@ -11,6 +11,7 @@ use Wix\Mediaplatform\Model\Job\TranscodeJob;
 use Wix\Mediaplatform\Model\Job\TranscodeSpecification;
 use Wix\Mediaplatform\Model\Job\VideoCodec;
 use Wix\Mediaplatform\Model\Job\VideoSpecification;
+use Wix\Mediaplatform\Model\Request\CopyFileRequest;
 use Wix\Mediaplatform\Model\Request\CreateArchiveRequest;
 use Wix\Mediaplatform\Model\Request\ExtractArchiveRequest;
 use Wix\Mediaplatform\Model\Request\ImageOperationRequest;
@@ -69,6 +70,25 @@ class WixDemo
             ->toUrl();
 
         echo "SEE IMPORTED IMAGE @ " . $url . PHP_EOL;
+    }
+
+    function copyFile() {
+	    $id = uniqid();
+
+	    $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
+	    $files = $this->mediaPlatform->fileManager()
+	                                 ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, null);
+
+	    $source = $files[0];
+	    $destination = new Destination();
+	    $destination->setPath('/demo/upload/' . $id .'.golan_copy.jpg');
+
+	    $copyFileRequest = new CopyFileRequest();
+	    $copyFileRequest->setSource($source);
+	    $copyFileRequest->setDestination($destination);
+
+	    $res = $this->mediaPlatform->fileManager()->copyFile($copyFileRequest);
+	    print_r($res);
     }
 
     function uploadImage() {
