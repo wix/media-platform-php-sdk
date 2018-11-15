@@ -18,7 +18,8 @@ class VERB
     const FILE_LIST = NS::SERVICE . "file.list";
     const FILE_DOWNLOAD = NS::SERVICE . "file.download";
     const FILE_DELETE = NS::SERVICE . "file.delete";
-    
+    const FILE_COPY = NS::SERVICE . "file.copy";
+
     const AV_TRANSCODE = NS::SERVICE . "av.transcode";
     const AV_REPACKAGE = NS::SERVICE . "av.repackage";
     
