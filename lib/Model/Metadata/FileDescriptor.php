@@ -148,8 +148,8 @@ class FileDescriptor extends BaseModel
             ", type='" . $this->type . '\'' .
             ", size=" . $this->size .
             ", acl='" . $this->acl . '\'' .
-            ", dateCreated=" . $this->dateCreated->format(DateTime::ISO8601) .
-            ", dateUpdated=" . $this->dateUpdated->format(DateTime::ISO8601) .
+            ", dateCreated=" . (is_object($this->dateCreated) ? $this->dateCreated->format(DateTime::ISO8601) : $this->dateCreated) .
+            ", dateUpdated=" . (is_object($this->dateUpdated) ? $this->dateUpdated->format(DateTime::ISO8601) : $this->dateUpdated) .
             '}';
     }
 }
