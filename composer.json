@@ -1,6 +1,5 @@
 {
     "name": "wix/media-platform-php-sdk",
-    "version": "1.0.0",
     "description": "The official Wix Media Platform PHP SDK",
     "keywords": [
         "wix",
@@ -9,7 +8,7 @@
         "api"
     ],
     "homepage": "http://gcp.wixmp.com",
-    "license": "SEE LICENSE IN LICENSE.md",
+    "license": "0BSD",
     "authors": [
         {
             "name": "Wix.com",
