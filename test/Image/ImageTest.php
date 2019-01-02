@@ -119,6 +119,12 @@ class ImageTest extends BaseTest
         $url = $image->watermark("abcdefghijklmnopqrstuvwxyz1234567890")->toUrl();
 
         $this->assertEquals("//test.com/images/file.png/v1/scrop/w_100,h_200,q_75,usm_0.50_0.20_0.00,wm_abcdefghijklmnopqrstuvwxyz1234567890/file.png", $url);
+    }
 
+    public function testAddToken() {
+	    $image = new Image("//test.com/images/file.png/v1/scrop/w_100,h_200,q_75,usm_0.50_0.20_0.00/file.png");
+	    $url = $image->token("abcdefghijklmnopqrstuvwxyz1234567890")->toUrl();
+
+	    $this->assertEquals("//test.com/images/file.png/v1/scrop/w_100,h_200,q_75,token_abcdefghijklmnopqrstuvwxyz1234567890,usm_0.50_0.20_0.00/file.png", $url);
     }
 }

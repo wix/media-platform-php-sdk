@@ -1,15 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: leon
- * Date: 25/05/2017
- * Time: 18:46
- */
 
 namespace Wix\Mediaplatform\Image\Parser;
 
 
 use InvalidArgumentException;
+use Wix\Mediaplatform\Image\Auth\Token;
 use Wix\Mediaplatform\Image\Encoder\JPEG;
 use Wix\Mediaplatform\Image\Filter\Blur;
 use Wix\Mediaplatform\Image\Filter\Brightness;
@@ -31,14 +26,15 @@ class ImageUrlParser
      * @var array
      */
     const OPTIONS = array(
-        Blur::KEY => 'Wix\Mediaplatform\Image\Filter\Blur',
-        Brightness::KEY => 'Wix\Mediaplatform\Image\Filter\Brightness',
-        Contrast::KEY => 'Wix\Mediaplatform\Image\Filter\Contrast',
-        JPEG::KEY => 'Wix\Mediaplatform\Image\Encoder\JPEG',
-        Hue::KEY => 'Wix\Mediaplatform\Image\Filter\Hue',
-        Saturation::KEY => 'Wix\Mediaplatform\Image\Filter\Saturation',
-        UnsharpMask::KEY => 'Wix\Mediaplatform\Image\Filter\UnsharpMask',
-        Watermark::KEY => 'Wix\Mediaplatform\Image\Filter\Watermark',
+	    Token::KEY       => 'Wix\Mediaplatform\Image\Auth\Token',
+	    Blur::KEY        => 'Wix\Mediaplatform\Image\Filter\Blur',
+	    Brightness::KEY  => 'Wix\Mediaplatform\Image\Filter\Brightness',
+	    Contrast::KEY    => 'Wix\Mediaplatform\Image\Filter\Contrast',
+	    JPEG::KEY        => 'Wix\Mediaplatform\Image\Encoder\JPEG',
+	    Hue::KEY         => 'Wix\Mediaplatform\Image\Filter\Hue',
+	    Saturation::KEY  => 'Wix\Mediaplatform\Image\Filter\Saturation',
+	    UnsharpMask::KEY => 'Wix\Mediaplatform\Image\Filter\UnsharpMask',
+	    Watermark::KEY   => 'Wix\Mediaplatform\Image\Filter\Watermark',
     );
 
     /**

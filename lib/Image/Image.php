@@ -9,6 +9,7 @@
 namespace Wix\Mediaplatform\Image;
 
 
+use Wix\Mediaplatform\Image\Auth\Token;
 use Wix\Mediaplatform\Image\Encoder\JPEG;
 use Wix\Mediaplatform\Image\Filter\Blur;
 use Wix\Mediaplatform\Image\Filter\Brightness;
@@ -252,6 +253,10 @@ class Image
      */
     public function watermark($manifestId) {
         return $this->addOption(new Watermark($manifestId));
+    }
+
+    public function token($token) {
+    	return $this->addOption(new Token($token));
     }
 
     /**
