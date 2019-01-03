@@ -71,9 +71,10 @@ class FileUploader
      * @param string $fileName
      * @param string|resource $source
      * @param string|null $acl
+     * @param array $options
      * @return array
      */
-    public function uploadFile($path, $mimeType, $fileName, $source, $acl = null) {
+    public function uploadFile($path, $mimeType, $fileName, $source, $acl = null, $options = []) {
         /**
          * @var UploadUrlRequest $uploadUrlRequest
          **/
@@ -95,10 +96,12 @@ class FileUploader
             $form[] = array("name" => $fileName, "contents" => $source);
         }
 
+        $options['multipart'] = $form;
+
         $restResponse = $this->authenticatedHTTPClient->post(
             $uploadUrlResponse->getUploadUrl(),
             array(),
-            array("multipart" => $form)
+            $options
         );
 
         $payload = $restResponse->getPayload();
