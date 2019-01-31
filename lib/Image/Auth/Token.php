@@ -69,9 +69,11 @@ class Token extends Option {
 		$token->setSubject( NS::APPLICATION . $appId );
 		$token->setVerbs( NS::SERVICE . 'image.operations' );
 		$token->setObject( array(
-			"height" => "<=$imageHeight",
-			"path"   => $filePath,
-			"width"  => "<=$imageWidth",
+			array(
+				"height" => "<=$imageHeight",
+				"path"   => $filePath,
+				"width"  => "<=$imageWidth",
+			)
 		) );
 
 
