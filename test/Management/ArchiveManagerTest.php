@@ -52,7 +52,8 @@ class ArchiveManagerTest extends BaseTest
         $createArchiveRequest
             ->addSource($source)
             ->setDestination($destination)
-            ->setArchiveType('zip');
+	        ->setJobCallback("https://example.com/callback")
+	        ->setArchiveType('zip');
 
         $job = self::$archiveManager->createArchive($createArchiveRequest);
 
@@ -70,7 +71,10 @@ class ArchiveManagerTest extends BaseTest
         $destination->setDirectory("/fish");
 
         $extractArchiveRequest = new ExtractArchiveRequest();
-        $extractArchiveRequest->setSource($source)->setDestination($destination);
+        $extractArchiveRequest
+	        ->setJobCallback("https://example.com/callback")
+	        ->setSource($source)
+	        ->setDestination($destination);
 
         $job = self::$archiveManager->extractArchive($extractArchiveRequest);
 

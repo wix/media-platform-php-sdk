@@ -16,7 +16,7 @@ use Wix\Mediaplatform\Model\Job\TranscodeSpecification;
  * Class TranscodeFileRequest
  * @package Wix\Mediaplatform\Model\Request
  */
-class TranscodeRequest extends BaseRequest
+class TranscodeRequest extends BaseAsyncRequest
 {
     /**
      * @var array

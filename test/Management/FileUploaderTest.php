@@ -88,7 +88,8 @@ class FileUploaderTest extends BaseTest
 
         $importFileRequest = new ImportFileRequest();
         $importFileRequest->setSourceUrl("http://source.url")
-            ->setDestination($destination);
+	        ->setJobCallback("https://example.com/callback")
+	        ->setDestination($destination);
         $job = self::$fileUploader->importFile($importFileRequest);
 
         $this->assertEquals("71f0d3fde7f348ea89aa1173299146f8_19e137e8221b4a709220280b432f947f", $job->getId());
@@ -103,6 +104,7 @@ class FileUploaderTest extends BaseTest
 
         $importFileRequest = new ImportFileRequest();
         $importFileRequest->setSourceUrl("http://source.url")
+	        ->setJobCallback("https://example.com/callback")
             ->setDestination($destination);
         $job = self::$fileUploader->importFile($importFileRequest);
 

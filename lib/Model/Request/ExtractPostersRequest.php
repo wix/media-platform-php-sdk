@@ -16,7 +16,7 @@ use Wix\Mediaplatform\Model\Job\Source;
  * Class ExtractPostersRequest
  * @package Wix\Mediaplatform\Model\Request
  */
-class ExtractPostersRequest extends BaseRequest
+class ExtractPostersRequest extends BaseAsyncRequest
 {
     /**
      * @var array

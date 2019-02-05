@@ -57,6 +57,7 @@ class TranscodeManagerTest extends BaseTest
         $source = Source::factory()->setPath("/test/file.mp4");
 
         $transcodeRequest->addSource($source)
+	        ->setJobCallback("https://example.com/callback")
             ->setSpecifications($specifications);
 
         $transcodeResponse = self::$transcodeManager->transcodeVideo($transcodeRequest);

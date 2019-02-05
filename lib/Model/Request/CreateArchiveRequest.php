@@ -16,7 +16,7 @@ use Wix\Mediaplatform\Model\Job\Source;
  * Class CreateArchiveRequest
  * @package Wix\Mediaplatform\Model\Request
  */
-class CreateArchiveRequest extends BaseRequest
+class CreateArchiveRequest extends BaseAsyncRequest
 {
     /**
      * @var array

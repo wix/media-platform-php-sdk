@@ -16,7 +16,7 @@ use Wix\Mediaplatform\Model\Job\Source;
  * Class ExtractArchiveRequest
  * @package Wix\Mediaplatform\Model\Request
  */
-class ExtractArchiveRequest extends BaseRequest
+class ExtractArchiveRequest extends BaseAsyncRequest
 {
     /**
      * @var Source
