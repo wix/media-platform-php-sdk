@@ -32,6 +32,22 @@ class JobCallback {
 	private $passthrough;
 
 	/**
+	 * JobCallback constructor.
+	 *
+	 * @param string $url
+	 * @param array $attachment
+	 * @param array $headers
+	 * @param bool $passthrough
+	 */
+	public function __construct( $url, array $attachment = array(), array $headers = array(), $passthrough = false) {
+		$this->url         = $url;
+		$this->attachment  = $attachment;
+		$this->headers     = $headers;
+		$this->passthrough = $passthrough;
+	}
+
+
+	/**
 	 * @return string
 	 */
 	public function getUrl() {
