@@ -14,6 +14,7 @@ use Wix\Mediaplatform\Model\Job\Source;
 use Wix\Mediaplatform\Model\Request\CopyFileRequest;
 use Wix\Mediaplatform\Model\Request\CreateFileRequest;
 use Wix\Mediaplatform\Model\Request\ImportFileRequest;
+use Wix\Mediaplatform\Model\Request\JobCallback;
 
 class FileUploaderTest extends BaseTest
 {
@@ -86,9 +87,12 @@ class FileUploaderTest extends BaseTest
         $destination->setAcl("public")
             ->setDirectory("/fish");
 
-        $importFileRequest = new ImportFileRequest();
+		$jobCallback = new JobCallback();
+		$jobCallback->setUrl("https://example.com/callback");
+
+		$importFileRequest = new ImportFileRequest();
         $importFileRequest->setSourceUrl("http://source.url")
-	        ->setJobCallback("https://example.com/callback")
+	        ->setJobCallback($jobCallback)
 	        ->setDestination($destination);
         $job = self::$fileUploader->importFile($importFileRequest);
 
@@ -102,9 +106,12 @@ class FileUploaderTest extends BaseTest
         $destination->setAcl("public")
             ->setDirectory("/fish");
 
-        $importFileRequest = new ImportFileRequest();
+	    $jobCallback = new JobCallback();
+	    $jobCallback->setUrl("https://example.com/callback");
+
+	    $importFileRequest = new ImportFileRequest();
         $importFileRequest->setSourceUrl("http://source.url")
-	        ->setJobCallback("https://example.com/callback")
+	        ->setJobCallback($jobCallback)
             ->setDestination($destination);
         $job = self::$fileUploader->importFile($importFileRequest);
 

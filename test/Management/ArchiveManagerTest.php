@@ -10,10 +10,9 @@ namespace Wix\Mediaplatform\Management;
 
 use Wix\Mediaplatform\BaseTest;
 use Wix\Mediaplatform\Model\Job\Destination;
-use Wix\Mediaplatform\Model\Job\ExtractArchiveJob;
 use Wix\Mediaplatform\Model\Job\Source;
-use Wix\Mediaplatform\Model\Request\CreateFileRequest;
 use Wix\Mediaplatform\Model\Request\ExtractArchiveRequest;
+use Wix\Mediaplatform\Model\Request\JobCallback;
 
 class ArchiveManagerTest extends BaseTest
 {
@@ -49,10 +48,13 @@ class ArchiveManagerTest extends BaseTest
         $destination->setAcl("public")
             ->setPath("/demo/file.zip");
 
+        $jobCallback = new JobCallback();
+        $jobCallback->setUrl("https://example.com/callback");
+
         $createArchiveRequest
             ->addSource($source)
             ->setDestination($destination)
-	        ->setJobCallback("https://example.com/callback")
+	        ->setJobCallback($jobCallback)
 	        ->setArchiveType('zip');
 
         $job = self::$archiveManager->createArchive($createArchiveRequest);
@@ -70,9 +72,12 @@ class ArchiveManagerTest extends BaseTest
         $destination = new Destination();
         $destination->setDirectory("/fish");
 
-        $extractArchiveRequest = new ExtractArchiveRequest();
+	    $jobCallback = new JobCallback();
+	    $jobCallback->setUrl("https://example.com/callback");
+
+	    $extractArchiveRequest = new ExtractArchiveRequest();
         $extractArchiveRequest
-	        ->setJobCallback("https://example.com/callback")
+	        ->setJobCallback($jobCallback)
 	        ->setSource($source)
 	        ->setDestination($destination);
 

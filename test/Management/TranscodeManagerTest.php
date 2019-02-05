@@ -13,6 +13,7 @@ use Wix\Mediaplatform\Model\Job\Destination;
 use Wix\Mediaplatform\Model\Job\QualityRange;
 use Wix\Mediaplatform\Model\Job\Source;
 use Wix\Mediaplatform\Model\Job\TranscodeSpecification;
+use Wix\Mediaplatform\Model\Request\JobCallback;
 use Wix\Mediaplatform\Model\Request\TranscodeRequest;
 
 class TranscodeManagerTest extends BaseTest
@@ -56,8 +57,11 @@ class TranscodeManagerTest extends BaseTest
 
         $source = Source::factory()->setPath("/test/file.mp4");
 
-        $transcodeRequest->addSource($source)
-	        ->setJobCallback("https://example.com/callback")
+	    $jobCallback = new JobCallback();
+	    $jobCallback->setUrl("https://example.com/callback");
+
+	    $transcodeRequest->addSource($source)
+	        ->setJobCallback($jobCallback)
             ->setSpecifications($specifications);
 
         $transcodeResponse = self::$transcodeManager->transcodeVideo($transcodeRequest);

@@ -16,19 +16,19 @@ namespace Wix\Mediaplatform\Model\Request;
 abstract class BaseAsyncRequest extends BaseRequest
 {
 	/**
-	 * @var $jobCallback string
+	 * @var $jobCallback JobCallback
 	 */
 	protected $jobCallback;
 
 	/**
-	 * @return string
+	 * @return JobCallback
 	 */
 	public function getJobCallback() {
 		return $this->jobCallback;
 	}
 
 	/**
-	 * @param string $jobCallback
+	 * @param JobCallback $jobCallback
 	 *
 	 * @return $this
 	 */
