@@ -36,6 +36,35 @@ class Token extends Option {
 	}
 
 	/**
+	 * @param $appId
+	 * @param $appSecret
+	 * @param $verb
+	 *
+	 * @param $object
+	 *
+	 * @return string
+	 */
+	private static function createBaseToken( $appId, $appSecret, $verb, $object ) {
+		$token = new \Wix\Mediaplatform\Authentication\Token();
+		$token->setIssuer( NS::APPLICATION . $appId );
+		$token->setSubject( NS::APPLICATION . $appId );
+		$token->addVerb( NS::SERVICE . $verb );
+		$token->setObject( array(
+			array(
+				$object
+			)
+		) );
+
+
+		$claims = $token->toClaims();
+		unset( $claims[ Constants::EXPIRATION ] );
+		unset( $claims[ Constants::ISSUED_AT ] );
+		unset( $claims[ Constants::IDENTIFIER ] );
+
+		return JWT::encode( $claims, $appSecret );
+	}
+
+	/**
 	 * @return string
 	 */
 	public function serialize() {
@@ -64,27 +93,27 @@ class Token extends Option {
 	 */
 	public static function createImageToken( $appId, $appSecret, $filePath, $imageHeight, $imageWidth ) {
 
-		$token = new \Wix\Mediaplatform\Authentication\Token();
-		$token->setIssuer( NS::APPLICATION . $appId );
-		$token->setSubject( NS::APPLICATION . $appId );
-		$token->setVerbs( NS::SERVICE . 'image.operations' );
-		$token->setObject( array(
-			array(
-				array(
-					"height" => "<=$imageHeight",
-					"path"   => $filePath,
-					"width"  => "<=$imageWidth",
-					)
-			)
+		return self::createBaseToken( $appId, $appSecret, 'image.operations', array(
+			"height" => "<=$imageHeight",
+			"path"   => $filePath,
+			"width"  => "<=$imageWidth",
 		) );
-
-
-		$claims = $token->toClaims();
-		unset($claims[Constants::EXPIRATION]);
-		unset($claims[Constants::ISSUED_AT]);
-		unset($claims[Constants::IDENTIFIER]);
-
-		return JWT::encode($claims , $appSecret );
 	}
+
+	/**
+	 * @param $appId string
+	 * @param $appSecret string
+	 * @param $filePath string
+	 * @param $imageHeight int
+	 * @param $imageWidth int
+	 *
+	 * @return string
+	 */
+	public static function createOriginalImageToken( $appId, $appSecret, $filePath ) {
+		return self::createBaseToken( $appId, $appSecret, 'file.download', array(
+			"path" => $filePath,
+		) );
+	}
+
 
 }

@@ -218,6 +218,32 @@ To generate the token and attach it to the image url, please use the following e
         ->toUrl();
 ```
 
+## Serving original versions of private images
+
+It is possible to serve an original version of a private image, by attaching a special token to the image url
+To generate the token and attach it to the image url, please use the following example below:
+
+```php
+    // your wixmp application id
+    $appId = "<insert_app_id>";
+    
+    // your wixmp app secret (keep it hidden)
+    $appSecret = "<insert_app_secret>";
+    
+    // path to the private file we want to resize and serve
+    $filePath = "/image/path/file.jpg"
+    
+    // generate jwt token
+    $token = Wix\Mediaplatform\Image\Auth\Token::createImageToken($appId, $appSecret, $filePath);
+
+    // create the image url
+    $image = new Image();
+    $imageUrl = $image->setPath('/image/path/file.jpg')
+        ->setFilename('file.jpg')
+        ->token($token)
+        ->toUrl();
+```
+
 ## Image Features
 
 The SDK enables extracting an image's features, which includes face detection, labeling, explicit content detection and color-hinting:

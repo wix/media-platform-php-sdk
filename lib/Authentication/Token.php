@@ -124,7 +124,7 @@ class Token
     }
 
     /**
-     * @param string $object
+     * @param $object
      * @return Token
      */
     public function setObject($object)
