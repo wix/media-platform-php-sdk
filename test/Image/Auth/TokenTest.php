@@ -29,7 +29,7 @@ class TokenTest extends BaseTest
 
     	$this->assertEquals('urn:app:appId', $decoded['sub']);
     	$this->assertEquals('urn:app:appId', $decoded['iss']);
-    	$this->assertEquals('urn:service:image.operations', $decoded['aud']);
+    	$this->assertEquals(array('urn:service:image.operations'), $decoded['aud']);
     	$this->assertEquals('<=100', $decoded['obj'][0][0]->height);
     	$this->assertEquals('/file/path', $decoded['obj'][0][0]->path);
     	$this->assertEquals('<=200', $decoded['obj'][0][0]->width);
@@ -42,7 +42,7 @@ class TokenTest extends BaseTest
 
         $this->assertEquals('urn:app:appId', $decoded['sub']);
         $this->assertEquals('urn:app:appId', $decoded['iss']);
-        $this->assertEquals('urn:service:file.download', $decoded['aud']);
+        $this->assertEquals(array('urn:service:file.download'), $decoded['aud']);
         $this->assertEquals('/file/path', $decoded['obj'][0][0]->path);
     }
 }
