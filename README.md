@@ -234,7 +234,7 @@ To generate the token and attach it to the image url, please use the following e
     $filePath = "/image/path/file.jpg"
     
     // generate jwt token
-    $token = Wix\Mediaplatform\Image\Auth\Token::createImageToken($appId, $appSecret, $filePath);
+    $token = Wix\Mediaplatform\Image\Auth\Token::createOriginalImageToken($appId, $appSecret, $filePath);
 
     // create the image url
     $image = new Image();
