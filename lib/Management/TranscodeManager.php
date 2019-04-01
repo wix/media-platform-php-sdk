@@ -57,7 +57,7 @@ class TranscodeManager
     }
 
     public function extractPosters(ExtractPostersRequest $extractPostersRequest) {
-	    $restResponse = $this->authenticatedHttpClient->post($this->baseUrl . "/av/posters", $extractPostersRequest);
+	    $restResponse = $this->authenticatedHttpClient->post($this->baseUrl . "/av/poster", $extractPostersRequest);
 	    return new ExtractPostersJobResult($restResponse->getPayload());
     }
 }
