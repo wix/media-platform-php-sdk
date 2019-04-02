@@ -13,23 +13,23 @@ namespace Wix\Mediaplatform\Model\Request;
  * Class JobCallback
  * @package Wix\Mediaplatform\Model\Job
  */
-class JobCallback {
+class JobCallback extends BaseRequest {
 	/**
 	 * @var $url string
 	 */
-	private $url;
+	protected $url;
 	/**
 	 * @var $attachment array()
 	 */
-	private $attachment;
+	protected $attachment;
 	/**
 	 * @var $headers array()
 	 */
-	private $headers;
+	protected $headers;
 	/**
 	 * @var $passthrough boolean
 	 */
-	private $passthrough;
+	protected $passthrough;
 
 	/**
 	 * JobCallback constructor.
