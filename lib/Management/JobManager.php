@@ -11,6 +11,7 @@ namespace Wix\Mediaplatform\Management;
 
 use Wix\Mediaplatform\Configuration\Configuration;
 use Wix\Mediaplatform\Http\AuthenticatedHTTPClient;
+use Wix\Mediaplatform\Model\Job\ExtractPostersJob;
 use Wix\Mediaplatform\Model\Job\FileImportJob;
 use Wix\Mediaplatform\Model\Job\Job;
 use Wix\Mediaplatform\Model\Job\TranscodeJob;
@@ -51,7 +52,7 @@ class JobManager
 
     /**
      * @param array $payload
-     * @return FileImportJob|TranscodeJob|null
+     * @return FileImportJob|TranscodeJob|ExtractPostersJob|null
      */
     public static function createJobObjectFromPayload(Array $payload = array()) {
         if(!empty($payload['type'])) {
@@ -59,6 +60,8 @@ class JobManager
                 return new FileImportJob($payload);
             } elseif($payload['type'] == TranscodeJob::$job_type) {
                 return new TranscodeJob($payload);
+            }  elseif($payload['type'] == ExtractPostersJob::$job_type) {
+                return new ExtractPostersJob($payload);
             }
         }
     }
