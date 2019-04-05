@@ -158,6 +158,26 @@ class FileManager
 
     /**
      * @param $path
+     * @return FileMetadata
+     */
+    public function extractFileMetadataByPath($path)
+    {
+        $params = array();
+        $params["path"] = $path;
+
+        /**
+         * @var RestResponse $restResponse
+         */
+        $restResponse = $this->authenticatedHttpClient->get(
+            $this->baseUrl . "/files/metadata/extract",
+            $params
+        );
+
+        return new FileMetadata($restResponse->getPayload());
+    }
+
+    /**
+     * @param $path
      * @param ListFilesRequest|null $listFilesRequest
      * @return ListFilesResponse
      */
