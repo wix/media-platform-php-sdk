@@ -233,8 +233,6 @@ class Token
         return $this;
     }
 
-
-
     /**
      * @return array
      */
