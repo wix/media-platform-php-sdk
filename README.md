@@ -227,7 +227,7 @@ It's possible to serve a secured (private) image with a watermark via the image 
             ->token($token)
             ->toUrl();
                 
-        // $imageUrl will be: /image/path/file.jpg/v1/fill/w_100,h_100,wm_token/watermarked.jpg
+        // $imageUrl will be: /image/path/file.jpg/v1/fill/w_100,h_100,wm_token/watermarked.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
 ```
 
 ## Serving resized versions of private images
