@@ -185,6 +185,51 @@ Adding a watermark manifest to secured (private) files will make these files ava
 
 ```
 
+## Serving Watermarked Images with the token (without Manifest Creation)
+
+It's possible to serve a secured (private) image with a watermark via the image API, without creating the Watermark Manifest. This action requires a token.
+
+```php
+        // your wixmp application id
+        $appId = "<insert_app_id>";
+        
+        // your wixmp app secret (keep it hidden)
+        $appSecret = "<insert_app_secret>";
+        
+        // path to the private file we want to resize and serve
+        $filePath = "/image/path/file.jpg"
+        
+        // define the source for the watermark image
+        $watermarkPath = "/image/watermark/file.png";
+        
+        // maximum watermarked image width that we allow to serve from our private file
+        $imageWidth = 640;
+        
+        // maximum watermarked image height that we allow to serve from our private file
+        $imageHeight = 480;
+        
+        // define the watermark specification options
+        $specification = new ImageWatermarkSpecification();
+        $specification->setWatermark($watermarkSource);
+        $specification->setPosition(ImageWatermarkPosition::CENTER);
+        $specification->setOpacity(90);
+        $specification->setScale(0);
+        
+        // generate watermark jwt token
+        $token = Wix\Mediaplatform\Image\Auth\Token::createWatermarkToken($appId, $appSecret, $filePath, $watermarkPath, $imageHeight, $imageWidth, $opacity, $position, $scale);
+    
+        // create the image url
+        $image = new Image();
+        $imageUrl = $image->setPath('/image/path/file.jpg')
+            ->setFilename('watermarked.jpg')
+            ->fill(200, 200)
+            ->watermark( 'wm_token' )
+            ->token($token)
+            ->toUrl();
+                
+        // $imageUrl will be: /image/path/file.jpg/v1/fill/w_100,h_100,wm_token/watermarked.jpg
+```
+
 ## Serving resized versions of private images
 
 It is possible to serve a resized version of a private image, by attaching a special token to the image url

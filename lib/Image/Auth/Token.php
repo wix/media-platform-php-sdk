@@ -115,5 +115,31 @@ class Token extends Option {
 		) );
 	}
 
+    /**
+     * @param $appId string
+     * @param $appSecret string
+     * @param $filePath string
+     * @param $watermarkPath string
+     * @param $imageHeight int
+     * @param $imageWidth int
+     * @param $opacity int
+     * @param $position int
+     * @param $scale int
+     *
+     * @return string
+     */
+    public static function createWatermarkToken( $appId, $appSecret, $filePath, $watermarkPath,
+                                                 $imageHeight, $imageWidth, $opacity, $position, $scale) {
+        return self::createBaseToken( $appId, $appSecret, 'image.watermark', array(
+            "path" => $filePath,
+            "watermark" => $watermarkPath,
+            "height" => "<=$imageHeight",
+            "width"  => "<=$imageWidth",
+            "opacity" => $opacity,
+            "position" => $position,
+            "scale" => $scale
+        ) );
+    }
+
 
 }
