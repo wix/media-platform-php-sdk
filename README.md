@@ -187,7 +187,7 @@ Adding a watermark manifest to secured (private) files will make these files ava
 
 ## Serving Watermarked Images with the token (without Manifest Creation)
 
-It's possible to serve a secured (private) image with applied watermark image via the image API without creating the Watermark Manifest. It requires supplying a token, though.
+It's possible to serve a secured (private) image with a watermark via the image API, without creating the Watermark Manifest. This action requires a token.
 
 ```php
         // your wixmp application id
@@ -221,13 +221,13 @@ It's possible to serve a secured (private) image with applied watermark image vi
         // create the image url
         $image = new Image();
         $imageUrl = $image->setPath('/image/path/file.jpg')
-            ->setFilename('file.jpg')
+            ->setFilename('watermarked.jpg')
             ->fill(200, 200)
             ->watermark( 'wm_token' )
             ->token($token)
             ->toUrl();
                 
-        // $imageUrl will be:
+        // $imageUrl will be: /image/path/file.jpg/v1/fill/w_100,h_100,wm_token/watermarked.jpg
 ```
 
 ## Serving resized versions of private images
