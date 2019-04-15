@@ -207,14 +207,7 @@ It's possible to serve a secured (private) image with a watermark via the image 
         
         // maximum watermarked image height that we allow to serve from our private file
         $imageHeight = 480;
-        
-        // define the watermark specification options
-        $specification = new ImageWatermarkSpecification();
-        $specification->setWatermark($watermarkSource);
-        $specification->setPosition(ImageWatermarkPosition::CENTER);
-        $specification->setOpacity(90);
-        $specification->setScale(0);
-        
+              
         // generate watermark jwt token
         $token = Wix\Mediaplatform\Image\Auth\Token::createWatermarkToken($appId, $appSecret, $filePath, $watermarkPath, $imageHeight, $imageWidth, $opacity, $position, $scale);
     
