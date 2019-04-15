@@ -9,7 +9,6 @@
 namespace Wix\Mediaplatform\Image;
 
 use Wix\Mediaplatform\BaseTest;
-use Wix\Mediaplatform\Model\Request\CreateFileRequest;
 
 class ImageTest extends BaseTest
 {
@@ -119,6 +118,18 @@ class ImageTest extends BaseTest
         $url = $image->watermark("abcdefghijklmnopqrstuvwxyz1234567890")->toUrl();
 
         $this->assertEquals("//test.com/images/file.png/v1/scrop/w_100,h_200,q_75,usm_0.50_0.20_0.00,wm_abcdefghijklmnopqrstuvwxyz1234567890/file.png", $url);
+    }
+
+
+    public function testWatermarkWithToken()
+    {
+        $image = new Image();
+        $imageUrl = $image->setPath('/image/path/file.jpg')
+            ->setFilename('watermarked.png')
+            ->fill(200, 200)
+            ->watermark( 'token' )
+            ->toUrl();
+        $this->assertEquals("/image/path/file.jpg/v1/fill/w_200,h_200,wm_token/watermarked.png", $imageUrl);
     }
 
     public function testAddToken() {

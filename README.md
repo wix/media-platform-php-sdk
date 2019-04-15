@@ -197,7 +197,7 @@ It's possible to serve a secured (private) image with a watermark via the image 
         $appSecret = "<insert_app_secret>";
         
         // path to the private file we want to resize and serve
-        $filePath = "/image/path/file.jpg"
+        $filePath = "/image/path/file.jpg";
         
         // define the source for the watermark image
         $watermarkPath = "/image/watermark/file.png";
@@ -207,6 +207,15 @@ It's possible to serve a secured (private) image with a watermark via the image 
         
         // maximum watermarked image height that we allow to serve from our private file
         $imageHeight = 480;
+        
+        // watermark opacity (in percents)
+        $opacity = 40;
+        
+        // watermark position at the image. Refer to the ImageWatermarkPosition for the available options 
+        $position = ImageWatermarkPosition::CENTER;
+        
+        // watermark scale (in percents) in relation to image width
+        $scale = 50
               
         // generate watermark jwt token
         $token = Wix\Mediaplatform\Image\Auth\Token::createWatermarkToken($appId, $appSecret, $filePath, $watermarkPath, $imageHeight, $imageWidth, $opacity, $position, $scale);
@@ -214,13 +223,13 @@ It's possible to serve a secured (private) image with a watermark via the image 
         // create the image url
         $image = new Image();
         $imageUrl = $image->setPath('/image/path/file.jpg')
-            ->setFilename('watermarked.jpg')
+            ->setFilename('watermarked.png')
             ->fill(200, 200)
-            ->watermark( 'wm_token' )
+            ->watermark( 'token' )
             ->token($token)
             ->toUrl();
                 
-        // $imageUrl will be: /image/path/file.jpg/v1/fill/w_100,h_100,wm_token/watermarked.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
+        // $imageUrl will be: /image/path/file.jpg/v1/fill/w_100,h_100,wm_token/watermarked.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
 ```
 
 ## Serving resized versions of private images
