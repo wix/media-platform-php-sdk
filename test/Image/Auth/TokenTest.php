@@ -11,6 +11,8 @@ namespace Wix\Mediaplatform\Image\Encoder;
 use Firebase\JWT\JWT;
 use Wix\Mediaplatform\BaseTest;
 use Wix\Mediaplatform\Image\Auth\Token;
+use Wix\Mediaplatform\Image\Gravity;
+use Wix\Mediaplatform\Image\WatermarkProperties;
 
 class TokenTest extends BaseTest
 {
@@ -51,8 +53,10 @@ class TokenTest extends BaseTest
     }
 
     public function testGenerateWatermarkToken() {
+    	$watermarkProperties = new WatermarkProperties('/watermarks/path/file.png', 40, 0.25, Gravity::NORTHEAST);
+
         $jwt = Token::createWatermarkToken("appId", "appSecret", "/path/file.jpg",
-            '/watermarks/path/file.png', 300, 300, 40, 5, 1 );
+	         300, 300, $watermarkProperties );
 
         $decoded = (array) JWT::decode($jwt, "appSecret", array("HS256"));
 
@@ -60,10 +64,10 @@ class TokenTest extends BaseTest
         $this->assertEquals('urn:app:appId', $decoded['iss']);
         $this->assertEquals(array('urn:service:image.watermark'), $decoded['aud']);
         $this->assertEquals('/path/file.jpg', $decoded['obj'][0][0]->path);
-        $this->assertEquals('/watermarks/path/file.png', $decoded['obj'][0][0]->watermark);
+        $this->assertEquals('/watermarks/path/file.png', $decoded['wmk']->path);
         $this->assertEquals('<=300', $decoded['obj'][0][0]->height);
         $this->assertEquals('<=300', $decoded['obj'][0][0]->width);
 
-        $this->assertEquals($jwt, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOmFwcElkIiwiaXNzIjoidXJuOmFwcDphcHBJZCIsIm9iaiI6W1t7InBhdGgiOiJcL3BhdGhcL2ZpbGUuanBnIiwid2F0ZXJtYXJrIjoiXC93YXRlcm1hcmtzXC9wYXRoXC9maWxlLnBuZyIsImhlaWdodCI6Ijw9MzAwIiwid2lkdGgiOiI8PTMwMCIsIm9wYWNpdHkiOjQwLCJwb3NpdGlvbiI6NSwic2NhbGUiOjF9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS53YXRlcm1hcmsiXX0.CkDxUNOTrRK3JQfSRIhISOSEXCmq14SwKRRVchJ2HgQ');
+        $this->assertEquals($jwt, 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOmFwcElkIiwiaXNzIjoidXJuOmFwcDphcHBJZCIsIm9iaiI6W1t7InBhdGgiOiJcL3BhdGhcL2ZpbGUuanBnIiwiaGVpZ2h0IjoiPD0zMDAiLCJ3aWR0aCI6Ijw9MzAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLndhdGVybWFyayJdLCJ3bWsiOnsicGF0aCI6Ilwvd2F0ZXJtYXJrc1wvcGF0aFwvZmlsZS5wbmciLCJvcGFjaXR5Ijo0MCwicHJvcG9ydGlvbnMiOjAuMjUsImdyYXZpdHkiOiJub3J0aC1lYXN0In19.vIrmJiLC8pSlCmUbM1zERATW5_zklXZffqpGPUE9sDI');
     }
 }

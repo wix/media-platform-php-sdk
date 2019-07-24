@@ -7,6 +7,7 @@ use Wix\Mediaplatform\Authentication\Jwt\Constants;
 use Wix\Mediaplatform\Authentication\NS;
 use Wix\Mediaplatform\Image\Option;
 use Wix\Mediaplatform\Image\StringToken;
+use Wix\Mediaplatform\Image\WatermarkProperties;
 
 /**
  * Class AuthToken
@@ -42,9 +43,11 @@ class Token extends Option {
 	 *
 	 * @param $object
 	 *
+	 * @param $watermarkProperties WatermarkProperties
+	 *
 	 * @return string
 	 */
-	private static function createBaseToken( $appId, $appSecret, $verb, $object ) {
+	private static function createBaseToken( $appId, $appSecret, $verb, $object, $watermarkProperties = null) {
 		$token = new \Wix\Mediaplatform\Authentication\Token();
 		$token->setIssuer( NS::APPLICATION . $appId );
 		$token->setSubject( NS::APPLICATION . $appId );
@@ -55,6 +58,13 @@ class Token extends Option {
 			)
 		) );
 
+		if(!empty($watermarkProperties)) {
+			$token->setAdditionalClaims(
+				array(
+					WatermarkProperties::KEY => $watermarkProperties->toClaims()
+				)
+			);
+		}
 
 		$claims = $token->toClaims();
 		unset( $claims[ Constants::EXPIRATION ] );
@@ -115,31 +125,25 @@ class Token extends Option {
 		) );
 	}
 
-    /**
-     * @param $appId string
-     * @param $appSecret string
-     * @param $filePath string
-     * @param $watermarkPath string
-     * @param $imageHeight int
-     * @param $imageWidth int
-     * @param $opacity int
-     * @param $position int
-     * @param $scale int
-     *
-     * @return string
-     */
-    public static function createWatermarkToken( $appId, $appSecret, $filePath, $watermarkPath,
-                                                 $imageHeight, $imageWidth, $opacity, $position, $scale) {
+	/**
+	 * @param $appId string
+	 * @param $appSecret string
+	 * @param $filePath string
+	 * @param $imageHeight int
+	 * @param $imageWidth int
+	 * @param $watermarkProperties WatermarkProperties
+	 *
+	 * @return string
+	 */
+    public static function createWatermarkToken( $appId, $appSecret, $filePath, $imageHeight, $imageWidth, $watermarkProperties) {
         return self::createBaseToken( $appId, $appSecret, 'image.watermark', array(
             "path" => $filePath,
-            "watermark" => $watermarkPath,
             "height" => "<=$imageHeight",
             "width"  => "<=$imageWidth",
-            "opacity" => $opacity,
-            "position" => $position,
-            "scale" => $scale
-        ) );
+        ), $watermarkProperties );
     }
 
 
 }
+
+
