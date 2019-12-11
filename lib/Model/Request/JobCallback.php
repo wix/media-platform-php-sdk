@@ -11,21 +11,9 @@ namespace Wix\Mediaplatform\Model\Request;
 
 /**
  * Class JobCallback
- * @package Wix\Mediaplatform\Model\Job
+ * @package Wix\Mediaplatform\Model\Request
  */
-class JobCallback extends BaseRequest {
-	/**
-	 * @var $url string
-	 */
-	protected $url;
-	/**
-	 * @var $attachment array()
-	 */
-	protected $attachment;
-	/**
-	 * @var $headers array()
-	 */
-	protected $headers;
+class JobCallback extends Callback {
 	/**
 	 * @var $passthrough boolean
 	 */
@@ -40,65 +28,8 @@ class JobCallback extends BaseRequest {
 	 * @param bool $passthrough
 	 */
 	public function __construct( $url = null, array $attachment = array(), array $headers = array(), $passthrough = false) {
-		$this->url         = $url;
-		$this->attachment  = $attachment;
-		$this->headers     = $headers;
+		parent::__construct($url, $attachment, $headers);
 		$this->passthrough = $passthrough;
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function getUrl() {
-		return $this->url;
-	}
-
-	/**
-	 * @param mixed $url
-	 *
-	 * @return JobCallback
-	 */
-	public function setUrl( $url ) {
-		$this->url = $url;
-
-		return $this;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getAttachment() {
-		return $this->attachment;
-	}
-
-	/**
-	 * @param array $attachment
-	 *
-	 * @return JobCallback
-	 */
-	public function setAttachment( $attachment ) {
-		$this->attachment = $attachment;
-
-		return $this;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getHeaders() {
-		return $this->headers;
-	}
-
-	/**
-	 * @param array $headers
-	 *
-	 * @return JobCallback
-	 */
-	public function setHeaders( $headers ) {
-		$this->headers = $headers;
-
-		return $this;
 	}
 
 	/**

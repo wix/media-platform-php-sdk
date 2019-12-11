@@ -15,7 +15,9 @@ use Wix\Mediaplatform\Model\Job\FileImportJob;
 use Wix\Mediaplatform\Model\Metadata\FileDescriptor;
 use Wix\Mediaplatform\Model\Request\CopyFileRequest;
 use Wix\Mediaplatform\Model\Request\ImportFileRequest;
+use Wix\Mediaplatform\Model\Request\UploadConfigurationRequest;
 use Wix\Mediaplatform\Model\Request\UploadUrlRequest;
+use Wix\Mediaplatform\Model\Response\GetUploadConfigurationResponse;
 use Wix\Mediaplatform\Model\Response\GetUploadUrlResponse;
 
 class FileUploader
@@ -30,7 +32,7 @@ class FileUploader
      */
     private $uploadUrlEndpoint;
 
-    /**
+      /**
      * @var string
      */
     private $apiBaseUrl;
@@ -47,6 +49,10 @@ class FileUploader
 
         $this->uploadUrlEndpoint = "https://" . $configuration->getDomain() . "/_api/upload/url";
     }
+
+    private function uploadConfigurationEndpoint($version="v2") {
+	    return  $this->apiBaseUrl . "/" . $version . "/upload/configuration";
+	}
 
     /**
      * @param UploadUrlRequest $uploadUrlRequest
@@ -65,28 +71,65 @@ class FileUploader
         return new GetUploadUrlResponse($restResponse->getPayload());
     }
 
-    /**
-     * @param string $path
-     * @param string $mimeType
-     * @param string $fileName
-     * @param string|resource $source
-     * @param string|null $acl
-     * @param array $options
-     * @return array
-     */
-    public function uploadFile($path, $mimeType, $fileName, $source, $acl = null, $options = []) {
-        /**
-         * @var UploadUrlRequest $uploadUrlRequest
-         **/
-        $uploadUrlRequest = new UploadUrlRequest();
-        $uploadUrlRequest->setMimeType($mimeType)
-            ->setPath($path);
-        /**
-         * @var GetUploadUrlResponse $uploadUrlResponse
-         */
-        $uploadUrlResponse = $this->getUploadUrl($uploadUrlRequest);
+	/**
+	 * @param UploadConfigurationRequest $uploadConfigurationRequest
+	 * @param string $version
+	 *
+	 * @return GetUploadConfigurationResponse
+	 */
+    public function getUploadConfiguration(UploadConfigurationRequest $uploadConfigurationRequest = null, $version = "v2") {
+        $params = null;
+        if ($uploadConfigurationRequest != null) {
+            $params = $uploadConfigurationRequest->toArray();
+        }
 
-        $form = $this->prepareForm($path, $mimeType, $acl, $uploadUrlResponse);
+        $restResponse = $this->authenticatedHTTPClient->get(
+            $this->uploadConfigurationEndpoint($version),
+            $params);
+
+        return new GetUploadConfigurationResponse($restResponse->getPayload());
+    }
+
+	/**
+	 * @param string $path
+	 * @param string $mimeType
+	 * @param string $fileName
+	 * @param string|resource $source
+	 * @param string|null $acl
+	 * @param array $options
+	 *
+	 * @return array
+	 */
+    public function uploadFileV3($path, $mimeType, $fileName, $source, $acl = null, $options = []) {
+    	return $this->uploadFile($path, $mimeType, $fileName, $source, $acl, $options, "v3");
+    }
+
+	/**
+	 * @param string $path
+	 * @param string $mimeType
+	 * @param string $fileName
+	 * @param string|resource $source
+	 * @param string|null $acl
+	 * @param array $options
+	 * @param string $version
+	 *
+	 * @return array
+	 */
+    public function uploadFile($path, $mimeType, $fileName, $source, $acl = null, $options = [], $version = "v2") {
+        /**
+         * @var UploadConfigurationRequest $uploadConfigurationRequest
+         **/
+        $uploadConfigurationRequest = new UploadConfigurationRequest();
+        $uploadConfigurationRequest->setMimeType($mimeType)
+	        ->setAcl($acl)
+            ->setPath($path)
+        ;
+        /**
+         * @var GetUploadConfigurationResponse $uploadConfigurationResponse
+         */
+        $uploadConfigurationResponse = $this->getUploadConfiguration($uploadConfigurationRequest, $version);
+
+        $form = $this->prepareForm($path, $mimeType, $uploadConfigurationResponse->getUploadToken(), $acl);
 
         if(is_string($source)) {
             // file path
@@ -99,7 +142,7 @@ class FileUploader
         $options['multipart'] = $form;
 
         $restResponse = $this->authenticatedHTTPClient->post(
-            $uploadUrlResponse->getUploadUrl(),
+            $uploadConfigurationResponse->getUploadUrl(),
             array(),
             $options
         );
@@ -141,17 +184,18 @@ class FileUploader
 	    return new FileDescriptor($restResponse->getPayload());
     }
 
-    /**
-     * @param string $path
-     * @param string $mimeType
-     * @param string|null $acl
-     * @param GetUploadUrlResponse $uploadUrlResponse
-     * @return array
-     */
-    private function prepareForm($path, $mimeType, $acl = null, GetUploadUrlResponse $uploadUrlResponse) {
+	/**
+	 * @param string $path
+	 * @param string $mimeType
+	 * @param $uploadToken
+	 * @param string|null $acl
+	 *
+	 * @return array
+	 */
+    private function prepareForm($path, $mimeType, $uploadToken, $acl = null) {
         $multipart = array();
         $multipart[] = array("name" => "path", "contents" => $path);
-        $multipart[] = array("name" => "uploadToken", "contents" => $uploadUrlResponse->getUploadToken());
+        $multipart[] = array("name" => "uploadToken", "contents" => $uploadToken);
         $multipart[] = array("name" => "mimeType", "contents" => $mimeType);
         if ($acl != null) {
             $multipart[] = array("name" => "acl", "contents" => $acl);
