@@ -7,52 +7,12 @@
  */
 
 namespace Wix\Mediaplatform\Model\Response;
-use Wix\Mediaplatform\Model\BaseModel;
 
 /**
  * Class GetUploadUrlResponse
+ * @deprecated Use GetUploadConfigurationResponse
  * @package Wix\Mediaplatform\Model\Response
  */
-class GetUploadUrlResponse extends BaseModel
-{
-    /**
-     * @var string
-     */
-    protected $uploadUrl;
+class GetUploadUrlResponse extends GetUploadConfigurationResponse {
 
-    /**
-     * @var string
-     */
-    protected $uploadToken;
-
-    /**
-     * GetUploadUrlResponse constructor.
-     * @param null $uploadUrl
-     * @param null $uploadToken
-     */
-    public function __construct($uploadUrl = null, $uploadToken = null) {
-        // using payload to init the object
-        if(is_array($uploadUrl) && !empty($uploadUrl)) {
-            parent::__construct($uploadUrl);
-        } else {
-            $this->uploadUrl = $uploadUrl;
-            $this->uploadToken = $uploadToken;
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getUploadUrl()
-    {
-        return $this->uploadUrl;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUploadToken()
-    {
-        return $this->uploadToken;
-    }
 }
