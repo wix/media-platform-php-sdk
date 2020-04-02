@@ -101,13 +101,18 @@ class Token extends Option {
 	 *
 	 * @return string
 	 */
-	public static function createImageToken( $appId, $appSecret, $filePath, $imageHeight, $imageWidth ) {
-
-		return self::createBaseToken( $appId, $appSecret, 'image.operations', array(
+	public static function createImageToken( $appId, $appSecret, $filePath, $imageHeight, $imageWidth, $blur = null ) {
+		$obj = array(
 			"height" => "<=$imageHeight",
 			"path"   => $filePath,
 			"width"  => "<=$imageWidth",
-		) );
+		);
+
+		if($blur) {
+			$obj['blur'] = $blur;
+		}
+
+		return self::createBaseToken( $appId, $appSecret, 'image.operations', $obj );
 	}
 
 	/**
@@ -119,7 +124,7 @@ class Token extends Option {
 	 *
 	 * @return string
 	 */
-	public static function createOriginalImageToken( $appId, $appSecret, $filePath ) {
+	public static function createOriginalImageToken( $appId, $appSecret, $filePath) {
 		return self::createBaseToken( $appId, $appSecret, 'file.download', array(
 			"path" => $filePath,
 		) );
@@ -132,15 +137,22 @@ class Token extends Option {
 	 * @param $imageHeight int
 	 * @param $imageWidth int
 	 * @param $watermarkProperties WatermarkProperties
+	 * @param $blur string
 	 *
 	 * @return string
 	 */
-    public static function createWatermarkToken( $appId, $appSecret, $filePath, $imageHeight, $imageWidth, $watermarkProperties) {
-        return self::createBaseToken( $appId, $appSecret, 'image.watermark', array(
-            "path" => $filePath,
-            "height" => "<=$imageHeight",
-            "width"  => "<=$imageWidth",
-        ), $watermarkProperties );
+    public static function createWatermarkToken( $appId, $appSecret, $filePath, $imageHeight, $imageWidth, $watermarkProperties, $blur = null) {
+	    $obj = array(
+		    "path"   => $filePath,
+		    "height" => "<=$imageHeight",
+		    "width"  => "<=$imageWidth",
+	    );
+
+	    if($blur) {
+	    	$obj['blur'] = $blur;
+	    }
+
+	    return self::createBaseToken( $appId, $appSecret, 'image.watermark', $obj, $watermarkProperties );
     }
 
 
