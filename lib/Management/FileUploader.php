@@ -83,7 +83,7 @@ class FileUploader
             $params = $uploadConfigurationRequest->toArray();
         }
 
-        $restResponse = $this->authenticatedHTTPClient->get(
+        $restResponse = $this->authenticatedHTTPClient->post(
             $this->uploadConfigurationEndpoint($version),
             $params);
 
@@ -149,10 +149,8 @@ class FileUploader
 
         $payload = $restResponse->getPayload();
         $response = array();
-        if(is_array($payload) && !empty($payload)) {
-            foreach($payload as $file) {
-                $response[] = new FileDescriptor($file);
-            }
+        if (is_array($payload) && !empty($payload)) {
+            $response[] = new FileDescriptor($payload);
         }
 
         return $response;
