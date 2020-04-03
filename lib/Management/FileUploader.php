@@ -83,7 +83,7 @@ class FileUploader
             $params = $uploadConfigurationRequest->toArray();
         }
 
-        $restResponse = $this->authenticatedHTTPClient->get(
+        $restResponse = $this->authenticatedHTTPClient->post(
             $this->uploadConfigurationEndpoint($version),
             $params);
 
