@@ -86,7 +86,6 @@ class FileDownloader
 	 */
 	public function getSignedUrl( $path, SignedDownloadUrlRequest $signedDownloadUrlRequest = null) {
 		$additionalClaims = array();
-		$additionalClaims["path"] = $path;
 		$token = new Token();
 
 		$saveAs = "";
@@ -105,9 +104,20 @@ class FileDownloader
 			}
 		}
 
-		$token->setIssuer(NS::APPLICATION . $this->configuration->getAppId())
+		$object = array(
+			"path" => $path
+		);
+
+		$token->setIssuer( NS::APPLICATION . $this->configuration->getAppId())
 		      ->setSubject(NS::APPLICATION . $this->configuration->getAppId())
 		      ->addVerb(VERB::FILE_DOWNLOAD)
+		      ->setObject(
+		      	array(
+			      array(
+				      $object
+			      )
+		        )
+		      )
 		      ->setAdditionalClaims($additionalClaims);
 
 		$signedToken = $this->authenticator->encode($token);

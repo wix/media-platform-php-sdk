@@ -73,7 +73,7 @@ class FileDownloaderTest extends TestCase
 	    $this->assertNotEmpty($queryParams["token"]);
 
 	    $decoded = (array) JWT::decode($queryParams["token"], "sharedSecret", array("HS256"));
-	    $this->assertEquals("/file.txt", $decoded["path"]);
+	    $this->assertEquals("/file.txt", $decoded["obj"][0][0]->path);
 	    $this->assertEquals("urn:service:file.download", $decoded["aud"][0]);
     }
 
@@ -96,7 +96,7 @@ class FileDownloaderTest extends TestCase
 		$this->assertNotEmpty($queryParams["token"]);
 
 		$decoded = (array) JWT::decode($queryParams["token"], "sharedSecret", array("HS256"));
-		$this->assertEquals("/file.txt", $decoded["path"]);
+		$this->assertEquals("/file.txt", $decoded["obj"][0][0]->path);
 		$this->assertEquals("urn:service:file.download", $decoded["aud"][0]);
 		$this->assertEquals("url", $decoded["red"]);
 
