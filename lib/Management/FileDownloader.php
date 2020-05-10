@@ -85,28 +85,25 @@ class FileDownloader
 	 * @return string
 	 */
 	public function getSignedUrl( $path, SignedDownloadUrlRequest $signedDownloadUrlRequest = null) {
-		$payload = array();
-		$payload["path"] = $path;
+		$additionalClaims = array();
+		$additionalClaims["path"] = $path;
 		$token = new Token();
+
+		$saveAs = "";
 
 		if ($signedDownloadUrlRequest != null) {
 			if ($signedDownloadUrlRequest->getTtl() != null) {
 				$token->setExpiration(time() + $signedDownloadUrlRequest->getTtl());
 			}
 			if ($signedDownloadUrlRequest->getOnExpireRedirectTo() != null) {
-				$payload["red"] = $signedDownloadUrlRequest->getOnExpireRedirectTo();
+				$additionalClaims["red"] = $signedDownloadUrlRequest->getOnExpireRedirectTo();
 			}
 			if ($signedDownloadUrlRequest->getAttachment() != null) {
-				$attachment = array();
 				if ($signedDownloadUrlRequest->getAttachment()->getFilename() != null) {
-					$attachment["filename"] = $signedDownloadUrlRequest->getAttachment()->getFilename();
+					$saveAs = sprintf("&filename=%s", $signedDownloadUrlRequest->getAttachment()->getFilename());
 				}
-				$payload["attachment"] = $attachment;
 			}
 		}
-
-		$additionalClaims = array();
-		$additionalClaims["payload"] = $payload;
 
 		$token->setIssuer(NS::APPLICATION . $this->configuration->getAppId())
 		      ->setSubject(NS::APPLICATION . $this->configuration->getAppId())
@@ -115,12 +112,15 @@ class FileDownloader
 
 		$signedToken = $this->authenticator->encode($token);
 
-		return sprintf("https://%s%s?token=%s",
-			preg_replace( "/\.appspot.com/",
-				".wixmp.com",
-				$this->configuration->getDomain() ),
+		$hostname = preg_replace( "/\.appspot\.com/",
+			".wixmp.com",
+			$this->configuration->getDomain() );
+
+		return sprintf("https://%s%s?token=%s%s",
+			$hostname,
 			$path,
-			$signedToken
+			$signedToken,
+			$saveAs
 		);
 	}
 }
