@@ -13,6 +13,7 @@ use Wix\Mediaplatform\Authentication\Authenticator;
 use Wix\Mediaplatform\Configuration\Configuration;
 use Wix\Mediaplatform\Model\Request\Attachment;
 use Wix\Mediaplatform\Model\Request\DownloadUrlRequest;
+use Wix\Mediaplatform\Model\Request\SignedDownloadUrlRequest;
 
 class FileDownloaderTest extends TestCase
 {
@@ -35,7 +36,7 @@ class FileDownloaderTest extends TestCase
      */
     public static function setUpBeforeClass()
     {
-        self::$configuration = new Configuration("domain", "appId", "sharedSecret");
+        self::$configuration = new Configuration("wixmp-domain.appspot.com", "appId", "sharedSecret");
         self::$authenticator = new Authenticator(self::$configuration);
         self::$fileDownloader = new FileDownloader(self::$configuration, self::$authenticator);
     }
@@ -44,9 +45,8 @@ class FileDownloaderTest extends TestCase
         $url = self::$fileDownloader->getDownloadUrl("/file.txt");
 
 
-        $this->assertStringStartsWith("https://domain/_api/download/file?downloadToken=", $url);
+        $this->assertStringStartsWith("https://wixmp-domain.appspot.com/_api/download/file?downloadToken=", $url);
     }
-
 
     public function testGetDownloadUrlWithOptions() {
         $downloadUrlRequest = new DownloadUrlRequest();
@@ -57,7 +57,23 @@ class FileDownloaderTest extends TestCase
 
         $url = self::$fileDownloader->getDownloadUrl("/file.txt", $downloadUrlRequest);
 
-        $this->assertStringStartsWith("https://domain/_api/download/file?downloadToken=", $url);
+        $this->assertStringStartsWith("https://wixmp-domain.appspot.com/_api/download/file?downloadToken=", $url);
     }
 
+    public function testGetSignedUrlDefault() {
+    	$url = self::$fileDownloader->getSignedUrl("/file.txt");
+    	$this->assertStringStartsWith("https://wixmp-domain.wixmp.com/file.txt?token=", $url);
+    }
+
+	public function testGetSignedUrlWithOptions() {
+		$signedDownloadUrlRequest = new SignedDownloadUrlRequest();
+		$attachment = new Attachment();
+		$attachment->setFilename("fish");
+		$signedDownloadUrlRequest->setOnExpireRedirectTo("url")
+		                   ->setAttachment($attachment);
+
+		$url = self::$fileDownloader->getSignedUrl("/file.txt", $signedDownloadUrlRequest);
+
+		$this->assertStringStartsWith("https://wixmp-domain.wixmp.com/file.txt?token=", $url);
+	}
 }

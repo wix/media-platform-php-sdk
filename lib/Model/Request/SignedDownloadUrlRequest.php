@@ -10,11 +10,10 @@ namespace Wix\Mediaplatform\Model\Request;
 
 
 /**
- * Class DownloadUrlRequest
- * @deprecated use SignedDownloadUrlRequest
+ * Class SignedDownloadUrlRequest
  * @package Wix\Mediaplatform\Model\Request
  */
-class DownloadUrlRequest extends BaseRequest
+class SignedDownloadUrlRequest extends BaseRequest
 {
     /**
      * @var int
@@ -32,7 +31,7 @@ class DownloadUrlRequest extends BaseRequest
     protected $onExpireRedirectTo;
 
     /**
-     * DownloadUrlRequest constructor.
+     * SignedDownloadUrlRequest constructor.
      */
     public function __construct()
     {
@@ -48,7 +47,7 @@ class DownloadUrlRequest extends BaseRequest
 
     /**
      * @param int $ttl
-     * @return DownloadUrlRequest
+     * @return SignedDownloadUrlRequest
      */
     public function setTtl($ttl)
     {
@@ -66,7 +65,7 @@ class DownloadUrlRequest extends BaseRequest
 
     /**
      * @param Attachment $attachment
-     * @return DownloadUrlRequest
+     * @return SignedDownloadUrlRequest
      */
     public function setAttachment($attachment)
     {
@@ -84,7 +83,7 @@ class DownloadUrlRequest extends BaseRequest
 
     /**
      * @param string $onExpireRedirectTo
-     * @return DownloadUrlRequest
+     * @return SignedDownloadUrlRequest
      */
     public function setOnExpireRedirectTo($onExpireRedirectTo)
     {
