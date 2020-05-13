@@ -107,7 +107,7 @@ $job = $mediaPlatform->fileManager()->importFile($importFileRequest);
 File access can be restricted by setting the acl to 'private'. In order to access these files, a secure URL must be generated:
 
 ```php
-$signedUrl = $mediaPlatform->fileDownloader()->getDownloadUrl("path/to/file.ext");
+$signedUrl = $mediaPlatform->fileDownloader()->getSignedUrl("path/to/file.ext");
 ```
 
 ## Jobs

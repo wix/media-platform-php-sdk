@@ -15,6 +15,7 @@ use Wix\Mediaplatform\Authentication\Token;
 use Wix\Mediaplatform\Authentication\VERB;
 use Wix\Mediaplatform\Configuration\Configuration;
 use Wix\Mediaplatform\Model\Request\DownloadUrlRequest;
+use Wix\Mediaplatform\Model\Request\SignedDownloadUrlRequest;
 
 class FileDownloader
 {
@@ -41,6 +42,7 @@ class FileDownloader
     /**
      * @param $path
      * @param DownloadUrlRequest|null $downloadUrlRequest
+     * @deprecated use getSignedUrl
      * @return string
      */
     public function getDownloadUrl($path, DownloadUrlRequest $downloadUrlRequest = null) {
@@ -77,4 +79,58 @@ class FileDownloader
             "/_api/download/file?downloadToken=" .
             $signedToken;
     }
+
+	/**
+	 * @param $path
+	 * @return string
+	 */
+	public function getSignedUrl( $path, SignedDownloadUrlRequest $signedDownloadUrlRequest = null) {
+		$additionalClaims = array();
+		$token = new Token();
+
+		$saveAs = "";
+
+		if ($signedDownloadUrlRequest != null) {
+			if ($signedDownloadUrlRequest->getTtl() != null) {
+				$token->setExpiration(time() + $signedDownloadUrlRequest->getTtl());
+			}
+			if ($signedDownloadUrlRequest->getOnExpireRedirectTo() != null) {
+				$additionalClaims["red"] = $signedDownloadUrlRequest->getOnExpireRedirectTo();
+			}
+			if ($signedDownloadUrlRequest->getAttachment() != null) {
+				if ($signedDownloadUrlRequest->getAttachment()->getFilename() != null) {
+					$saveAs = sprintf("&filename=%s", $signedDownloadUrlRequest->getAttachment()->getFilename());
+				}
+			}
+		}
+
+		$object = array(
+			"path" => $path
+		);
+
+		$token->setIssuer( NS::APPLICATION . $this->configuration->getAppId())
+		      ->setSubject(NS::APPLICATION . $this->configuration->getAppId())
+		      ->addVerb(VERB::FILE_DOWNLOAD)
+		      ->setObject(
+		      	array(
+			      array(
+				      $object
+			      )
+		        )
+		      )
+		      ->setAdditionalClaims($additionalClaims);
+
+		$signedToken = $this->authenticator->encode($token);
+
+		$hostname = preg_replace( "/\.appspot\.com/",
+			".wixmp.com",
+			$this->configuration->getDomain() );
+
+		return sprintf("https://%s%s?token=%s%s",
+			$hostname,
+			$path,
+			$signedToken,
+			$saveAs
+		);
+	}
 }

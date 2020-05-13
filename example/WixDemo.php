@@ -283,6 +283,19 @@ class WixDemo
         echo "Download Url: " . $res . PHP_EOL;
     }
 
+    function getSignedUrl() {
+        echo "uploading file..." . PHP_EOL;
+        $id = uniqid();
+
+        $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
+        $files = $this->mediaPlatform->fileManager()
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, "private");
+
+        $path = $files[0]->getPath();
+        $res = $this->mediaPlatform->fileDownloader()->getSignedUrl($path);
+        echo "Download Url: " . $res . PHP_EOL;
+    }
+
     function listJobs() {
         $searchJobsRequest = new SearchJobsRequest();
         $searchJobsRequest->setType(FileImportJob::$job_type)->setPageSize(3);
