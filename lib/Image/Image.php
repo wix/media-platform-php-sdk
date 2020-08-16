@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: leon
- * Date: 25/05/2017
- * Time: 14:34
- */
+
 
 namespace Wix\Mediaplatform\Image;
 

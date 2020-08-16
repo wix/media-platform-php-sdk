@@ -7,12 +7,7 @@ use GuzzleHttp\Psr7\Request;
 use Wix\Mediaplatform\Authentication\Authenticator;
 use Wix\Mediaplatform\Model\Response\RestResponse;
 
-/**
- * Created by PhpStorm.
- * User: leon
- * Date: 28/05/2017
- * Time: 13:36
- */
+
 class AuthenticatedHTTPClient
 {
     /**

@@ -9,12 +9,7 @@ use Wix\Mediaplatform\Authentication\Authenticator;
 use Wix\Mediaplatform\Configuration\Configuration;
 use Wix\Mediaplatform\Http\AuthenticatedHTTPClient;
 
-/**
- * Created by PhpStorm.
- * User: leon
- * Date: 29/05/2017
- * Time: 10:28
- */
+
 abstract class BaseTest extends TestCase
 {
     /**

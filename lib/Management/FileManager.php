@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: leon
- * Date: 25/05/2017
- * Time: 20:48
- */
 
 namespace Wix\Mediaplatform\Management;
 
 
-use SebastianBergmann\CodeCoverage\Node\File;
 use Wix\Mediaplatform\Configuration\Configuration;
 use Wix\Mediaplatform\Http\AuthenticatedHTTPClient;
 use Wix\Mediaplatform\Model\Job\FileImportJob;
@@ -19,8 +12,8 @@ use Wix\Mediaplatform\Model\Request\CopyFileRequest;
 use Wix\Mediaplatform\Model\Request\CreateFileRequest;
 use Wix\Mediaplatform\Model\Request\ImportFileRequest;
 use Wix\Mediaplatform\Model\Request\ListFilesRequest;
-use Wix\Mediaplatform\Model\Request\UploadUrlRequest;
-use Wix\Mediaplatform\Model\Response\GetUploadUrlResponse;
+use Wix\Mediaplatform\Model\Request\UploadConfigurationRequest;
+use Wix\Mediaplatform\Model\Response\GetUploadConfigurationResponse;
 use Wix\Mediaplatform\Model\Response\ListFilesResponse;
 use Wix\Mediaplatform\Model\Response\RestResponse;
 
@@ -61,13 +54,14 @@ class FileManager
         $this->fileUploader = $fileUploader;
     }
 
-    /**
-     * @param UploadUrlRequest|null $uploadUrlRequest
-     * @return GetUploadUrlResponse
-     */
-    public function getUploadUrl(UploadUrlRequest $uploadUrlRequest = null)
+	/**
+	 * @param UploadConfigurationRequest|null $uploadConfigurationRequest
+	 *
+	 * @return GetUploadConfigurationResponse
+	 */
+    public function getUploadConfiguration(UploadConfigurationRequest $uploadConfigurationRequest = null)
     {
-        return $this->fileUploader->getUploadUrl($uploadUrlRequest);
+        return $this->fileUploader->getUploadConfiguration($uploadConfigurationRequest);
     }
 
     /**
@@ -165,10 +159,7 @@ class FileManager
         $params = array();
         $params["path"] = $path;
 
-        /**
-         * @var RestResponse $restResponse
-         */
-        $restResponse = $this->authenticatedHttpClient->get(
+	    $restResponse = $this->authenticatedHttpClient->get(
             $this->baseUrl . "/files/metadata/extract",
             $params
         );

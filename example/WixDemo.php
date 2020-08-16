@@ -13,6 +13,7 @@ use Wix\Mediaplatform\Model\Job\VideoCodec;
 use Wix\Mediaplatform\Model\Job\VideoSpecification;
 use Wix\Mediaplatform\Model\Request\CopyFileRequest;
 use Wix\Mediaplatform\Model\Request\CreateArchiveRequest;
+use Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExtractors;
 use Wix\Mediaplatform\Model\Request\ExtractArchiveRequest;
 use Wix\Mediaplatform\Model\Request\ImageOperationRequest;
 use Wix\Mediaplatform\Model\Request\ImportFileRequest;
@@ -20,12 +21,7 @@ use Wix\Mediaplatform\Model\Request\ListFilesRequest;
 use Wix\Mediaplatform\Model\Request\SearchJobsRequest;
 use Wix\Mediaplatform\Model\Request\TranscodeRequest;
 
-/**
- * Created by PhpStorm.
- * User: leon
- * Date: 01/06/2017
- * Time: 12:47
- */
+
 class WixDemo
 {
     /**
@@ -165,10 +161,10 @@ class WixDemo
         $imageFeaturesRequest = new \Wix\Mediaplatform\Model\Request\ExtractImageFeaturesRequest();
         $imageFeaturesRequest->setFileId($fileId);
         $imageFeaturesRequest->setFeatures(array(
-            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExtractors::COLOR_DETECTION,
-            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExtractors::EXPLICIT_CONTENT_DETECTION,
-            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExtractors::FACIAL_DETECTION,
-            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExtractors::LABEL_DETECTION,
+            ImageFeatureExtractors::COLOR_DETECTION,
+            ImageFeatureExtractors::EXPLICIT_CONTENT_DETECTION,
+            ImageFeatureExtractors::FACIAL_DETECTION,
+            ImageFeatureExtractors::LABEL_DETECTION,
         ));
 
         $res = $this->mediaPlatform->imageManager()->extractFeatures($imageFeaturesRequest);
@@ -268,19 +264,6 @@ class WixDemo
         }
 
         print_r($metadata);
-    }
-
-    function getDownloadUrl() {
-        echo "uploading file..." . PHP_EOL;
-        $id = uniqid();
-
-        $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
-        $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, null);
-
-        $path = $files[0]->getPath();
-        $res = $this->mediaPlatform->fileDownloader()->getDownloadUrl($path);
-        echo "Download Url: " . $res . PHP_EOL;
     }
 
     function getSignedUrl() {
