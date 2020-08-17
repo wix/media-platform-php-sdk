@@ -62,7 +62,7 @@ class WixDemo
         $image = new Image($job->getResult()->getPayload());
 
         $url = $image->setHost("https://images-wixmp-410a67650b2f46baa5d003c6.wixmp.com")
-            ->smartCrop(400, 300)
+            ->crop(400, 300, 0, 0, 1)
             ->toUrl();
 
         echo "SEE IMPORTED IMAGE @ " . $url . PHP_EOL;
@@ -92,15 +92,13 @@ class WixDemo
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, null);
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", $file, null);
         $image = new Image($files[0]);
         $image->setHost("https://images-wixmp-410a67650b2f46baa5d003c6.wixmp.com");
 
         $image->crop(200, 300, 0, 0, 2);
         echo "CROPPED IMAGE @ " . $image->toUrl() . PHP_EOL;
 
-        $image->smartCrop(200, 300);
-        echo "SMART CROPPED IMAGE @ " . $image->toUrl() . PHP_EOL;
     }
 
     function listFiles() {

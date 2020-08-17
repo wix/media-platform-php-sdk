@@ -154,11 +154,6 @@ class ImageUrlParser
      */
     private static function findMethod(Image $image, $methodName)
     {
-        if ($methodName === "scrop")
-        {
-            $methodName = "smartCrop";
-        }
-
         $methods = get_class_methods(get_class($image));
         foreach ($methods as $method) {
             if ($method === $methodName) {

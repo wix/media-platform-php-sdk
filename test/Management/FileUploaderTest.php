@@ -33,7 +33,7 @@ class FileUploaderTest extends BaseTest
     }
 
 	public function testGetUploadConfigurationSuccess() {
-		self::setUpMockResponse(array("Content-Type" => "application/json"), "get-upload-configuration-response-v3.json");
+		self::setUpMockResponse(array("Content-Type" => "application/json"), "get-upload-configuration-response.json");
 
 		$uploadConfigurationRequest = new UploadConfigurationRequest();
 		$response = self::$fileUploader->getUploadConfiguration($uploadConfigurationRequest);
@@ -42,11 +42,11 @@ class FileUploaderTest extends BaseTest
 
     public function testUploadFile() {
         self::setUpMockResponse(array("Content-Type" => "application/json"),
-            array("get-upload-url-response.json", "file-upload-response.json")
+            array("get-upload-configuration-response.json", "file-upload-response.json")
         );
 
         $file = fopen(BaseTest::RESOURCES_DIR . DIRECTORY_SEPARATOR . "source/image.jpg", 'r');
-        $files = self::$fileUploader->uploadFile("/a/new.txt", "text/plain", "new.txt", $file, null, array());
+        $files = self::$fileUploader->uploadFile("/a/new.txt", "text/plain", $file, null, array());
 
         $this->assertEquals("c4516b12744b4ef08625f016a80aed3a", $files[0]->getId());
     }

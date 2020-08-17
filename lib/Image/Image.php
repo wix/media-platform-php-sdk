@@ -17,7 +17,6 @@ use Wix\Mediaplatform\Image\Framing\Crop;
 use Wix\Mediaplatform\Image\Framing\Fill;
 use Wix\Mediaplatform\Image\Framing\Fit;
 use Wix\Mediaplatform\Image\Framing\Frame;
-use Wix\Mediaplatform\Image\Framing\SmartCrop;
 use Wix\Mediaplatform\Image\Parser\FileDescriptorParser;
 use Wix\Mediaplatform\Image\Parser\FileMetadataParser;
 use Wix\Mediaplatform\Image\Parser\ImageUrlParser;
@@ -154,17 +153,6 @@ class Image
     public function crop($width, $height, $x, $y, $scaleFactor)
     {
         $this->frame = new Crop($x, $y, $width, $height, $scaleFactor);
-        return $this;
-    }
-
-    /**
-     * @param int $width
-     * @param int $height
-     * @return $this
-     */
-    public function smartCrop($width, $height)
-    {
-        $this->frame = new SmartCrop($width, $height);
         return $this;
     }
 

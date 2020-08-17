@@ -67,15 +67,14 @@ class FileManager
     /**
      * @param string $path
      * @param string $mimeType
-     * @param string $fileName
      * @param string|resource $source
      * @param string|null $acl
      * @param array $options
      * @return array
      */
-    public function uploadFile($path, $mimeType, $fileName, $source, $acl = null, $options = [])
+    public function uploadFile($path, $mimeType, $source, $acl = null, $options = [])
     {
-        return $this->fileUploader->uploadFile($path, $mimeType, $fileName, $source, $acl, $options);
+        return $this->fileUploader->uploadFile($path, $mimeType, $source, $acl, $options);
     }
 
     /**

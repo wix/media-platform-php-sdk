@@ -2,7 +2,6 @@
   "code": 0,
   "message": "OK",
   "payload": {
-    "uploadToken": "some token",
-    "uploadUrl": "https://manager.com/_api/v2/upload/file"
+    "uploadUrl": "https://upload.wixmp.com/upload/ABCDEFGHIJKLMNOPQRSTUVWXYZ.1234567890.ABCDEFGHIJKLMNOPQRSTUVWXYZ"
   }
 }

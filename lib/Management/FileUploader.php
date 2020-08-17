@@ -57,14 +57,13 @@ class FileUploader
 	/**
 	 * @param string $path
 	 * @param string $mimeType
-	 * @param string $fileName
 	 * @param string|resource $source
 	 * @param string|null $acl
 	 * @param array $options
 	 *
 	 * @return array
 	 */
-    public function uploadFile($path, $mimeType, $fileName, $source, $acl = null, $options = []) {
+    public function uploadFile($path, $mimeType, $source, $acl = null, $options = []) {
 	    $uploadConfigurationRequest = new UploadConfigurationRequest();
         $uploadConfigurationRequest->setMimeType($mimeType)
 	        ->setAcl($acl)
@@ -76,18 +75,18 @@ class FileUploader
 
         if(is_string($source)) {
             // file path
-            $form[] = array("name" => $fileName, "contents" => fopen($source, "r"));
+            $form[] = array("name" => "file", "contents" => fopen($source, "r"));
         } elseif(is_resource($source)) {
             // resource stream
-            $form[] = array("name" => $fileName, "contents" => $source);
+            $form[] = array("name" => "file", "contents" => $source);
         }
 
         $options['multipart'] = $form;
 
         $restResponse = $this->authenticatedHTTPClient->post(
-            $uploadConfigurationResponse->getUploadUrl(),
-            array(),
-            $options
+	        $uploadConfigurationResponse->getUploadUrl(),
+	        array(),
+	        $options
         );
 
         $payload = $restResponse->getPayload();
