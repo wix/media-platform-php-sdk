@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: leon
- * Date: 29/05/2017
- * Time: 11:11
- */
+
 
 namespace Wix\Mediaplatform\Image;
 
@@ -67,25 +62,6 @@ class ImageTest extends BaseTest
     }
 
 
-    public function testSmartCrop()
-    {
-        $image = new Image("//test.com/file.jpeg/v1/crop/w_709,h_400,x_1,y_2,scl_1,q_75,usm_0.5_0.2_0.0/file.jpeg");
-        $url = $image->smartCrop(100, 200)
-            ->toUrl();
-
-        $this->assertEquals("//test.com/file.jpeg/v1/scrop/w_100,h_200,q_75,usm_0.50_0.20_0.00/file.jpeg", $url);
-    }
-
-
-    public function testParseSmartCrop()
-    {
-        $image = new Image("//test.com/file.jpeg/v1/scrop/w_100,h_200,q_75,usm_0.50_0.20_0.00/file.jpeg");
-        $url = $image->toUrl();
-
-        $this->assertEquals("//test.com/file.jpeg/v1/scrop/w_100,h_200,q_75,usm_0.50_0.20_0.00/file.jpeg", $url);
-    }
-
-
     public function testAcceptsHTTP()
     {
         $image = new Image("http://test.com/1111/images/324234/v1/crop/w_709,h_400,x_1,y_2,scl_1/file.png#w_1000,h_2000,mt_image%2Fpng");
@@ -114,10 +90,10 @@ class ImageTest extends BaseTest
 
     public function testWatermark()
     {
-        $image = new Image("//test.com/images/file.png/v1/scrop/w_100,h_200,q_75,usm_0.50_0.20_0.00/file.png");
+        $image = new Image("//test.com/images/file.png/v1/crop/w_709,h_400,x_1,y_2,scl_1,q_75,usm_0.50_0.20_0.00/file.png");
         $url = $image->watermark("abcdefghijklmnopqrstuvwxyz1234567890")->toUrl();
 
-        $this->assertEquals("//test.com/images/file.png/v1/scrop/w_100,h_200,q_75,usm_0.50_0.20_0.00,wm_abcdefghijklmnopqrstuvwxyz1234567890/file.png", $url);
+        $this->assertEquals("//test.com/images/file.png/v1/crop/w_709,h_400,x_1,y_2,scl_1,q_75,usm_0.50_0.20_0.00,wm_abcdefghijklmnopqrstuvwxyz1234567890/file.png", $url);
     }
 
 
@@ -133,9 +109,9 @@ class ImageTest extends BaseTest
     }
 
     public function testAddToken() {
-	    $image = new Image("//test.com/images/file.png/v1/scrop/w_100,h_200,q_75,usm_0.50_0.20_0.00/file.png");
+	    $image = new Image("//test.com/images/file.png/v1/crop/w_709,h_400,x_1,y_2,scl_1,q_75,usm_0.50_0.20_0.00/file.png");
 	    $url = $image->token("abcdefghijklmnopqrstuvwxyz1234567890")->toUrl();
 
-	    $this->assertEquals("//test.com/images/file.png/v1/scrop/w_100,h_200,q_75,token_abcdefghijklmnopqrstuvwxyz1234567890,usm_0.50_0.20_0.00/file.png", $url);
+	    $this->assertEquals("//test.com/images/file.png/v1/crop/w_709,h_400,x_1,y_2,scl_1,q_75,token_abcdefghijklmnopqrstuvwxyz1234567890,usm_0.50_0.20_0.00/file.png", $url);
     }
 }

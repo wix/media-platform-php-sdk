@@ -74,15 +74,18 @@ First, if you haven't done so yet, register at [Wix Media Platform][wixmp-url], 
 
 ```php
 $file = fopen("...path to file...", "r");
-$files = $mediaPlatform->fileManager()->uploadFile("/destination_path/file_name.ext", "mime_type", "file_name.ext", file, "private||public");
+$files = $mediaPlatform->fileManager()->uploadFile("/destination_path/file_name.ext", "mime_type", $file, "private||public");
 ```
 
-### Get Upload URL
+### Get Upload Configuration
 
-Generates a signed URL and token, required for uploading from the browser
+Generates an Upload Configuration, required for uploading from the browser
 
 ```php
-$getUploadUrlResponse = $mediaPlatform->fileManager()->getUploadUrl();
+$uploadConfigurationRequest = new \Wix\Mediaplatform\Model\Request\UploadConfigurationRequest();
+$uploadConfigurationRequest->setPath('/destination_path/file_name.ext');
+
+$getUploadConfigurationResponse = $mediaPlatform->fileManager()->getUploadConfiguration($uploadConfigurationRequest);
 ```
 
 ## File Import

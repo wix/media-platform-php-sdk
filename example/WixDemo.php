@@ -13,6 +13,7 @@ use Wix\Mediaplatform\Model\Job\VideoCodec;
 use Wix\Mediaplatform\Model\Job\VideoSpecification;
 use Wix\Mediaplatform\Model\Request\CopyFileRequest;
 use Wix\Mediaplatform\Model\Request\CreateArchiveRequest;
+use Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExtractors;
 use Wix\Mediaplatform\Model\Request\ExtractArchiveRequest;
 use Wix\Mediaplatform\Model\Request\ImageOperationRequest;
 use Wix\Mediaplatform\Model\Request\ImportFileRequest;
@@ -20,12 +21,7 @@ use Wix\Mediaplatform\Model\Request\ListFilesRequest;
 use Wix\Mediaplatform\Model\Request\SearchJobsRequest;
 use Wix\Mediaplatform\Model\Request\TranscodeRequest;
 
-/**
- * Created by PhpStorm.
- * User: leon
- * Date: 01/06/2017
- * Time: 12:47
- */
+
 class WixDemo
 {
     /**
@@ -66,7 +62,7 @@ class WixDemo
         $image = new Image($job->getResult()->getPayload());
 
         $url = $image->setHost("https://images-wixmp-410a67650b2f46baa5d003c6.wixmp.com")
-            ->smartCrop(400, 300)
+            ->crop(400, 300, 0, 0, 1)
             ->toUrl();
 
         echo "SEE IMPORTED IMAGE @ " . $url . PHP_EOL;
@@ -77,7 +73,7 @@ class WixDemo
 
 	    $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
 	    $files = $this->mediaPlatform->fileManager()
-	                                 ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, null);
+	                                 ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", $file, null);
 
 	    $source = $files[0];
 	    $destination = new Destination();
@@ -96,15 +92,13 @@ class WixDemo
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, null);
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", $file, null);
         $image = new Image($files[0]);
         $image->setHost("https://images-wixmp-410a67650b2f46baa5d003c6.wixmp.com");
 
         $image->crop(200, 300, 0, 0, 2);
         echo "CROPPED IMAGE @ " . $image->toUrl() . PHP_EOL;
 
-        $image->smartCrop(200, 300);
-        echo "SMART CROPPED IMAGE @ " . $image->toUrl() . PHP_EOL;
     }
 
     function listFiles() {
@@ -120,7 +114,7 @@ class WixDemo
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, null);
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg",  $file, null);
 
         $fileId = $files[0]->getId();
         $res = $this->mediaPlatform->fileManager()->getFileMetadataById($fileId);
@@ -133,7 +127,7 @@ class WixDemo
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, 'private');
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", $file, 'private');
 
         $fileId = $files[0]->getId();
         $res = $this->mediaPlatform->fileManager()->updateFileAcl(null, $fileId, 'public');
@@ -146,7 +140,7 @@ class WixDemo
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, 'private');
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", $file, 'private');
 
         $filePath = $files[0]->getPath();
         $res = $this->mediaPlatform->fileManager()->getFileDigest($filePath);
@@ -159,16 +153,16 @@ class WixDemo
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, null);
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", $file, null);
 
         $fileId = $files[0]->getId();
         $imageFeaturesRequest = new \Wix\Mediaplatform\Model\Request\ExtractImageFeaturesRequest();
         $imageFeaturesRequest->setFileId($fileId);
         $imageFeaturesRequest->setFeatures(array(
-            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExtractors::COLOR_DETECTION,
-            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExtractors::EXPLICIT_CONTENT_DETECTION,
-            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExtractors::FACIAL_DETECTION,
-            \Wix\Mediaplatform\Model\Request\Enum\ImageFeatureExtractors::LABEL_DETECTION,
+            ImageFeatureExtractors::COLOR_DETECTION,
+            ImageFeatureExtractors::EXPLICIT_CONTENT_DETECTION,
+            ImageFeatureExtractors::FACIAL_DETECTION,
+            ImageFeatureExtractors::LABEL_DETECTION,
         ));
 
         $res = $this->mediaPlatform->imageManager()->extractFeatures($imageFeaturesRequest);
@@ -181,7 +175,7 @@ class WixDemo
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, null);
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", $file, null);
 
         $fileId = $files[0]->getId();
 
@@ -214,7 +208,7 @@ class WixDemo
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, "private");
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", $file, "private");
 
         $fileId = $files[0]->getId();
 
@@ -247,7 +241,7 @@ class WixDemo
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/video.mp4", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".video.mp4","video/mp4", "video.mp4", $file, null);
+            ->uploadFile("/demo/upload/" . $id . ".video.mp4","video/mp4", $file, null);
 
         $fileId = $files[0]->getId();
         echo "Waiting for metadata (up to 60 seconds)...";
@@ -270,26 +264,13 @@ class WixDemo
         print_r($metadata);
     }
 
-    function getDownloadUrl() {
-        echo "uploading file..." . PHP_EOL;
-        $id = uniqid();
-
-        $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
-        $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, null);
-
-        $path = $files[0]->getPath();
-        $res = $this->mediaPlatform->fileDownloader()->getDownloadUrl($path);
-        echo "Download Url: " . $res . PHP_EOL;
-    }
-
     function getSignedUrl() {
         echo "uploading file..." . PHP_EOL;
         $id = uniqid();
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, "private");
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", $file, "private");
 
         $path = $files[0]->getPath();
         $res = $this->mediaPlatform->fileDownloader()->getSignedUrl($path);
@@ -312,7 +293,6 @@ class WixDemo
         $fileDescriptor = $this->mediaPlatform->fileManager()
             ->uploadFile("/demo/upload/" . $id . ".document.xlsx",
             "application/vnd.ms-excel",
-            "document.xlsx",
             $file, "private")[0];
 
         $createArchiveRequest = new CreateArchiveRequest();
@@ -340,7 +320,6 @@ class WixDemo
         $fileDescriptor = $this->mediaPlatform->fileManager()
             ->uploadFile("/demo/upload/" . $id . ".document.xlsx.zip",
             "application/zip",
-            "document.xlsx.zip",
             $file, "private")[0];
 
         $extractArchiveRequest = new ExtractArchiveRequest();

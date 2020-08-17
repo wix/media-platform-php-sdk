@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: leon
- * Date: 24/05/2017
- * Time: 17:52
- */
+
 
 namespace Wix\Mediaplatform\Model\Metadata;
 

@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: leon
- * Date: 01/06/2017
- * Time: 11:42
- */
+
 
 namespace Wix\Mediaplatform\Model\Job;
 

@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: leon
- * Date: 29/05/2017
- * Time: 10:58
- */
+
 
 namespace Wix\Mediaplatform\Management;
 
@@ -41,25 +36,6 @@ class FileDownloaderTest extends TestCase
         self::$configuration = new Configuration("wixmp-domain.appspot.com", "appId", "sharedSecret");
         self::$authenticator = new Authenticator(self::$configuration);
         self::$fileDownloader = new FileDownloader(self::$configuration, self::$authenticator);
-    }
-
-    public function testGetDownloadUrlDefault(){
-        $url = self::$fileDownloader->getDownloadUrl("/file.txt");
-
-
-        $this->assertStringStartsWith("https://wixmp-domain.appspot.com/_api/download/file?downloadToken=", $url);
-    }
-
-    public function testGetDownloadUrlWithOptions() {
-        $downloadUrlRequest = new DownloadUrlRequest();
-        $attachment = new Attachment();
-        $attachment->setFilename("fish");
-        $downloadUrlRequest->setOnExpireRedirectTo("url")
-            ->setAttachment($attachment);
-
-        $url = self::$fileDownloader->getDownloadUrl("/file.txt", $downloadUrlRequest);
-
-        $this->assertStringStartsWith("https://wixmp-domain.appspot.com/_api/download/file?downloadToken=", $url);
     }
 
     public function testGetSignedUrlDefault() {

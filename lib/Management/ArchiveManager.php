@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: leon
- * Date: 01/06/2017
- * Time: 11:36
- */
-
 namespace Wix\Mediaplatform\Management;
 
 
@@ -42,10 +35,11 @@ class ArchiveManager
     }
 
 
-    /**
-     * @param CreateArchiveRequest
-     * @return CreateArchiveJob
-     */
+	/**
+	 * @param CreateArchiveRequest $createArchiveRequest
+	 *
+	 * @return CreateArchiveJob
+	 */
     public function createArchive(CreateArchiveRequest $createArchiveRequest) {
         $restResponse = $this->authenticatedHTTPClient->post(
             $this->baseUrl . "/archive/create",
