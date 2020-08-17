@@ -73,7 +73,7 @@ class WixDemo
 
 	    $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
 	    $files = $this->mediaPlatform->fileManager()
-	                                 ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, null);
+	                                 ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", $file, null);
 
 	    $source = $files[0];
 	    $destination = new Destination();
@@ -114,7 +114,7 @@ class WixDemo
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, null);
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg",  $file, null);
 
         $fileId = $files[0]->getId();
         $res = $this->mediaPlatform->fileManager()->getFileMetadataById($fileId);
@@ -127,7 +127,7 @@ class WixDemo
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, 'private');
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", $file, 'private');
 
         $fileId = $files[0]->getId();
         $res = $this->mediaPlatform->fileManager()->updateFileAcl(null, $fileId, 'public');
@@ -140,7 +140,7 @@ class WixDemo
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, 'private');
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", $file, 'private');
 
         $filePath = $files[0]->getPath();
         $res = $this->mediaPlatform->fileManager()->getFileDigest($filePath);
@@ -153,7 +153,7 @@ class WixDemo
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, null);
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", $file, null);
 
         $fileId = $files[0]->getId();
         $imageFeaturesRequest = new \Wix\Mediaplatform\Model\Request\ExtractImageFeaturesRequest();
@@ -175,7 +175,7 @@ class WixDemo
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, null);
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", $file, null);
 
         $fileId = $files[0]->getId();
 
@@ -208,7 +208,7 @@ class WixDemo
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, "private");
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", $file, "private");
 
         $fileId = $files[0]->getId();
 
@@ -241,7 +241,7 @@ class WixDemo
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/video.mp4", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".video.mp4","video/mp4", "video.mp4", $file, null);
+            ->uploadFile("/demo/upload/" . $id . ".video.mp4","video/mp4", $file, null);
 
         $fileId = $files[0]->getId();
         echo "Waiting for metadata (up to 60 seconds)...";
@@ -270,7 +270,7 @@ class WixDemo
 
         $file = fopen(__DIR__ .  DIRECTORY_SEPARATOR . "resources/golan.jpg", "r");
         $files = $this->mediaPlatform->fileManager()
-            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", "golan.jpg", $file, "private");
+            ->uploadFile("/demo/upload/" . $id . ".golan.jpg","image/jpeg", $file, "private");
 
         $path = $files[0]->getPath();
         $res = $this->mediaPlatform->fileDownloader()->getSignedUrl($path);
@@ -293,7 +293,6 @@ class WixDemo
         $fileDescriptor = $this->mediaPlatform->fileManager()
             ->uploadFile("/demo/upload/" . $id . ".document.xlsx",
             "application/vnd.ms-excel",
-            "document.xlsx",
             $file, "private")[0];
 
         $createArchiveRequest = new CreateArchiveRequest();
@@ -321,7 +320,6 @@ class WixDemo
         $fileDescriptor = $this->mediaPlatform->fileManager()
             ->uploadFile("/demo/upload/" . $id . ".document.xlsx.zip",
             "application/zip",
-            "document.xlsx.zip",
             $file, "private")[0];
 
         $extractArchiveRequest = new ExtractArchiveRequest();
